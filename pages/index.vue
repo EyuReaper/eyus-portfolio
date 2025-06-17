@@ -2,31 +2,31 @@
 <template>
   <div class="flex flex-col min-h-screen bg-airforce-blue-dark">
     <Navbar />
-    <main class="flex-grow container mx-auto px-4 py-16 flex flex-col items-center justify-center text-center">
+    <main class="container flex flex-col items-center justify-center flex-grow px-4 py-16 mx-auto text-center">
       <!-- Hero Section -->
       <section class="max-w-4xl animate-fade-in">
         <img
-          src="https://placehold.co/200x200/6B7280/B3B6B9?text=Eyu"
+          src="/assets/profile.jpg"
           alt="Eyu's Profile Picture"
-          class="rounded-full border-4 border-airforce-gold shadow-lg mx-auto mb-6 w-48 h-48 object-cover"
+          class="object-cover w-48 h-48 mx-auto mb-6 border-4 rounded-full shadow-lg border-airforce-gold"
         />
-        <h1 class="text-6xl font-extrabold text-airforce-silver leading-tight mb-4 animate-fly-in">
+        <h1 class="mb-4 text-6xl font-extrabold leading-tight text-airforce-silver animate-fly-in">
           Eyu's Portfolio
         </h1>
-        <p class="text-3xl font-semibold text-airforce-gold mb-8 italic">
+        <p class="mb-8 text-3xl italic font-semibold text-airforce-gold">
           — Aviator of Code, Navigating Digital Frontiers —
         </p>
-        <p class="text-xl text-airforce-silver leading-relaxed mb-10 max-w-2xl mx-auto">
+        <p class="max-w-2xl mx-auto mb-10 text-xl leading-relaxed text-airforce-silver">
           Welcome to my command center. I am a dedicated developer, constantly
           honing my skills to deliver precise, robust, and high-performance
           web solutions. My mission is to transform complex challenges into elegant
           digital experiences.
         </p>
         <div class="flex flex-wrap justify-center gap-6">
-          <NuxtLink to="/projects" class="bg-airforce-gold hover:bg-airforce-red text-airforce-blue-dark font-bold py-4 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-lg">
+          <NuxtLink to="/projects" class="px-8 py-4 text-lg font-bold transition-all duration-300 transform rounded-full shadow-lg bg-airforce-gold hover:bg-airforce-red text-airforce-blue-dark hover:scale-105">
             <span class="mr-2">🚀</span> View My Missions
           </NuxtLink>
-          <NuxtLink to="/contact" class="border-2 border-airforce-silver hover:border-airforce-gold text-airforce-silver hover:text-airforce-gold font-bold py-4 px-8 rounded-full text-lg">
+          <NuxtLink to="/contact" class="px-8 py-4 text-lg font-bold border-2 rounded-full border-airforce-silver hover:border-airforce-gold text-airforce-silver hover:text-airforce-gold">
             <span class="mr-2">📧</span> Establish Contact
           </NuxtLink>
         </div>
