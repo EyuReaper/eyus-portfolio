@@ -1,0 +1,17 @@
+/* assets/css/main.css */
+/* This is your main CSS file where Tailwind's base, components, and utilities are imported. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans bg-airforce-blue-dark text-airforce-silver; /* Apply base theme colors and font */
+}
+
+.gradient-border {
+  border: 2px solid transparent;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  background-image: linear-gradient(to right, #0F1A3A, #01051A), linear-gradient(to right, #FFD700, #B3B6B9);
+}
