@@ -35,26 +35,25 @@
         <!-- Project Card 2 -->
         <div class="p-6 transition-transform duration-300 transform border shadow-xl bg-airforce-blue-medium rounded-xl border-airforce-gray hover:border-airforce-gold hover:scale-105">
           <img
-            src="https://placehold.co/400x250/01051A/B3B6B9?text=Project+Bravo"
+            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png"
             alt="Project Bravo Thumbnail"
             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
             @click="showImageModal('https://placehold.co/800x600/01051A/B3B6B9?text=Project+Bravo+Zoomed')"
           />
-          <h3 class="mb-3 text-3xl font-semibold text-airforce-silver">Project Bravo: Mission Control Dashboard</h3>
+          <h3 class="mb-3 text-3xl font-semibold text-airforce-silver">Project Bravo:Luxury Watch Product Landing Page</h3>
           <p class="mb-4 text-airforce-silver text-md">
-            An intuitive dashboard for managing complex operational workflows,
-            featuring data visualization and secure user authentication.
+            A visually striking product landing page that showcases luxury timepieces with smooth parallax scrolling and interactive elements.
           </p>
           <div class="flex flex-wrap gap-2 mb-4 text-sm">
-            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">Nuxt.js</span>
-            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">SCSS</span>
-            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">Firebase</span>
+            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">Javascript</span>
+            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">Html</span>
+            <span class="px-3 py-1 rounded-full bg-airforce-gray text-airforce-blue-dark">CSS</span>
           </div>
           <div class="flex justify-between">
             <a href="#" class="px-4 py-2 text-sm font-bold rounded-full bg-airforce-gold hover:bg-airforce-red text-airforce-blue-dark">
               View Live <span class="ml-1">↗</span>
             </a>
-            <a href="#" class="px-4 py-2 text-sm font-bold border rounded-full border-airforce-silver hover:border-airforce-gold text-airforce-silver hover:text-airforce-gold">
+            <a href="https://github.com/EyuReaper/luxury-watch-landing-page" class="px-4 py-2 text-sm font-bold border rounded-full border-airforce-silver hover:border-airforce-gold text-airforce-silver hover:text-airforce-gold">
               GitHub <span class="ml-1">↗</span>
             </a>
           </div>
