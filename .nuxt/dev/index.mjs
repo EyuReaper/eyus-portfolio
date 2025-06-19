@@ -1013,7 +1013,7 @@ const _6D6u97kT_TcJzc0YS7WFvFQ50lmWeJj9Ho96UGdFSQ = (function(nitro) {
 
 const rootDir = "C:/Users/Reaper X/Desktop/eyus-portfolio";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Eyu's personal portfolio showcasing projects and skills with an airforce theme."}],"link":[{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"}],"style":[],"script":[],"noscript":[],"title":"Eyu's Portfolio - Aviator of Code"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Eyu's personal portfolio showcasing projects and skills with an airforce theme."}],"link":[{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"},{"rel":"icon","type":"image/png","href":"/favicon-96x96.png"}],"style":[],"script":[],"noscript":[],"title":"Eyu's Portfolio - Aviator of Code"};
 
 const appRootTag = "div";
 

@@ -26,7 +26,8 @@ export default defineNuxtConfig({
       ],
       link: [
         // You can link external fonts here, e.g., Google Fonts for Inter
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' },
+        {rel: 'icon', type: 'image/png', href: '/favicon-96x96.png'}, // Path to your favicon
       ]
     }
   },

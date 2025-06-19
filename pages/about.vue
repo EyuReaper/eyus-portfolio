@@ -14,7 +14,7 @@
         </div>
         <div class="space-y-6 text-lg leading-relaxed md:order-1">
           <p>
-            As a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
+            Hi my name is Eyuel or Eyu for short. As  a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
           </p>
           <p>
             I specialize in React & Vue.js for robust frontend experiences and leverage Tailwind CSS for rapid, maintainable styling. My skills extend to Nuxt.js, Node.js for backend, databases like MongoDB/PostgreSQL, cloud platforms like AWS/GCP. I am always eager to collaborate on projects that demand creativity, problem-solving, and a commitment to excellence.
