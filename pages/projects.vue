@@ -38,7 +38,7 @@
             src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png"
             alt="Project Bravo Thumbnail"
             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
-            @click="showImageModal('https://placehold.co/800x600/01051A/B3B6B9?text=Project+Bravo+Zoomed')"
+            @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png')"
           />
           <h3 class="mb-3 text-3xl font-semibold text-airforce-silver">Project Bravo:Luxury Watch Product Landing Page</h3>
           <p class="mb-4 text-airforce-silver text-md">
