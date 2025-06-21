@@ -25,10 +25,14 @@
             <textarea id="message" v-model="form.message" rows="6" required
                       class="w-full p-3 border rounded-lg bg-airforce-blue-dark border-airforce-gray focus:outline-none focus:border-airforce-gold text-airforce-silver"></textarea>
           </div>
-          <button type="submit"
-                  :disabled="isSubmitting"
-                  class="w-full py-3 text-lg font-bold transition-all duration-300 transform rounded-full shadow-lg bg-airforce-gold hover:bg-airforce-red text-airforce-blue-dark hover:scale-105">
-            <span v-if="isSubmitting">Sending...</span>
+          <button
+            type="submit"
+            :disabled="isSubmitting"
+            class="flex items-center justify-center w-full py-3 text-lg font-bold transition-all duration-300 transform rounded-full shadow-lg bg-airforce-gold hover:bg-airforce-red text-airforce-blue-dark hover:scale-105"
+          >
+            <span v-if="isSubmitting" class="flex items-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" overflow="visible" fill="#ffd700" stroke="none"><defs><rect id="loader" x="15" y="40" width="10" height="20" rx="2" ry="2"/></defs><use xlink:href="#loader" transform="rotate(0 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(45 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.125s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(90 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.25s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(135 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.375s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(180 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.5s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(225 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.625s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(270 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.75s" repeatCount="indefinite"></animate></use><use xlink:href="#loader" transform="rotate(315 50 50)"><animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.875s" repeatCount="indefinite"></animate></use></svg>              Sending...
+            </span>
             <span v-else>Send Message <span class="ml-2">✈️</span></span>
           </button>
         </form>
@@ -56,6 +60,7 @@ const form = ref({
 
 const submitStatus = ref(null); // 'null', 'success', 'error'
 const isSubmitting = ref(false);
+let feedbackTimeout = null;
 
 const submitForm = async () => {
   submitStatus.value = null;
@@ -66,7 +71,7 @@ const submitForm = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        access_key: 'f82722bc-7f34-4d62-b7a9-9264f74e54c8', 
+        access_key: 'f82722bc-7f34-4d62-b7a9-9264f74e54c8',
         name: form.value.name,
         email: form.value.email,
         message: form.value.message
@@ -84,6 +89,11 @@ const submitForm = async () => {
     submitStatus.value = 'error';
   } finally {
     isSubmitting.value = false;
+    // Auto-hide feedback after 4 seconds
+    if (feedbackTimeout) clearTimeout(feedbackTimeout);
+    feedbackTimeout = setTimeout(() => {
+      submitStatus.value = null;
+    }, 4000);
   }
 };
 </script>
