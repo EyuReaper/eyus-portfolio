@@ -20,7 +20,7 @@
             I specialize in React & Vue.js for robust frontend experiences and leverage Tailwind CSS for rapid, maintainable styling. My skills extend to Nuxt.js, Node.js for backend, databases like MongoDB/PostgreSQL, cloud platforms like AWS/GCP. I am always eager to collaborate on projects that demand creativity, problem-solving, and a commitment to excellence.
           </p>
           <p>
-            Beyond coding, I enjoy  reading about  technology & history books, drawing & sketching ,solving puzzles , which further sharpens my analytical thinking, an eye for design and strategic planning  — qualities I bring to every development project.
+            Beyond coding, I enjoy  reading about  technology & history books, drawing & sketching ,solving puzzles , which further sharpens my analytical thinking, my eye for design and strategic planning  — qualities I bring to every development project.
           </p>
         </div>
       </div>

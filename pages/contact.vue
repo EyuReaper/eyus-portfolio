@@ -14,16 +14,19 @@
             <label for="name" class="block mb-2 text-sm font-semibold text-airforce-silver">Name</label>
             <input type="text" id="name" v-model="form.name" required
                    class="w-full p-3 border rounded-lg bg-airforce-blue-dark border-airforce-gray focus:outline-none focus:border-airforce-gold text-airforce-silver" />
+            <p v-if="errors.name" class="mt-1 text-sm text-airforce-red">{{ errors.name }}</p>
           </div>
           <div>
             <label for="email" class="block mb-2 text-sm font-semibold text-airforce-silver">Email</label>
             <input type="email" id="email" v-model="form.email" required
                    class="w-full p-3 border rounded-lg bg-airforce-blue-dark border-airforce-gray focus:outline-none focus:border-airforce-gold text-airforce-silver" />
+            <p v-if="errors.email" class="mt-1 text-sm text-airforce-red">{{ errors.email }}</p>
           </div>
           <div>
             <label for="message" class="block mb-2 text-sm font-semibold text-airforce-silver">Message</label>
             <textarea id="message" v-model="form.message" rows="6" required
                       class="w-full p-3 border rounded-lg bg-airforce-blue-dark border-airforce-gray focus:outline-none focus:border-airforce-gold text-airforce-silver"></textarea>
+            <p v-if="errors.message" class="mt-1 text-sm text-airforce-red">{{ errors.message }}</p>
           </div>
           <button
             type="submit"
@@ -58,12 +61,50 @@ const form = ref({
   message: ''
 });
 
+const errors = ref({
+  name: '',
+  email: '',
+  message: ''
+});
+
 const submitStatus = ref(null); // 'null', 'success', 'error'
 const isSubmitting = ref(false);
 let feedbackTimeout = null;
 
+function validateEmail(email) {
+  // Simple email regex
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateForm() {
+  let valid = true;
+  errors.value = { name: '', email: '', message: '' };
+
+  if (!form.value.name.trim()) {
+    errors.value.name = 'Name is required.';
+    valid = false;
+  }
+  if (!form.value.email.trim()) {
+    errors.value.email = 'Email is required.';
+    valid = false;
+  } else if (!validateEmail(form.value.email)) {
+    errors.value.email = 'Please enter a valid email address.';
+    valid = false;
+  }
+  if (!form.value.message.trim()) {
+    errors.value.message = 'Message is required.';
+    valid = false;
+  }
+  return valid;
+}
+
 const submitForm = async () => {
   submitStatus.value = null;
+
+  if (!validateForm()) {
+    return;
+  }
+
   isSubmitting.value = true;
 
   try {
@@ -89,7 +130,6 @@ const submitForm = async () => {
     submitStatus.value = 'error';
   } finally {
     isSubmitting.value = false;
-    // Auto-hide feedback after 4 seconds
     if (feedbackTimeout) clearTimeout(feedbackTimeout);
     feedbackTimeout = setTimeout(() => {
       submitStatus.value = null;
