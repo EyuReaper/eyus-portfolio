@@ -1,0 +1,109 @@
+{
+  "todo": [],
+  "in-progress": [],
+  "testing": [
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:27:57.312Z",
+      "description": {
+        "content": "Adding aria-live to status messages.\nUsing aria-invalid on invalid fields.\nEnsuring color contrast is sufficient.\n",
+        "mime": "text/markdown"
+      },
+      "id": "4",
+      "prio": 3,
+      "references": [],
+      "title": "Accessibility"
+    },
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:26:01.871Z",
+      "description": {
+        "content": "Integrate with a real service (e.g., Web3Forms",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "prio": 3,
+      "references": [],
+      "title": "Form Submission Logic"
+    },
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:26:46.452Z",
+      "description": {
+        "content": "Add a loading state to prevent double submissions and provide user feedback.",
+        "mime": "text/markdown"
+      },
+      "id": "2",
+      "prio": 3,
+      "references": [],
+      "title": "Loading State"
+    },
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:29:31.430Z",
+      "description": {
+        "content": "Use a backend or a service that provides spam filtering (like reCAPTCHA or honeypot fields).",
+        "mime": "text/markdown"
+      },
+      "id": "6",
+      "prio": 3,
+      "references": [],
+      "title": "Security"
+    },
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:28:49.249Z",
+      "description": {
+        "content": " Consider auto-hiding them after a few seconds or allowing the user to dismiss them.",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "prio": 3,
+      "references": [],
+      "title": "User Feedback"
+    },
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:27:18.588Z",
+      "description": {
+        "content": "Add more robust client-side validation for better UX",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "prio": 3,
+      "references": [],
+      "title": "Validation"
+    }
+  ],
+  "done": [
+    {
+      "assignedTo": {
+        "name": "EyuReaper"
+      },
+      "category": "script",
+      "creation_time": "2025-06-21T10:32:08.377Z",
+      "id": "7",
+      "prio": 3,
+      "references": [],
+      "title": "Remove commented-out code if not needed."
+    }
+  ]
+}
