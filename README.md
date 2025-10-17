@@ -4,13 +4,15 @@ Eyus Portfolio is a responsive and accessible portfolio website built with Vue.j
 
 ## Table of Contents
 
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contact Form](#contact-form)
-- [Security & Accessibility](#security--accessibility)
-- [License](#license)
+- [Eyus Portfolio](#eyus-portfolio)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Project Structure](#project-structure)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contact Form](#contact-form)
+  - [Security \& Accessibility](#security--accessibility)
+  - [License](#license)
 
 ## Features
 
