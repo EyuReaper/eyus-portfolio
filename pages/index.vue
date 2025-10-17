@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen bg-airforce-blue-dark">
-    <Navbar />
+    <Navbar class="z-10" />
     <FallingStarsBg />
     <main class="container z-10 flex flex-col items-center justify-center flex-grow px-4 py-16 mx-auto text-center">
       <!-- Hero Section -->
