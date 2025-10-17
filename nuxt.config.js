@@ -1,4 +1,5 @@
-// nuxt.config.js
+import { fileURLToPath } from 'url';
+
 export default defineNuxtConfig({
   // Modules to be loaded before rendering page
   modules: [
@@ -10,35 +11,47 @@ export default defineNuxtConfig({
     '~/assets/css/main.css' // Path to your main Tailwind CSS file
   ],
 
+  // Path aliases for consistent imports
+  alias: {
+    '@': fileURLToPath(new URL('.', import.meta.url)),
+    '@/components': fileURLToPath(new URL('./components', import.meta.url)),
+    '@/lib': fileURLToPath(new URL('./lib', import.meta.url)),
+  },
+
   // Build configuration
   build: {
-    // You can add build-specific configurations here
+    // Ensure PostCSS plugins for Tailwind
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   },
 
   // App configuration (head, meta, etc.)
   app: {
     head: {
-      title: 'Eyu\'s Portfolio - Aviator of Code', // Custom title for your portfolio
+      title: 'Eyu\'s Portfolio - Aviator of Code',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: 'Eyu\'s personal portfolio showcasing projects and skills with an airforce theme.' }
       ],
       link: [
-        // You can link external fonts here, e.g., Google Fonts for Inter
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' },
-        {rel: 'icon', type: 'image/png', href: '/favicon-96x96.png'}, // Path to your favicon
+        { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png' },
       ]
     }
   },
 
-  // Tailwind CSS configuration (optional, can be done via tailwind.config.js)
+  // Tailwind CSS configuration
   tailwindcss: {
-    // Configuration options for @nuxtjs/tailwindcss module
-    // See: https://tailwindcss.nuxtjs.org/options
+    // Reference the correct tailwind.config.js
+    configPath: '~/tailwind.config.js',
   },
 
-  // Target: 'static' is crucial for Vercel deployment as a static site
-  ssr: true, // Set to true for SSR (default for Nuxt 3), but generation target will be static
-  target: 'static', // This is deprecated in Nuxt 3. Use `npx nuxt generate` command to build a static site.
+  // Static site generation
+  ssr: true,
+  target: 'static',
 })

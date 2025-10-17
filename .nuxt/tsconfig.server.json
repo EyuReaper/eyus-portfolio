@@ -97,6 +97,18 @@
       "#internal/nuxt/paths": [
         "../node_modules/nuxt/dist/core/runtime/nitro/utils/paths"
       ],
+      "@/components": [
+        "../components"
+      ],
+      "@/components/*": [
+        "../components/*"
+      ],
+      "@/lib": [
+        "../lib"
+      ],
+      "@/lib/*": [
+        "../lib/*"
+      ],
       "#unhead/composables": [
         "../node_modules/nuxt/dist/head/runtime/composables/v3"
       ]

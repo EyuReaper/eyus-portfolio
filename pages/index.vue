@@ -1,8 +1,8 @@
-<!-- pages/index.vue -->
 <template>
   <div class="flex flex-col min-h-screen bg-airforce-blue-dark">
     <Navbar />
-    <main class="container flex flex-col items-center justify-center flex-grow px-4 py-16 mx-auto text-center">
+    <FallingStarsBg />
+    <main class="container z-10 flex flex-col items-center justify-center flex-grow px-4 py-16 mx-auto text-center">
       <!-- Hero Section -->
       <section class="max-w-4xl animate-fade-in">
         <img
@@ -37,8 +37,7 @@
 </template>
 
 <script setup>
-// No specific script logic needed for the index page.
-// The content is primarily static and styled with Tailwind.
+import FallingStarsBg from '@/components/ui/FallingStarsBg.vue';
 </script>
 
 <style scoped>
