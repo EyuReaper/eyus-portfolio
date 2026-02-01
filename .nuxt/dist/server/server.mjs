@@ -1,1 +1,0 @@
-export { default } from "file:///C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"

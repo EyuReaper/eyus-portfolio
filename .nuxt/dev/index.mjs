@@ -1,39 +1,39 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, getRequestURL, getResponseHeader, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, createError, getRouterParam, getResponseStatusText } from 'file:///home/eyug/eyus-portfolio/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, getRequestURL, getResponseHeader, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, createError, getRouterParam, getResponseStatusText } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/@vue/shared/dist/shared.cjs.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, joinRelativeURL } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/defu/dist/defu.mjs';
-import destr, { destr as destr$1 } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/destr/dist/index.mjs';
-import { snakeCase } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/devalue/index.js';
-import { isVNode, toValue, isRef } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/vue/index.mjs';
-import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unhead/dist/plugins.mjs';
-import { createHooks } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/radix3/dist/index.mjs';
+import { escapeHtml } from 'file:///home/eyug/eyus-portfolio/node_modules/@vue/shared/dist/shared.cjs.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///home/eyug/eyus-portfolio/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, joinRelativeURL } from 'file:///home/eyug/eyus-portfolio/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file:///home/eyug/eyus-portfolio/node_modules/vue/server-renderer/index.mjs';
+import destr, { destr as destr$1 } from 'file:///home/eyug/eyus-portfolio/node_modules/destr/dist/index.mjs';
+import { createHooks } from 'file:///home/eyug/eyus-portfolio/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file:///home/eyug/eyus-portfolio/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///home/eyug/eyus-portfolio/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///home/eyug/eyus-portfolio/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/eyug/eyus-portfolio/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file:///home/eyug/eyus-portfolio/node_modules/ohash/dist/index.mjs';
+import { klona } from 'file:///home/eyug/eyus-portfolio/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///home/eyug/eyus-portfolio/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file:///home/eyug/eyus-portfolio/node_modules/scule/dist/index.mjs';
+import { getContext } from 'file:///home/eyug/eyus-portfolio/node_modules/unctx/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/eyug/eyus-portfolio/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file:///home/eyug/eyus-portfolio/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file:///home/eyug/eyus-portfolio/node_modules/youch-core/build/index.js';
+import { Youch } from 'file:///home/eyug/eyus-portfolio/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file:///home/eyug/eyus-portfolio/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/errx/dist/index.js';
-import { walkResolver } from 'file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/unhead/dist/utils.mjs';
+import { stringify, uneval } from 'file:///home/eyug/eyus-portfolio/node_modules/devalue/index.js';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/eyug/eyus-portfolio/node_modules/errx/dist/index.js';
+import { isVNode, toValue, isRef } from 'file:///home/eyug/eyus-portfolio/node_modules/vue/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///home/eyug/eyus-portfolio/node_modules/unhead/dist/server.mjs';
+import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file:///home/eyug/eyus-portfolio/node_modules/unhead/dist/plugins.mjs';
+import { walkResolver } from 'file:///home/eyug/eyus-portfolio/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/Reaper X/Desktop/eyus-portfolio/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/eyug/eyus-portfolio/server/assets"}];
 
 const assets = createStorage();
 
@@ -45,11 +45,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Reaper X/Desktop/eyus-portfolio","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Reaper X/Desktop/eyus-portfolio/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Reaper X/Desktop/eyus-portfolio/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Reaper X/Desktop/eyus-portfolio/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/Reaper X/Desktop/eyus-portfolio/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/eyug/eyus-portfolio","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/eyug/eyus-portfolio/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/eyug/eyus-portfolio/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/eyug/eyus-portfolio/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/eyug/eyus-portfolio/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -690,6 +690,11 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
+getContext("nitro-app", {
+  asyncContext: false,
+  AsyncLocalStorage: void 0
+});
+
 const config = useRuntimeConfig();
 const _routeRulesMatcher = toRouteMatcher(
   createRouter({ routes: config.nitro.routeRules })
@@ -1005,15 +1010,15 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _6D6u97kT_TcJzc0YS7WFvFQ50lmWeJj9Ho96UGdFSQ = (function(nitro) {
+const _C4nKysbda7eGZxp3cvjxoY1WkTGKGnVxr8JkXm8HSuU = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "C:/Users/Reaper X/Desktop/eyus-portfolio";
+const rootDir = "/home/eyug/eyus-portfolio";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Eyu's personal portfolio showcasing projects and skills with an airforce theme."}],"link":[{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"},{"rel":"icon","type":"image/png","href":"/favicon-96x96.png"}],"style":[],"script":[],"noscript":[],"title":"Eyu's Portfolio - Aviator of Code"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Eyu's personal portfolio showcasing projects and skills with an airforce theme."}],"link":[{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap"},{"rel":"icon","type":"image/png","href":"/favicon-96x96.png"}],"style":[],"script":[],"noscript":[],"title":"Eyu's Portfolio - Aviator of Code"};
 
 const appRootTag = "div";
 
@@ -1030,7 +1035,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _h15anO4yboqx1UxTDQeN1TQM9pdAgW4OKjJqSlUtY = (nitroApp) => {
+const _zDZUWN5E1Al0ffW8eanKQSk2KK6IYgjcKPeAz1eDL8 = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -1100,8 +1105,8 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _6D6u97kT_TcJzc0YS7WFvFQ50lmWeJj9Ho96UGdFSQ,
-_h15anO4yboqx1UxTDQeN1TQM9pdAgW4OKjJqSlUtY
+  _C4nKysbda7eGZxp3cvjxoY1WkTGKGnVxr8JkXm8HSuU,
+_zDZUWN5E1Al0ffW8eanKQSk2KK6IYgjcKPeAz1eDL8
 ];
 
 const VueResolver = (_, value) => {
@@ -1144,7 +1149,7 @@ function createSSRContext(event) {
     url: event.path,
     event,
     runtimeConfig: useRuntimeConfig(event),
-    noSSR: event.context.nuxt?.noSSR || (false),
+    noSSR: true,
     head: createHead(unheadOptions),
     error: false,
     nuxt: void 0,
@@ -1175,8 +1180,8 @@ function publicAssetsURL(...path) {
 
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
-const getServerEntry = () => import('file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
-const getClientManifest = () => import('file://C:/Users/Reaper%20X/Desktop/eyus-portfolio/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => Promise.resolve().then(function () { return server$1; }).then((r) => r.default || r);
+const getClientManifest = () => import('file:///home/eyug/eyus-portfolio/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();
   if (!manifest) {
@@ -1244,7 +1249,7 @@ function lazyCachedFunction(fn) {
   };
 }
 function getRenderer(ssrContext) {
-  return ssrContext.noSSR ? getSPARenderer() : getSSRRenderer();
+  return getSPARenderer() ;
 }
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 
@@ -1422,12 +1427,12 @@ async function getIslandContext(event) {
   return ctx;
 }
 
-const _lazy_1pZB6e = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_8Bf2Nf = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_1pZB6e, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_8Bf2Nf, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_1pZB6e, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_8Bf2Nf, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -1655,7 +1660,7 @@ parentPort?.on("message", (msg) => {
   }
 });
 const nitroApp = useNitroApp();
-const server = new Server(toNodeListener(nitroApp.h3App));
+const server$2 = new Server(toNodeListener(nitroApp.h3App));
 let listener;
 listen().catch(() => listen(
   true
@@ -1695,8 +1700,8 @@ function listen(useRandomPort = Boolean(
 )) {
   return new Promise((resolve, reject) => {
     try {
-      listener = server.listen(useRandomPort ? 0 : getSocketAddress(), () => {
-        const address = server.address();
+      listener = server$2.listen(useRandomPort ? 0 : getSocketAddress(), () => {
+        const address = server$2.address();
         parentPort?.postMessage({
           event: "listen",
           address: typeof address === "string" ? { socketPath: address } : { host: "localhost", port: address?.port }
@@ -1722,7 +1727,7 @@ function getSocketAddress() {
   return join(tmpdir(), socketName);
 }
 async function shutdown() {
-  server.closeAllConnections?.();
+  server$2.closeAllConnections?.();
   await Promise.all([
     new Promise((resolve) => listener?.close(resolve)),
     nitroApp.hooks.callHook("close").catch(console.error)
@@ -1739,6 +1744,13 @@ const template$1 = (messages) => {
 const errorDev = /*#__PURE__*/Object.freeze({
   __proto__: null,
   template: template$1
+});
+
+const server = () => {};
+
+const server$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: server
 });
 
 const template = "";
@@ -1772,7 +1784,7 @@ function renderPayloadJsonScript(opts) {
     "type": "application/json",
     "innerHTML": contents,
     "data-nuxt-data": appId,
-    "data-ssr": !(opts.ssrContext.noSSR)
+    "data-ssr": false
   };
   {
     payload.id = "__NUXT_DATA__";
@@ -1830,7 +1842,7 @@ const renderer = defineRenderHandler(async (event) => {
   if (routeOptions.ssr === false) {
     ssrContext.noSSR = true;
   }
-  const renderer = await getRenderer(ssrContext);
+  const renderer = await getRenderer();
   const _rendered = await renderer.renderToString(ssrContext).catch(async (error) => {
     if (ssrContext._renderResponse && error.message === "skipping render") {
       return {};

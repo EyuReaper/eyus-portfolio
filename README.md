@@ -1,6 +1,6 @@
-# Eyus Portfolio
+# Eyus Portfolio Tactical SPA
 
-Eyus Portfolio is a responsive and accessible portfolio website built with Vue.js and Tailwind CSS. It showcases projects, contact information, and connections through various social platforms. The project demonstrates modern web development techniques including form validation, secure API integration, and accessible UI components.
+Eyus Portfolio is now a Single Page Application (SPA) reimagined with an Air Force Tactical HUD theme, built using Vue 3 (Composition API) and Tailwind CSS. It showcases projects, contact information, and professional connections through a unified, immersive experience. The project demonstrates modern web development techniques including form validation, secure API integration, accessible UI components, and smooth animated transitions.
 
 ## Table of Contents
 
@@ -16,10 +16,14 @@ Eyus Portfolio is a responsive and accessible portfolio website built with Vue.j
 
 ## Features
 
-- **Responsive Design:** Built using Tailwind CSS for mobile-first responsiveness.
+- **Single Page Application (SPA):** Delivers a fluid, app-like experience with smooth transitions between sections.
+- **Tactical HUD Theme:** Immersive Air Force HUD styling with dark mode, scanline effects, and a fixed grid pattern.
+- **Responsive Design:** Built using Tailwind CSS for mobile-first responsiveness, with a cockpit-like aesthetic.
+- **Bottom-Docked Navigation:** Innovative floating, pill-shaped navigation with Intersection Observer to highlight the active section.
 - **Contact Form:** Integrated contact form with validation, secure API submission using Web3Forms, custom animated loader, and spam prevention (honeypot field).
-- **Accessibility:** Semantic HTML, proper ARIA attributes, live region updates for user feedback, and keyboard-friendly navigation.
-- **Modular Components:** Structured to easily extend with additional pages or components such as Navbar and Footer.
+- **Smooth Transitions:** Uses Vue's `<Transition>` component and Intersection Observer for elegant UI state changes.
+- **Accessibility:** Semantic HTML, proper ARIA attributes, live region updates for user feedback, and keyboard-friendly navigation, including project cards.
+- **Modular Components:** Structured for maintainability and extensibility.
 
 ## Project Structure
 
@@ -27,21 +31,21 @@ Below is a brief explanation of the main project folders and files:
 
 ```
 eyus-portfolio/
-├── assets/              # Images, fonts, and other static files.
-├── components/          # Reusable Vue components (e.g., Navbar.vue, Footer.vue).
-├── pages/               # Page-level Vue components (e.g., home.vue, contact.vue).
-│   └── contact.vue      # The contact page with a form to send messages.
-├── public/              # Publicly accessible files like favicon or index.html.
-├── styles/              # Custom CSS or Tailwind CSS configuration files.
+├── assets/              # Images, fonts, and other static files (e.g., CSS for global styles).
+├── components/          # Reusable Vue components (e.g., BottomNav.vue for navigation).
+│   └── ui/              # UI-specific components (e.g., FallingStarsBg.vue).
+├── pages/               # Contains the single page-level Vue component (index.vue).
+│   └── index.vue        # The main SPA with all sections (SCAN, INTEL, HANGAR, COMMS).
+├── public/              # Publicly accessible files like favicon.
 ├── README.md            # This file.
+├── tailwind.config.js   # Tailwind CSS configuration, including custom colors and animations.
 └── package.json         # Project dependencies and scripts.
 ```
 
 - **assets/**: Contains all static assets used throughout the website.
-- **components/**: Contains reusable UI components. For example, the `Navbar` and `Footer` components are imported in the `contact.vue` page.
-- **pages/**: Houses page-specific Vue files; each file represents a separate page in the application.
-- **public/**: Files in this folder are served directly and might include global HTML templates.
-- **styles/**: Holds any custom styling files and Tailwind CSS configurations.
+- **components/**: Contains reusable UI components, including the new `BottomNav.vue` and `FallingStarsBg.vue`.
+- **pages/**: Houses the single `index.vue` file, which now serves as the entire application.
+- **public/**: Files in this folder are served directly.
 
 ## Installation
 
@@ -71,16 +75,6 @@ eyus-portfolio/
 - **Development:** Use your favorite IDE (e.g., Visual Studio Code) to edit Vue components. Changes will be hot-reloaded in the browser.
 - **Building:** Run `npm run build` to compile the project for production.
 
-## Contact Form
-
-The contact form is implemented in `pages/contact.vue`. It features:
-
-- **Validation:** Client-side input validation for name, email, and message fields.
-- **Submission:** Uses Web3Forms API to submit form data. Replace the access key in the code with your actual key.
-- **Loader:** A custom animated loader SVG is displayed during form submission.
-- **Feedback:** Success or error messages are displayed and are accessible. Users can dismiss the feedback manually.
-- **Spam Prevention:** A hidden (honeypot) field is used to help prevent spam submissions.
-
 ## Security & Accessibility
 
 - **Security:**
@@ -90,6 +84,7 @@ The contact form is implemented in `pages/contact.vue`. It features:
 - **Accessibility:**
   - All form inputs include associated `<label>` elements.
   - ARIA attributes such as `aria-invalid`, `aria-describedby`, `aria-live`, and `role` are added for better screen reader support.
+  - Project cards are now keyboard-navigable (`tabindex="0"`, `role="button"`) and trigger the image modal on `Enter` key press.
   - The animated loader is hidden from assistive technologies, with a visually hidden alternative text provided.
 
 ## License

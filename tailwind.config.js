@@ -14,25 +14,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Define a custom font family, using 'Inter' as default for a clean look
-        // You can add other thematic fonts here, e.g., 'Oswald' or 'Rajdhani' from Google Fonts
-        sans: ['Inter', 'sans-serif'],
+        sans: ['"JetBrains Mono"', 'monospace'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
-        // Define your custom airforce themed colors
-        'airforce-blue-dark': '#01051A',      // Deep, almost black blue
-        'airforce-blue-medium': '#0F1A3A',    // Classic navy blue
-        'airforce-gray': '#6B7280',           // Cool, metallic gray
-        'airforce-silver': '#B3B6B9',         // Lighter silver for accents
-        'airforce-gold': '#FFD700',           // Subtle gold for highlights (e.g., insignia)
-        'airforce-red': '#B22222',            // A military red, for warnings or accents
-      },
-      backgroundImage: {
-        // Example for a subtle background image, replace with an actual path/URL
-        // 'sky-pattern': "url('/img/sky-pattern.png')",
+        'background': '#020617',
+        'safe': '#10b981',      // emerald-500
+        'system': '#0ea5e9',     // sky-500
       },
       keyframes: {
-        // Define custom keyframes for animations
         flyIn: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
@@ -41,11 +31,25 @@ export default {
             '0%': { opacity: '0' },
             '100%': { opacity: '1' },
         },
+        glow: {
+          '0%, 100%': { 'box-shadow': '0 0 5px #10b981' },
+          '50%': { 'box-shadow': '0 0 20px #10b981' },
+        },
+        scanline: {
+          '0%': { 'background-position': '0 0' },
+          '100%': { 'background-position': '0 100%' },
+        },
+        grid: {
+          '0%': { 'background-position': '0 0' },
+          '100%': { 'background-position': '50px 50px' },
+        }
       },
       animation: {
-        // Apply keyframes to custom animation utilities
         'fly-in': 'flyIn 1s ease-out forwards',
         'fade-in': 'fadeIn 1s ease-in forwards',
+        'glow': 'glow 1.5s ease-in-out infinite',
+        'scanline': 'scanline 10s linear infinite',
+        'grid': 'grid 2s linear infinite',
       },
     },
   },

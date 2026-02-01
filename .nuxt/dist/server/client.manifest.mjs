@@ -1,1 +1,18 @@
-export { default } from "file:///C:/Users/Reaper%20X/Desktop/eyus-portfolio/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export default {
+  "@vite/client": {
+    "prefetch": true,
+    "isEntry": true,
+    "file": "@vite/client",
+    "css": [],
+    "module": true,
+    "resourceType": "script"
+  },
+  "/home/eyug/eyus-portfolio/node_modules/nuxt/dist/app/entry.js": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "isEntry": true,
+    "file": "/home/eyug/eyus-portfolio/node_modules/nuxt/dist/app/entry.js"
+  }
+}

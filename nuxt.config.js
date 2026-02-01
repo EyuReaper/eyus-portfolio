@@ -39,7 +39,7 @@ export default defineNuxtConfig({
         { hid: 'description', name: 'description', content: 'Eyu\'s personal portfolio showcasing projects and skills with an airforce theme.' }
       ],
       link: [
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap' },
         { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png' },
       ]
     }
@@ -52,6 +52,5 @@ export default defineNuxtConfig({
   },
 
   // Static site generation
-  ssr: true,
-  target: 'static',
+  ssr: false,
 })
