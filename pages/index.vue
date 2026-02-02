@@ -321,6 +321,7 @@ te"/>
       </div>
     </div>
 
+    <CoPilotMusicPlayer />
     <BottomNav />
     <JetScroll />
   </div>
@@ -332,6 +333,7 @@ import { useIntersectionObserver } from '@vueuse/core';
 import FallingStarsBg from '@/components/ui/FallingStarsBg.vue';
 import BottomNav from '@/components/BottomNav.vue';
 import JetScroll from '@/components/jetscroll.vue';
+import CoPilotMusicPlayer from '@/components/CoPilotMusicPlayer.vue';
 
 // --- Section Visibility ---
 const intelRef = ref(null);
