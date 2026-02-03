@@ -40,7 +40,10 @@
             class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
           />
         </div>
+        <!--Todo: finish styling the title-->
         <div class="space-y-6 font-mono text-lg leading-relaxed md:order-1">
+          <h3 class="text-3xl text-emerald-500">The Pilot</h3>
+          <h4 class="text-2xl text-emerald-500">Call sign: <span class="text-orange-500">Reaper_X</span></h4>
           <p>
             Hi my name is Eyuel or Eyu for short. As a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
           </p>
@@ -111,7 +114,7 @@
               </div>
             </div>
           </div>
-          <h3 class="mb-3 text-3xl font-semibold text-white">Project Bravo:Luxury Watch Product Landing Page</h3>
+          <h3 class="mb-3 text-3xl font-semibold text-white">Project Bravo: Luxury Watch Product Landing Page</h3>
           <p class="mb-4 text-white text-md">
             A visually striking product landing page that showcases luxury timepieces with smooth parallax scrolling and interactive elements.
           </p>
@@ -158,24 +161,56 @@
           <div class="relative">
             <img
               src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
-              alt="Project Charlie Thumbnail"
+              alt="Project Delta Thumbnail"
               class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
               @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
             />
             <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 bg-black bg-opacity-75 rounded-lg opacity-0 group-hover:opacity-100">
               <h4 class="text-xl font-bold text-emerald-500">Technical Specs</h4>
               <div class="flex flex-wrap gap-2 mt-2 text-sm">
-                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">React</span>
-                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Typescript</span>
-                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Tailwind CSS</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Next.js</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Express+Typescript</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Sanity CMS</span>
               </div>
             </div>
           </div>
-          <h3 class="mb-3 text-3xl font-semibold text-white">Project Charlie: Amharic Phrase book</h3>
+          <h3 class="mb-3 text-3xl font-semibold text-white">Project Delta:YCKF-replica</h3>
           <p class="mb-4 text-white text-md">
-            A free, offline-friendly Amharic phrasebook web app for travelers and learners.
+            A full-stack Intership project done for young cyber knight foundation.
           </p>
         </div>
+
+
+                <!-- Project Card 5 -->  <!--todo add the  5th card-->
+        <div
+          class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
+          tabindex="0"
+          role="button"
+          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+        >
+          <div class="relative">
+            <img
+              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
+              alt="Project Echo Thumbnail"
+              class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
+              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+            />
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 bg-black bg-opacity-75 rounded-lg opacity-0 group-hover:opacity-100">
+              <h4 class="text-xl font-bold text-emerald-500">Technical Specs</h4>
+              <div class="flex flex-wrap gap-2 mt-2 text-sm">
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Javascript</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Node.js</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Typescript</span>
+              </div>
+            </div>
+          </div>
+          <h3 class="mb-3 text-3xl font-semibold text-white">Project Echo:Jano-fidel</h3>
+          <p class="mb-4 text-white text-md">
+            A Native Amharic programming Language built on Node.js.
+          </p>
+        </div>
+
       </div>
     </section>
 
