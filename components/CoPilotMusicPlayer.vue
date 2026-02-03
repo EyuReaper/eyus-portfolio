@@ -7,25 +7,25 @@
   >
     <div class="flex items-center space-x-4">
       <!-- Icon/Visual for Music Player -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 18V5l12-2v13M9 18a3 3 0 1 0 0 6 3 3 0 1 0 0-6Zm12 0a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/>
       </svg>
 
       <!-- Music Controls -->
       <div class="flex flex-col">
-        <div class="flex items-center space-x-2 mb-2">
+        <div class="flex items-center mb-2 space-x-2">
           <button @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
-            <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
           </button>
           <button @click="playNext" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><line x1="2" y1="19" x2="2" y2="5"></line></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><line x1="2" y1="19" x2="2" y2="5"></line></svg>
           </button>
-          <span class="text-sm font-mono text-safe">{{ currentTrackName }}</span>
+          <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
         </div>
 
         <!-- Volume Slider -->
-        <input type="range" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" class="w-24 h-1 bg-system rounded-lg appearance-none cursor-pointer">
+        <input type="range" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" class="w-24 h-1 rounded-lg appearance-none cursor-pointer bg-system">
       </div>
     </div>
   </div>
@@ -33,17 +33,20 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import DualWielder from '~/assets/Dual Wielder - PROJECT ACES.mp3';
+import MidnightLight from '~/assets/ Midnight Light - Jose Pavli.mp3';
+import Redline from '~/assets/Redline - Jose Pavli.mp3';
 
 const audio = ref(null);
 const isPlaying = ref(false);
-const volume = ref(0.7); // Default volume
+const volume = ref(0.2); // Default volume
 const currentTrackIndex = ref(0);
 
-// Placeholder music tracks
+// Music tracks
 const tracks = [
-  { name: "Tactical Beat 1", src: "/music/track1.mp3" }, // PLACEHOLDER: Replace with your actual track
-  { name: "Mission Briefing", src: "/music/track2.mp3" }, // PLACEHOLDER: Replace with your actual track
-  { name: "Sky Patrol", src: "/music/track3.mp3" },     // PLACEHOLDER: Replace with your actual track
+  { name: "Dual Wielder - PROJECT ACES", src: DualWielder },
+  { name: "Midnight Light - Jose Pavli", src: MidnightLight },
+  { name: "Redline - Jose Pavli", src: Redline },
 ];
 
 const currentTrackName = computed(() => tracks[currentTrackIndex.value].name);
@@ -84,6 +87,8 @@ onMounted(() => {
   audio.value.volume = volume.value;
   loadTrack(currentTrackIndex.value);
   audio.value.addEventListener('ended', playNext); // Auto play next track
+  audio.value.play(); // Attempt to autoplay
+  isPlaying.value = true;
 });
 
 onUnmounted(() => {

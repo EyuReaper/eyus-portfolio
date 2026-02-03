@@ -1,5 +1,8 @@
 <template>
-  <NuxtPage />
+  <div>
+    <NuxtPage />
+    <CoPilotMusicPlayer />
+  </div>
 </template>
 
 <script setup>

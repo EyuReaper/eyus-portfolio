@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-950 text-sky-500 min-h-screen">
+  <div class="min-h-screen bg-slate-950 text-sky-500">
     <FallingStarsBg />
 
     <!-- SCAN (Home) Section -->
@@ -22,10 +22,10 @@
           web solutions. My mission is to transform complex challenges into elegant
           digital experiences.
         </p>
-         <div id="typewriter-container" class="text-left mt-4 p-4 bg-black bg-opacity-50 rounded-lg">
-          <span class="text-emerald-500 font-mono"></span>
+         <div id="typewriter-container" class="p-4 mt-4 text-left bg-black bg-opacity-50 rounded-lg">
+          <span class="font-mono text-emerald-500"></span>
         </div>
-        <p class="mt-4 text-sky-500 text-sm font-mono flicker">System Diagnostic: All systems nominal.</p>
+        <p class="mt-4 font-mono text-sm text-sky-500 flicker">System Diagnostic: All systems nominal.</p>
       </div>
     </section>
 
@@ -40,7 +40,7 @@
             class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
           />
         </div>
-        <div class="space-y-6 text-lg leading-relaxed md:order-1 font-mono">
+        <div class="space-y-6 font-mono text-lg leading-relaxed md:order-1">
           <p>
             Hi my name is Eyuel or Eyu for short. As a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
           </p>
@@ -146,6 +146,36 @@
             A free, offline-friendly Amharic phrasebook web app for travelers and learners.
           </p>
         </div>
+
+        <!-- Project Card 4 -->  <!--todo add the  4th card-->
+        <div
+          class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
+          tabindex="0"
+          role="button"
+          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+        >
+          <div class="relative">
+            <img
+              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
+              alt="Project Charlie Thumbnail"
+              class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
+              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+            />
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 bg-black bg-opacity-75 rounded-lg opacity-0 group-hover:opacity-100">
+              <h4 class="text-xl font-bold text-emerald-500">Technical Specs</h4>
+              <div class="flex flex-wrap gap-2 mt-2 text-sm">
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">React</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Typescript</span>
+                <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950">Tailwind CSS</span>
+              </div>
+            </div>
+          </div>
+          <h3 class="mb-3 text-3xl font-semibold text-white">Project Charlie: Amharic Phrase book</h3>
+          <p class="mb-4 text-white text-md">
+            A free, offline-friendly Amharic phrasebook web app for travelers and learners.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -166,7 +196,7 @@
               required
               :aria-invalid="!!errors.name"
               :aria-describedby="errors.name ? 'name-error' : null"
-              class="w-full p-3 border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500 text-white"
+              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
             />
             <p
               v-if="errors.name"
@@ -184,7 +214,7 @@
               required
               :aria-invalid="!!errors.email"
               :aria-describedby="errors.email ? 'email-error' : null"
-              class="w-full p-3 border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500 text-white"
+              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
             />
             <p
               v-if="errors.email"
@@ -202,7 +232,7 @@
               required
               :aria-invalid="!!errors.message"
               :aria-describedby="errors.message ? 'message-error' : null"
-              class="w-full p-3 border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500 text-white"
+              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
             ></textarea>
             <p
               v-if="errors.message"
@@ -282,7 +312,7 @@ te"/>
           </div>
           <div
             v-else-if="submitStatus === 'error'"
-            class="flex items-center justify-between px-4 py-3 bg-red-100 border border-red-300 rounded shadow text-red-500"
+            class="flex items-center justify-between px-4 py-3 text-red-500 bg-red-100 border border-red-300 rounded shadow"
             role="alert"
             aria-live="assertive"
           >
@@ -312,7 +342,7 @@ te"/>
       <div class="relative max-w-4xl max-h-full overflow-auto rounded-lg shadow-xl">
         <button
           @click="closeImageModal"
-          class="absolute z-50 p-2 text-4xl font-bold transition-colors duration-200 rounded-full top-4 right-4 text-white bg-slate-900 hover:text-emerald-500"
+          class="absolute z-50 p-2 text-4xl font-bold text-white transition-colors duration-200 rounded-full top-4 right-4 bg-slate-900 hover:text-emerald-500"
           aria-label="Close"
         >
           &times;
@@ -321,7 +351,6 @@ te"/>
       </div>
     </div>
 
-    <CoPilotMusicPlayer />
     <BottomNav />
     <JetScroll />
   </div>
@@ -333,7 +362,6 @@ import { useIntersectionObserver } from '@vueuse/core';
 import FallingStarsBg from '@/components/ui/FallingStarsBg.vue';
 import BottomNav from '@/components/BottomNav.vue';
 import JetScroll from '@/components/jetscroll.vue';
-import CoPilotMusicPlayer from '@/components/CoPilotMusicPlayer.vue';
 
 // --- Section Visibility ---
 const intelRef = ref(null);
