@@ -148,6 +148,7 @@
           <p class="mb-4 text-white text-md">
             A free, offline-friendly Amharic phrasebook web app for travelers and learners.
           </p>
+
         </div>
 
         <!-- Project Card 4 -->  <!--todo add the  4th card-->
@@ -155,15 +156,15 @@
           class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
           tabindex="0"
           role="button"
-          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
-          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png')"
+          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png')"
         >
           <div class="relative">
             <img
-              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
+              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png"
               alt="Project Delta Thumbnail"
               class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
-              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png')"
             />
             <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 bg-black bg-opacity-75 rounded-lg opacity-0 group-hover:opacity-100">
               <h4 class="text-xl font-bold text-emerald-500">Technical Specs</h4>
@@ -186,15 +187,15 @@
           class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
           tabindex="0"
           role="button"
-          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
-          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+          @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png')"
+          @keydown.enter="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png')"
         >
           <div class="relative">
             <img
-              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
+              src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png"
               alt="Project Echo Thumbnail"
               class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
-              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png')"
+              @click="showImageModal('https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png')"
             />
             <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 bg-black bg-opacity-75 rounded-lg opacity-0 group-hover:opacity-100">
               <h4 class="text-xl font-bold text-emerald-500">Technical Specs</h4>
@@ -473,7 +474,7 @@ const isSubmitting = ref(false);
 let feedbackTimeout = null;
 
 function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s @]+ @[^\s @]+\.[^\s @]+$/.test(email);
 }
 
 function validateForm() {
@@ -557,7 +558,7 @@ const submitForm = async () => {
   animation: flicker 1.5s infinite alternate;
 }
 
-@keyframes flicker {
+ @keyframes flicker {
   0%, 100% {
     opacity: 1;
   }

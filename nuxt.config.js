@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'url';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-02-05',
   // Modules to be loaded before rendering page
   modules: [
     '@nuxtjs/tailwindcss' // Integrates Tailwind CSS with Nuxt
