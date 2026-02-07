@@ -1,6 +1,7 @@
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   // Specify files to scan for Tailwind classes to ensure PurgeCSS works correctly
   content: [
     "./components/**/*.{js,vue,ts}",
@@ -21,6 +22,8 @@ export default {
         'background': '#020617',
         'safe': '#10b981',      // emerald-500
         'system': '#0ea5e9',     // sky-500
+        'darkBackground': '#1a202c', // A dark gray for true dark mode
+        'darkText': '#e2e8f0',     // Light gray for text
       },
       keyframes: {
         flyIn: {

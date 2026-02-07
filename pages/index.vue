@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-950 text-sky-500">
+  <div class="min-h-screen bg-slate-950 text-sky-500 dark:bg-gray-950 dark:text-gray-100">
     <FallingStarsBg />
 
     <!-- SCAN (Home) Section -->
@@ -43,7 +43,7 @@
         <!--Todo: finish styling the title-->
         <div class="space-y-6 font-mono text-lg leading-relaxed md:order-1">
           <h3 class="text-3xl text-emerald-500">The Pilot</h3>
-          <h4 class="text-2xl text-emerald-500">Call sign: <span class="text-orange-500">Reaper_X</span></h4>
+          <h4 class="text-2xl text-emerald-500">Call sign: <a href="https://t.me/@Reaper_X"><span class="text-orange-500">Reaper_X</span></a></h4>
           <p>
             Hi my name is Eyuel or Eyu for short. As a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
           </p>

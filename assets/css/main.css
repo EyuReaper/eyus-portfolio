@@ -2,17 +2,61 @@
 /* This is your main CSS file where Tailwind's base, components, and utilities are imported. */
 
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
+
+
 body {
+
+
+
   @apply font-mono bg-background text-system;
-  background-image: 
+
+
+
+  background-image:
+
+
+
     linear-gradient(to bottom, rgba(18, 18, 18, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+
+
+
     linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+
+
+
   background-size: 100% 4px, 100% 100%;
+
+
+
   animation: scanline 10s linear infinite;
+
+
+
   position: relative;
+
+
+
+}
+
+
+
+
+
+
+
+.dark body {
+
+
+
+  @apply bg-gray-900 text-gray-100;
+
+
+
 }
 
 body::before {
