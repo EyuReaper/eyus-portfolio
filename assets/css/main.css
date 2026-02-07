@@ -53,7 +53,63 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
   @apply bg-gray-900 text-gray-100;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dark {
+
+
+
+
+
+
+
+  cursor: crosshair;
+
+
+
+
 
 
 
@@ -72,4 +128,25 @@ body::before {
   background-size: 50px 50px;
   z-index: -1;
   animation: grid 2s linear infinite;
+}
+
+.dark .reaper-text {
+  animation: glitch 0.4s cubic-bezier(.25,.46,.45,.94) both;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+}
+
+ @keyframes glitch {
+  0% { transform: translate(0); text-shadow: -2px 0 red, 2px 0 blue; }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); text-shadow: 0 0 8px rgba(16, 185, 129, 0.8); }
+}
+
+ @keyframes nvg-power-on {
+  0% { filter: brightness(0) contrast(2); }
+  25% { filter: brightness(1.5) sepia(1) hue-rotate(90deg); }
+  50% { filter: brightness(0.5); }
+  100% { filter: brightness(1); }
 }

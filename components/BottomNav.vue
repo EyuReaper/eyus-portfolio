@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import SplinterCellSfx from '~/assets/Splinter_Cell_Sfx.wav';
+import { useThemeStore } from '~/composables/useThemeStore';
 
 const navItems = [
   { id: 'scan', label: 'SCAN' },
@@ -62,36 +62,9 @@ const navItems = [
 ];
 
 const activeSection = ref('scan');
-const isDarkMode = ref(false);
 let observer;
 
-let sfxAudio; // Declare sfxAudio here
-
-// Applies the .dark class to the <html> element for Tailwind's dark: prefix
-const applyDarkModeClass = (isDark) => {
-  if (process.client) {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
-};
-
-const toggleDarkMode = () => {
-  // Play sound only if switching from light mode (Biometric Eye is pressed)
-  // Biometric Eye is displayed when isDarkMode is false.
-  // So, if isDarkMode.value is currently false, we are pressing the Biometric Eye.
-  if (sfxAudio && !isDarkMode.value) { 
-    sfxAudio.currentTime = 0; // Rewind to start for quick successive plays
-    sfxAudio.play();
-  }
-  isDarkMode.value = !isDarkMode.value;
-  applyDarkModeClass(isDarkMode.value);
-  if (process.client) {
-    localStorage.setItem('darkMode', isDarkMode.value);
-  }
-};
+const { isDarkMode, toggleDarkMode } = useThemeStore();
 
 const scrollTo = (id) => {
   const element = document.getElementById(id);
@@ -101,22 +74,7 @@ const scrollTo = (id) => {
 };
 
 onMounted(() => {
-  // Initialize sound effect
-  sfxAudio = new Audio(SplinterCellSfx);
-
-  // 1. Theme Initialization
-  if (process.client) {
-    const savedDarkMode = localStorage.getItem('darkMode');
-    if (savedDarkMode !== null) {
-      isDarkMode.value = JSON.parse(savedDarkMode);
-    } else {
-      // Check user's system preference
-      isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    applyDarkModeClass(isDarkMode.value);
-  }
-
-  // 2. Intersection Observer for Navigation
+  // 2. Intersection Observer for Navigation (Theme initialization is now in useThemeStore)
   const options = {
     rootMargin: '-50% 0px -50% 0px',
     threshold: 0,
