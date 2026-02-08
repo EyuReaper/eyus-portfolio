@@ -220,154 +220,152 @@
     <!-- COMMS (Contact) Section -->
     <section id="comms" ref="commsRef" :class="['container', 'flex-grow', 'px-4', 'py-16', 'mx-auto', 'text-white', 'min-h-screen', 'section-transition', { 'is-visible': commsVisible }]">
       <h2 class="mb-12 text-5xl font-bold text-center text-emerald-500">COMMS</h2>
-      <div class="max-w-xl p-8 mx-auto border shadow-xl bg-slate-900 rounded-xl border-sky-500">
-        <p class="mb-8 text-lg text-center">
-          Ready to deploy a new mission? Reach out and let's discuss how I can help.
-        </p>
-        <form @submit.prevent="submitForm" class="space-y-6">
-          <div>
-            <label for="name" class="block mb-2 text-sm font-semibold text-white">Name</label>
+      <div class="flex flex-col items-center justify-center max-w-5xl gap-12 mx-auto">
+        <div class="max-w-xl p-8 border shadow-xl bg-slate-900 rounded-xl border-sky-500">
+          <p class="mb-8 text-lg text-center">
+            Ready to deploy a new mission? Reach out and let's discuss how I can help.
+          </p>
+          <form @submit.prevent="submitForm" class="space-y-6">
+            <div>
+              <label for="name" class="block mb-2 text-sm font-semibold text-white">Name</label>
+              <input
+                type="text"
+                id="name"
+                v-model="form.name"
+                required
+                :aria-invalid="!!errors.name"
+                :aria-describedby="errors.name ? 'name-error' : null"
+                class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
+              />
+              <p
+                v-if="errors.name"
+                :id="'name-error'"
+                class="mt-1 text-sm text-red-500"
+                role="alert"
+              >{{ errors.name }}</p>
+            </div>
+            <div>
+              <label for="email" class="block mb-2 text-sm font-semibold text-white">Email</label>
+              <input
+                type="email"
+                id="email"
+                v-model="form.email"
+                required
+                :aria-invalid="!!errors.email"
+                :aria-describedby="errors.email ? 'email-error' : null"
+                class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
+              />
+              <p
+                v-if="errors.email"
+                :id="'email-error'"
+                class="mt-1 text-sm text-red-500"
+                role="alert"
+              >{{ errors.email }}</p>
+            </div>
+            <div>
+              <label for="message" class="block mb-2 text-sm font-semibold text-white">Message</label>
+              <textarea
+                id="message"
+                v-model="form.message"
+                rows="6"
+                required
+                :aria-invalid="!!errors.message"
+                :aria-describedby="errors.message ? 'message-error' : null"
+                class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
+              ></textarea>
+              <p
+                v-if="errors.message"
+                :id="'message-error'"
+                class="mt-1 text-sm text-red-500"
+                role="alert"
+              >{{ errors.message }}</p>
+            </div>
+            <!-- Honeypot field for spam prevention -->
             <input
               type="text"
-              id="name"
-              v-model="form.name"
-              required
-              :aria-invalid="!!errors.name"
-              :aria-describedby="errors.name ? 'name-error' : null"
-              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
+              v-model="form.honeypot"
+              autocomplete="off"
+              tabindex="-1"
+              style="display:none"
+              aria-hidden="true"
             />
-            <p
-              v-if="errors.name"
-              :id="'name-error'"
-              class="mt-1 text-sm text-red-500"
+                      <button
+                        type="submit"
+                        :disabled="isSubmitting"
+                        class="flex items-center justify-center w-full py-3 text-lg font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105 signal-transmitter"
+                      >
+                        <span v-if="isSubmitting" class="flex items-center">
+                          <span class="mr-2" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 100 100" overflow="visible" fill="#000" stroke="none" aria-hidden="true">
+                              <defs>
+                                <rect id="loader" x="15" y="40" width="10" height="20" rx="2" ry="2"/>
+                              </defs>
+                              <use xlink:href="#loader" transform="rotate(0 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(45 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.125s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(90 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.25s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(135 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.375s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(180 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.5s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(225 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.625s" repeatCount="indefinite"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(270 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.75s" repeatCount="indefeni
+            te"/>
+                              </use>
+                              <use xlink:href="#loader" transform="rotate(315 50 50)">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.875s" repeatCount="indefinite"/>
+                              </use>
+                            </svg>
+                          </span>
+                          <span class="sr-only">Sending...</span>
+                          Sending...
+                        </span>
+                        <span v-else>Transmit Signal <span class="ml-2" aria-hidden="true">📡</span></span>
+                      </button>
+                      <p class="mt-4 text-sm text-center text-emerald-500">Track my signal! The radar below shows my current social presence.</p>          </form>
+          <!-- Feedback messages -->
+          <div v-if="submitStatus" class="relative max-w-xl mx-auto mt-4">
+            <div
+              v-if="submitStatus === 'success'"
+              class="flex items-center justify-between px-4 py-3 text-green-800 bg-green-100 border border-green-300 rounded shadow"
+              role="status"
+              aria-live="polite"
+            >
+              <span>Message sent successfully!</span>
+              <button
+                @click="submitStatus = null"
+                type="button"
+                aria-label="Dismiss message"
+                class="ml-4 text-xl font-bold text-green-800 hover:text-green-600 focus:outline-none"
+              >&times;</button>
+            </div>
+            <div
+              v-else-if="submitStatus === 'error'"
+              class="flex items-center justify-between px-4 py-3 text-red-500 bg-red-100 border border-red-300 rounded shadow"
               role="alert"
-            >{{ errors.name }}</p>
-          </div>
-          <div>
-            <label for="email" class="block mb-2 text-sm font-semibold text-white">Email</label>
-            <input
-              type="email"
-              id="email"
-              v-model="form.email"
-              required
-              :aria-invalid="!!errors.email"
-              :aria-describedby="errors.email ? 'email-error' : null"
-              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
-            />
-            <p
-              v-if="errors.email"
-              :id="'email-error'"
-              class="mt-1 text-sm text-red-500"
-              role="alert"
-            >{{ errors.email }}</p>
-          </div>
-          <div>
-            <label for="message" class="block mb-2 text-sm font-semibold text-white">Message</label>
-            <textarea
-              id="message"
-              v-model="form.message"
-              rows="6"
-              required
-              :aria-invalid="!!errors.message"
-              :aria-describedby="errors.message ? 'message-error' : null"
-              class="w-full p-3 text-white border rounded-lg bg-slate-950 border-sky-500 focus:outline-none focus:border-emerald-500"
-            ></textarea>
-            <p
-              v-if="errors.message"
-              :id="'message-error'"
-              class="mt-1 text-sm text-red-500"
-              role="alert"
-            >{{ errors.message }}</p>
-          </div>
-          <!-- Honeypot field for spam prevention -->
-          <input
-            type="text"
-            v-model="form.honeypot"
-            autocomplete="off"
-            tabindex="-1"
-            style="display:none"
-            aria-hidden="true"
-          />
-          <button
-            type="submit"
-            :disabled="isSubmitting"
-            class="flex items-center justify-center w-full py-3 text-lg font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105 signal-transmitter"
-          >
-            <span v-if="isSubmitting" class="flex items-center">
-              <span class="mr-2" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 100 100" overflow="visible" fill="#000" stroke="none" aria-hidden="true">
-                  <defs>
-                    <rect id="loader" x="15" y="40" width="10" height="20" rx="2" ry="2"/>
-                  </defs>
-                  <use xlink:href="#loader" transform="rotate(0 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(45 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.125s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(90 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.25s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(135 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.375s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(180 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.5s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(225 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.625s" repeatCount="indefinite"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(270 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.75s" repeatCount="indefeni
-te"/>
-                  </use>
-                  <use xlink:href="#loader" transform="rotate(315 50 50)">
-                    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="0.875s" repeatCount="indefinite"/>
-                  </use>
-                </svg>
-              </span>
-              <span class="sr-only">Sending...</span>
-              Sending...
-            </span>
-            <span v-else>Transmit Signal <span class="ml-2" aria-hidden="true">📡</span></span>
-          </button>
-        </form>
-        <!-- Feedback messages -->
-        <div v-if="submitStatus" class="relative max-w-xl mx-auto mt-4">
-          <div
-            v-if="submitStatus === 'success'"
-            class="flex items-center justify-between px-4 py-3 text-green-800 bg-green-100 border border-green-300 rounded shadow"
-            role="status"
-            aria-live="polite"
-          >
-            <span>Message sent successfully!</span>
-            <button
-              @click="submitStatus = null"
-              type="button"
-              aria-label="Dismiss message"
-              class="ml-4 text-xl font-bold text-green-800 hover:text-green-600 focus:outline-none"
-            >&times;</button>
-          </div>
-          <div
-            v-else-if="submitStatus === 'error'"
-            class="flex items-center justify-between px-4 py-3 text-red-500 bg-red-100 border border-red-300 rounded shadow"
-            role="alert"
-            aria-live="assertive"
-          >
-            <span>Failed to send message. Please try again.</span>
-            <button
-              @click="submitStatus = null"
-              type="button"
-              aria-label="Dismiss message"
-              class="ml-4 text-xl font-bold text-red-500 hover:text-red-600 focus:outline-none"
-            >&times;</button>
+              aria-live="assertive"
+            >
+              <span>Failed to send message. Please try again.</span>
+              <button
+                @click="submitStatus = null"
+                type="button"
+                aria-label="Dismiss message"
+                class="ml-4 text-xl font-bold text-red-500 hover:text-red-600 focus:outline-none"
+              >&times;</button>
+            </div>
           </div>
         </div>
-        <p class="mt-8 text-sm text-center text-sky-500">
-          You can also connect with me on:
-          <a href="https://www.linkedin.com/in/eyuel-getachew-37061513b" class="mx-2 text-emerald-500 hover:underline">LinkedIn</a> |
-          <a href="https://github.com/EyuReaper" class="mx-2 text-emerald-500 hover:underline">GitHub</a>
-        </p>
+        <SocialRadar :socialLinks="socialMediaLinks" />
       </div>
     </section>
 
@@ -401,11 +399,19 @@ import FallingStarsBg from '@/components/ui/FallingStarsBg.vue';
 import BottomNav from '@/components/BottomNav.vue';
 import JetScroll from '@/components/jetscroll.vue';
 import TechAltitude from '@/components/TechAltitude.vue';
+import SocialRadar from '@/components/SocialRadar.vue'; // New import
 
 // --- Section Visibility ---
 const intelRef = ref(null);
 const hangarRef = ref(null);
 const commsRef = ref(null);
+
+const socialMediaLinks = [
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/eyuel-getachew-37061513b' },
+  { name: 'GitHub', url: 'https://github.com/EyuReaper' },
+  { name: 'Telegram', url: 'https://t.me/@Reaper_X' },
+  { name: 'X', url: 'https://x.com/@eyu_gx' }, // Placeholder URL for X (Twitter)
+];
 
 const intelVisible = ref(false);
 const hangarVisible = ref(false);

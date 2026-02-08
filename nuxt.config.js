@@ -7,6 +7,11 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss' // Integrates Tailwind CSS with Nuxt
   ],
 
+  // Plugins to load before mounting the App
+  plugins: [
+    '~/plugins/fontawesome.client.js',
+  ],
+
   // Global CSS/SCSS files
   css: [
     '~/assets/css/main.css' // Path to your main Tailwind CSS file
