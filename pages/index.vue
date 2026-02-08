@@ -43,7 +43,7 @@
         <!--Todo: finish styling the title-->
         <div class="space-y-6 font-mono text-lg leading-relaxed md:order-1">
           <h3 class="text-3xl text-emerald-500">The Pilot</h3>
-          <h4 class="text-2xl text-emerald-500">Call sign: <a href="https://t.me/@Reaper_X"><span class="text-orange-500">Reaper_X</span></a></h4>
+          <h4 class="text-2xl text-emerald-500">Call sign: <a href="https://t.me/@Reaper_X"><span class="text-orange-500">EyuReaper</span></a></h4>
           <p>
             Hi my name is Eyuel or Eyu for short. As a developer, my journey is driven by a passion for creating efficient and impactful digital solutions. I thrive on challenges, embracing new technologies and methodologies to build applications that are not only functional but also intuitive and user-friendly. My approach is disciplined and meticulous, reflecting the precision required in modern software development.
           </p>
@@ -56,6 +56,8 @@
         </div>
       </div>
     </section>
+
+    <TechAltitude />
 
     <!-- HANGAR (Projects) Section -->
     <section id="hangar" ref="hangarRef" :class="['container', 'flex-grow', 'min-h-screen', 'px-4', 'py-16', 'mx-auto', 'text-white', 'section-transition', { 'is-visible': hangarVisible }]">
@@ -398,6 +400,7 @@ import { useIntersectionObserver } from '@vueuse/core';
 import FallingStarsBg from '@/components/ui/FallingStarsBg.vue';
 import BottomNav from '@/components/BottomNav.vue';
 import JetScroll from '@/components/jetscroll.vue';
+import TechAltitude from '@/components/TechAltitude.vue';
 
 // --- Section Visibility ---
 const intelRef = ref(null);

@@ -52,6 +52,13 @@ export default defineNuxtConfig({
     configPath: '~/tailwind.config.js',
   },
 
+  // Runtime configuration
+  runtimeConfig: {
+    public: {
+      githubPat: process.env.NUXT_GITHUB_PAT
+    }
+  },
+
   // Static site generation
   ssr: false,
 })
