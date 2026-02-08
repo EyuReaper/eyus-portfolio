@@ -1,5 +1,48 @@
 <template>
   <div class="min-h-screen bg-slate-950 text-sky-500 dark:bg-gray-950 dark:text-gray-100">
+    <nav class="sticky top-0 z-[60] flex items-center justify-between px-4 md:px-8 py-3 border-b border-emerald-500/20 bg-slate-950/90 backdrop-blur-md font-mono">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-3 group cursor-crosshair">
+          <div class="relative flex items-center justify-center w-8 h-8 overflow-hidden border border-emerald-500">
+            <div class="absolute inset-0 transition-colors bg-emerald-500/10 group-hover:bg-emerald-500/30"></div>
+            <span class="text-xs font-bold tracking-tighter text-emerald-500">ER</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] tracking-widest text-emerald-500 uppercase font-bold leading-none">Eyu_Reaper.os</span>
+            <span class="text-[8px] text-slate-500 leading-none mt-1">v2.0.26_STABLE</span>
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-6 text-[10px] uppercase tracking-tighter border-l border-slate-800 pl-6">
+          <div class="flex items-center gap-2 text-emerald-400">
+            <span class="relative flex w-2 h-2">
+              <span class="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-emerald-400"></span>
+              <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-500"></span>
+            </span>
+            Status: Nominal
+          </div>
+          <div class="text-slate-400">Altitude: <span class="text-white">{{ scrollAltitude }}ft</span></div>
+          <div class="text-slate-400">Heading: <span class="text-white">{{ currentHeading }}°N</span></div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 px-3 py-1.5 bg-slate-900/80 border border-emerald-500/20 rounded-sm text-[11px]">
+          <a :href="`https://github.com/${githubUser}`" target="_blank" class="flex items-center gap-1.5 hover:text-white transition-all group">
+            <font-awesome-icon :icon="['fab', 'github']" class="text-emerald-500 group-hover:scale-110" />
+            <span class="font-bold text-slate-500">REPOS:</span>
+            <span class="font-mono text-emerald-400">{{ ghStats.repos }}</span>
+          </a>
+          <div class="w-[1px] h-3 bg-slate-800"></div>
+          <div class="flex items-center gap-1.5">
+            <font-awesome-icon :icon="['fas', 'star']" class="text-orange-500" />
+            <span class="font-bold text-slate-500">STARS:</span>
+            <span class="font-mono text-emerald-400">{{ ghStats.stars }}</span>
+          </div>
+        </div>
+
+      </div>
+    </nav>
     <FallingStarsBg />
 
     <!-- SCAN (Home) Section -->
@@ -417,6 +460,35 @@ const intelVisible = ref(false);
 const hangarVisible = ref(false);
 const commsVisible = ref(false);
 
+// --- GitHub Intel Setup ---
+const githubUser = 'EyuReaper';
+const ghStats = ref({ stars: '...', repos: '...' });
+const scrollAltitude = ref(0);
+const currentHeading = ref(0);
+
+const fetchGitHubStats = async () => {
+  try {
+    const userRes = await fetch(`https://api.github.com/users/${githubUser}`);
+    const userData = await userRes.json();
+    ghStats.value.repos = userData.public_repos;
+
+    const reposRes = await fetch(`https://api.github.com/users/${githubUser}/repos?per_page=100`);
+    const reposData = await reposRes.json();
+    ghStats.value.stars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+  } catch (e) {
+    ghStats.value = { stars: 'ERR', repos: 'ERR' };
+  }
+};
+
+const handleScrollData = () => {
+  // Simulate altitude based on scroll height
+  scrollAltitude.value = Math.floor(window.scrollY * 0.8);
+  // Change heading based on scroll percentage
+  const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
+  currentHeading.value = Math.floor(scrollPercent * 360);
+};
+
+
 useIntersectionObserver(intelRef, ([{ isIntersecting }]) => {
   if (isIntersecting) intelVisible.value = true;
 });
@@ -430,6 +502,9 @@ useIntersectionObserver(commsRef, ([{ isIntersecting }]) => {
 
 // --- Typewriter and Flicker ---
 onMounted(() => {
+  fetchGitHubStats(); // Call this when component mounts
+  window.addEventListener('scroll', handleScrollData); // Attach scroll listener
+
   const container = document.getElementById('typewriter-container');
   if (container) {
     const span = container.querySelector('span');
@@ -445,6 +520,10 @@ onMounted(() => {
     }
     type();
   }
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScrollData); // Detach scroll listener
 });
 
 

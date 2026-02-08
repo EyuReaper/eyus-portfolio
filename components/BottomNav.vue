@@ -1,6 +1,6 @@
 <template>
-  <nav class="fixed z-50 -translate-x-1/2 bottom-5 left-1/2">
-    <div class="flex items-center justify-center gap-2 px-4 py-2 border rounded-full shadow-lg bg-slate-900/50 backdrop-blur-sm border-sky-500">
+  <nav class="fixed z-50 -translate-x-1/2 bottom-5 left-1/2" style="transform: translateX(-50%) translateZ(0); will-change: transform;">
+    <div class="flex items-center justify-center gap-2 px-4 py-2 border rounded-full shadow-lg bg-slate-900/50 border-sky-500">
       <a 
         v-for="item in navItems"
         :key="item.id"

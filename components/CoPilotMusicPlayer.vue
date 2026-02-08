@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center">
+  <div v-if="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center">
     <div class="text-center p-8 rounded-xl shadow-lg border-2 border-system animate-glow">
       <p class="text-white text-2xl font-bold mb-4">System Ready - Engage Comms?</p>
       <button @click="engageComms" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-lg transition-colors duration-200">
@@ -13,11 +13,12 @@
     @mouseenter="isCollapsed = false"
     @mouseleave="isCollapsed = true"
     :class="[
-      'group fixed bottom-0 left-0 w-full z-50 p-4 sm:bottom-8 sm:left-8 sm:w-auto sm:p-5 sm:rounded-xl shadow-lg border-2 bg-slate-900/70 backdrop-blur-sm transition-all duration-300',
+      'group fixed bottom-0 left-0 w-full z-50 p-4 sm:bottom-8 sm:left-8 sm:w-auto sm:p-5 sm:rounded-xl shadow-lg border-2 bg-slate-900/70 transition-all duration-300',
       'border-system animate-glow', // Default border and glow
       'max-sm:bottom-4 max-sm:left-4', // Position for mobile
       isCollapsed ? 'max-sm:w-16 max-sm:h-16 max-sm:p-4 max-sm:rounded-full' : 'max-sm:w-72 max-sm:p-4 max-sm:rounded-xl', // Size for mobile collapsed/expanded
     ]"
+    style="transform: translateZ(0); will-change: transform;"
   >
     <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start', isCollapsed ? 'max-sm:justify-center' : '']">
       <!-- Icon/Visual for Music Player -->

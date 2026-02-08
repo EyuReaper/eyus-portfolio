@@ -6,6 +6,7 @@
       showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
     ]"
     aria-label="Scramble to top"
+    style="transform: translateZ(0); will-change: transform;"
   >
     <div :class="['relative transition-all duration-700 ease-in-expo', isBlasting ? '-translate-y-[100vh] scale-150' : 'hover:-translate-y-2', !isBlasting && showButton ? 'animate-glow' : '']">
       
@@ -24,6 +25,20 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const showButton = ref(false);
 const isBlasting = ref(false);
 
+// Simple throttle function
+const throttle = (func, limit) => {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+};
+
 const handleScroll = () => {
   // Show button after scrolling down 400px
   showButton.value = window.scrollY > 400;
@@ -41,8 +56,16 @@ const handleScramble = () => {
   }, 1000);
 };
 
-onMounted(() => window.addEventListener('scroll', handleScroll));
-onUnmounted(() => window.removeEventListener('scroll', handleScramble));
+// Throttled scroll handler
+let throttledHandleScroll;
+
+onMounted(() => {
+  throttledHandleScroll = throttle(handleScroll, 100); // Throttle to 100ms
+  window.addEventListener('scroll', throttledHandleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', throttledHandleScroll);
+});
 </script>
 
 <style scoped>
