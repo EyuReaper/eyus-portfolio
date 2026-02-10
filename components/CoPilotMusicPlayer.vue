@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center">
+  <div v-show="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center transition-opacity duration-500" :class="{'opacity-0 pointer-events-none': !showWelcomeMessage}">
     <div class="text-center p-8 rounded-xl shadow-lg border-2 border-system animate-glow">
       <p class="text-white text-2xl font-bold mb-4">System Ready - Engage Comms?</p>
       <button @click="engageComms" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-lg transition-colors duration-200">
@@ -9,7 +9,7 @@
   </div>
 
   <div
-    v-else
+    v-if="!showWelcomeMessage"
     @mouseenter="isCollapsed = false"
     @mouseleave="isCollapsed = true"
     :class="[

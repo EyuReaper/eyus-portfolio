@@ -1,9 +1,11 @@
 <template>
   <button 
+    v-show="mountedAndReady"
     @click="handleScramble"
     :class="[
       'fixed bottom-8 right-8 z-50 p-4 transition-all duration-500 rounded-full border-2 border-system hover:border-safe',
-      showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+      showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
+      !showButton && 'pointer-events-none'
     ]"
     aria-label="Scramble to top"
     style="transform: translateZ(0); will-change: transform;"
@@ -24,6 +26,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const showButton = ref(false);
 const isBlasting = ref(false);
+const mountedAndReady = ref(false);
 
 // Simple throttle function
 const throttle = (func, limit) => {
@@ -62,6 +65,7 @@ let throttledHandleScroll;
 onMounted(() => {
   throttledHandleScroll = throttle(handleScroll, 100); // Throttle to 100ms
   window.addEventListener('scroll', throttledHandleScroll);
+  mountedAndReady.value = true;
 });
 onUnmounted(() => {
   window.removeEventListener('scroll', throttledHandleScroll);

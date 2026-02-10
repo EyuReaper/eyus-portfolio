@@ -8,7 +8,7 @@
         @click.prevent="scrollTo(item.id)"
         :class="[
           'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300',
-          activeSection === item.id 
+          activeSection === item.id && mountedAndReady
             ? 'bg-emerald-500 text-slate-950 shadow-md animate-glow' 
             : 'text-sky-500 hover:text-white'
         ]"
@@ -62,6 +62,7 @@ const navItems = [
 ];
 
 const activeSection = ref('scan');
+const mountedAndReady = ref(false);
 let observer;
 
 const { isDarkMode, toggleDarkMode } = useThemeStore();
@@ -94,6 +95,7 @@ onMounted(() => {
       observer.observe(element);
     }
   });
+  mountedAndReady.value = true;
 });
 
 onUnmounted(() => {

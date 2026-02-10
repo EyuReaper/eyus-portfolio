@@ -59,8 +59,9 @@ export default defineNuxtConfig({
 
   // Runtime configuration
   runtimeConfig: {
+    githubPat: process.env.NUXT_GITHUB_PAT, // Now a server-only variable
     public: {
-      githubPat: process.env.NUXT_GITHUB_PAT
+      // Any public runtime config variables can go here
     }
   },
 
