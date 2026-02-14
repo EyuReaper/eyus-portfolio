@@ -133,6 +133,16 @@
           <p class="mb-4 text-white text-md">
             Sira Qemir (ሥራ ቀምር) is a modern task management web application built with React, Supabase, and Tailwind CSS and built for Ethiopians firs
           </p>
+          <div class="flex justify-around mt-4">
+            <a href="https://github.com/EyuReaper/sira-qemir" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105">
+              <font-awesome-icon :icon="['fab', 'github']" />
+              <span>GitHub</span>
+            </a>
+            <a href="https://sira-qemir-flrv.vercel.app" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105">
+              <font-awesome-icon :icon="['fas', 'rocket']" />
+              <span>Live Demo</span>
+            </a>
+          </div>
         </div>
 
         <!-- Project Card 2 -->
@@ -163,6 +173,12 @@
           <p class="mb-4 text-white text-md">
             A visually striking product landing page that showcases luxury timepieces with smooth parallax scrolling and interactive elements.
           </p>
+          <div class="flex justify-around mt-4">
+            <a href="https://github.com/EyuReaper/luxury-watch-landing-page" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105">
+              <font-awesome-icon :icon="['fab', 'github']" />
+              <span>GitHub</span>
+            </a>
+          </div>
         </div>
 
         <!-- Project Card 3 -->
@@ -193,10 +209,20 @@
           <p class="mb-4 text-white text-md">
             A free, offline-friendly Amharic phrasebook web app for travelers and learners.
           </p>
+          <div class="flex justify-around mt-4">
+            <a href="https://github.com/EyuReaper/amharic-phrase-book" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105">
+              <font-awesome-icon :icon="['fab', 'github']" />
+              <span>GitHub</span>
+            </a>
+            <a href="https://amharic-phrase-book.vercel.app/" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105">
+              <font-awesome-icon :icon="['fas', 'rocket']" />
+              <span>Live Demo</span>
+            </a>
+          </div>
 
         </div>
 
-        <!-- Project Card 4 -->  <!--todo add the  4th card-->
+        <!-- Project Card 4 -->  
         <div
           class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
           tabindex="0"
@@ -224,6 +250,16 @@
           <p class="mb-4 text-white text-md">
             A full-stack Intership project done for young cyber knight foundation.
           </p>
+          <div class="flex justify-around mt-4">
+            <a href="https://github.com/EyuReaper/yckf-replica" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105">
+              <font-awesome-icon :icon="['fab', 'github']" />
+              <span>GitHub</span>
+            </a>
+            <a href="https://yckf-replica.vercel.app/" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105">
+              <font-awesome-icon :icon="['fas', 'rocket']" />
+              <span>Live Demo</span>
+            </a>
+          </div>
         </div>
 
 
@@ -255,6 +291,16 @@
           <p class="mb-4 text-white text-md">
             A Native Amharic programming Language built on Node.js.
           </p>
+          <div class="flex justify-around mt-4">
+            <a href="https://github.com/EyuReaper/jano-fidel" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105">
+              <font-awesome-icon :icon="['fab', 'github']" />
+              <span>GitHub</span>
+            </a>
+            <a href="https://jano-fidel.vercel.app/" target="_blank" class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105">
+              <font-awesome-icon :icon="['fas', 'rocket']" />
+              <span>Live Demo</span>
+            </a>
+          </div>
         </div>
 
       </div>
