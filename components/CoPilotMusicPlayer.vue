@@ -13,10 +13,14 @@
     @mouseenter="isCollapsed = false"
     @mouseleave="isCollapsed = true"
     :class="[
-      'group fixed bottom-0 left-0 w-full z-50 p-4 sm:bottom-8 sm:left-8 sm:w-auto sm:p-5 sm:rounded-xl shadow-lg border-2 bg-slate-900/70 transition-all duration-300',
-      'border-system animate-glow', // Default border and glow
-      'max-sm:bottom-4 max-sm:left-4', // Position for mobile
-      isCollapsed ? 'max-sm:w-16 max-sm:h-16 max-sm:p-4 max-sm:rounded-full' : 'max-sm:w-72 max-sm:p-4 max-sm:rounded-xl', // Size for mobile collapsed/expanded
+      'group fixed z-50 transition-all duration-300',
+      'border-2 border-system animate-glow bg-slate-900/70',
+      // Mobile positioning (Stacked above BottomNav)
+      'bottom-24 left-5 w-auto rounded-xl p-4',
+      // Desktop positioning
+      'sm:bottom-8 sm:left-8 sm:p-5',
+      // Collapsed/Expanded states on small screens
+      isCollapsed ? 'max-sm:w-16 max-sm:h-16 max-sm:rounded-full max-sm:p-0 flex items-center justify-center' : 'max-sm:w-72',
     ]"
     style="transform: translateZ(0); will-change: transform;"
   >
@@ -27,7 +31,7 @@
       </svg>
 
       <!-- Music Controls -->
-      <div :class="['flex flex-col ml-4 sm:ml-0', isCollapsed ? 'max-sm:opacity-0 max-sm:h-0 max-sm:overflow-hidden max-sm:group-hover:opacity-100 max-sm:group-hover:h-auto max-sm:group-hover:ml-4 transition-all duration-300' : '']">
+      <div :class="['flex flex-col ml-4 sm:ml-0', isCollapsed ? 'max-sm:hidden sm:flex' : 'flex transition-all duration-300']">
         <div class="flex items-center mb-2 space-x-2">
           <button v-tooltip="isPlaying ? 'Pause' : 'Play'" @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>

@@ -50,103 +50,37 @@ body {
 
 
 .dark body {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @apply bg-gray-900 text-gray-100;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @apply bg-black text-emerald-500;
+  /* Intense Night Vision Effect */
+  background-image: 
+    linear-gradient(to bottom, rgba(0, 255, 128, 0.03) 50%, rgba(0, 0, 0, 0.5) 50%),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.05));
+  background-size: 100% 3px, 100% 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .dark {
-
-
-
-
-
-
-
   cursor: crosshair;
-
-
-
-
-
-
-
+  /* Global Green Glow for all text in Dark Mode */
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+/* Intensify grid in dark mode */
+.dark body::before {
   background-image: 
-    linear-gradient(to right, rgba(14, 165, 233, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  z-index: -1;
-  animation: grid 2s linear infinite;
+    linear-gradient(to right, rgba(16, 185, 129, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.15) 1px, transparent 1px);
 }
 
 .dark .reaper-text {
   animation: glitch 0.4s cubic-bezier(.25,.46,.45,.94) both;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
-}
-
- @keyframes glitch {
-  0% { transform: translate(0); text-shadow: -2px 0 red, 2px 0 blue; }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); text-shadow: 0 0 8px rgba(16, 185, 129, 0.8); }
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.9);
 }
 
  @keyframes nvg-power-on {
-  0% { filter: brightness(0) contrast(2); }
-  25% { filter: brightness(1.5) sepia(1) hue-rotate(90deg); }
-  50% { filter: brightness(0.5); }
+  0% { filter: brightness(0) contrast(2) grayscale(1); }
+  10% { filter: brightness(2) contrast(5) sepia(1) hue-rotate(90deg); }
+  20% { filter: brightness(0.5) contrast(1); }
+  30% { filter: brightness(1.5) contrast(2) sepia(1) hue-rotate(90deg); }
+  40% { filter: brightness(0.8) contrast(1); }
   100% { filter: brightness(1); }
 }

@@ -16,23 +16,25 @@ const applyDarkModeClass = (isDark) => {
 
 const toggleDarkMode = () => {
   // Play sound only if switching from light mode (Biometric Eye is pressed)
-  // Biometric Eye is displayed when isDarkMode is false.
-  // So, if isDarkMode.value is currently false, we are pressing the Biometric Eye.
     if (sfxAudio && !isDarkMode.value) {
-      sfxAudio.currentTime = 0; // Rewind to start for quick successive plays
+      sfxAudio.currentTime = 0;
       sfxAudio.play();
     }
     isDarkMode.value = !isDarkMode.value;
   
     // Create a "Power On" flicker effect on the whole page
-    const body = document.body;
-    body.style.animation = 'none';
-    body.offsetHeight; /* trigger reflow */
-    body.style.animation = isDarkMode.value ? 'nvg-power-on 0.5s steps(4)' : '';
+    if (process.client) {
+      const body = document.body;
+      body.style.animation = 'none';
+      body.offsetHeight; /* trigger reflow */
+      // Intensity increases during activation
+      body.style.animation = 'nvg-power-on 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    }
     
-    applyDarkModeClass(isDarkMode.value);  if (process.client) {
-    localStorage.setItem('darkMode', isDarkMode.value);
-  }
+    applyDarkModeClass(isDarkMode.value);
+    if (process.client) {
+      localStorage.setItem('darkMode', isDarkMode.value);
+    }
 };
 
 export function useThemeStore() {

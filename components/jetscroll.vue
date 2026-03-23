@@ -3,7 +3,7 @@
     v-show="mountedAndReady"
     @click="handleScramble"
     :class="[
-      'fixed bottom-8 right-8 z-50 p-4 transition-all duration-500 rounded-full border-2 border-system hover:border-safe',
+      'fixed bottom-24 right-5 sm:bottom-8 sm:right-8 z-50 p-4 transition-all duration-500 rounded-full border-2 border-system hover:border-safe',
       showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
       !showButton && 'pointer-events-none'
     ]"
