@@ -371,18 +371,18 @@
                     role="button"
                     @click="
                         showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png',
+                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png',
                         )
                     "
                     @keydown.enter="
                         showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png',
+                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png',
                         )
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png"
+                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png"
                             alt="Project Charlie Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
