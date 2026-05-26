@@ -37,8 +37,8 @@
             <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
           </button>
-          <button v-tooltip="'Next Track'" @click="playNext" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><line x1="2" y1="19" x2="2" y2="5"></line></svg>
+          <button v-tooltip="'Power Off'" @click="powerOff" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
           </button>
           <div class="w-full">
           <VueMarquee :duration="10" :key="currentTrackName">
@@ -106,6 +106,14 @@ const setVolume = () => {
   if (audio.value) {
     audio.value.volume = volume.value;
   }
+};
+
+const powerOff = () => {
+  if (audio.value) {
+    audio.value.pause();
+  }
+  isPlaying.value = false;
+  showWelcomeMessage.value = true;
 };
 
 onMounted(() => {

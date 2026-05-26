@@ -1,7 +1,7 @@
 <template>
   <canvas
     ref="starsCanvas"
-    class="absolute inset-0 z-0 w-full h-full pointer-events-none"
+    class="absolute inset-0 z-0 w-full h-full pointer-events-none hidden md:block"
     aria-hidden="true"
   ></canvas>
 </template>
@@ -23,6 +23,11 @@ let ctx = null;
 onMounted(() => {
   const canvas = starsCanvas.value;
   if (!canvas) return;
+
+  // Disable animation on mobile for performance
+  if (window.innerWidth < 768) {
+    return;
+  }
 
   window.addEventListener("resize", resizeCanvas);
   resizeCanvas();
