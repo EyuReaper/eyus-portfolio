@@ -8,8 +8,10 @@
 
 <script setup>
 import { useThemeStore } from './composables/useThemeStore';
+import { defineAsyncComponent } from 'vue';
 
 const { isDarkMode } = useThemeStore();
+const CoPilotMusicPlayer = defineAsyncComponent(() => import('./components/CoPilotMusicPlayer.vue'));
 </script>
 
 <style>
