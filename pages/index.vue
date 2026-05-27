@@ -96,7 +96,7 @@
         >
             <div class="max-w-4xl animate-fade-in">
                 <NuxtImg
-                    src="/assets/profile.jpg"
+                    src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/profile.jpg"
                     alt="Eyu's Profile Picture"
                     class="object-cover w-48 h-48 mx-auto mb-6 border-4 rounded-full shadow-lg border-emerald-500"
                     format="webp"
@@ -153,7 +153,7 @@
             <div class="grid items-center grid-cols-1 gap-12 md:grid-cols-2">
                 <div class="md:order-2">
                     <NuxtImg
-                        src="/assets/image1.png"
+                        src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/image1.png"
                         alt="Eyu's full image"
                         class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
                         format="webp"
