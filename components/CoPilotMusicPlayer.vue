@@ -12,26 +12,29 @@
     v-if="!showWelcomeMessage"
     @mouseenter="isCollapsed = false"
     @mouseleave="isCollapsed = true"
+    @click="isCollapsed = false"
     :class="[
       'group fixed z-50 transition-all duration-300',
       'border-2 border-system animate-glow bg-slate-900/70',
       // Mobile positioning (Stacked above BottomNav)
-      'bottom-24 left-5 w-auto rounded-xl p-4',
+      'bottom-24 left-5 rounded-xl',
       // Desktop positioning
-      'sm:bottom-8 sm:left-8 sm:p-5',
-      // Collapsed/Expanded states on small screens
-      isCollapsed ? 'max-sm:w-16 max-sm:h-16 max-sm:rounded-full max-sm:p-0 flex items-center justify-center' : 'max-sm:w-72',
+      'sm:bottom-8 sm:left-8',
+      // Collapsed/Expanded states
+      isCollapsed
+        ? 'w-14 h-14 rounded-full p-0 flex items-center justify-center'
+        : 'w-72 sm:w-80 p-4 sm:p-5',
     ]"
     style="transform: translateZ(0); will-change: transform;"
   >
-    <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start', isCollapsed ? 'max-sm:justify-center' : '']">
+    <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start', isCollapsed ? 'justify-center w-full' : '']">
       <!-- Icon/Visual for Music Player -->
       <svg xmlns="http://www.w3.org/2000/svg" :class="['w-8 h-8 md:w-10 md:h-10 text-emerald-500 shrink-0', isPlaying ? 'animate-pulse' : '']" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 18V5l12-2v13M9 18a3 3 0 1 0 0 6 3 3 0 1 0 0-6Zm12 0a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/>
       </svg>
 
       <!-- Music Controls -->
-      <div :class="['flex flex-col ml-4 sm:ml-0', isCollapsed ? 'max-sm:hidden sm:flex' : 'flex transition-all duration-300']">
+      <div :class="['flex flex-col ml-4 sm:ml-0 flex-1', isCollapsed ? 'hidden' : 'flex transition-all duration-300']">
         <div class="flex items-center mb-2 space-x-2">
           <button v-tooltip="isPlaying ? 'Pause' : 'Play'" @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
@@ -41,10 +44,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
           </button>
           <div class="w-full">
-          <VueMarquee :duration="10" :key="currentTrackName">
-          <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
-        </VueMarquee>
-      </div>
+            <ClientOnly>
+              <VueMarquee :duration="10" :key="currentTrackName">
+                <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
+              </VueMarquee>
+              <template #fallback>
+                <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
+              </template>
+            </ClientOnly>
+          </div>
         </div>
 
         <!-- Volume Slider -->
@@ -56,7 +64,6 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { VueMarquee } from 'vue-marquee';
 import DualWielder from '~/assets/Dual Wielder - PROJECT ACES.mp3';
 import MidnightLight from '~/assets/ Midnight Light - Jose Pavli.mp3';
 import Redline from '~/assets/Redline - Jose Pavli.mp3';
@@ -67,6 +74,7 @@ const volume = ref(0.2); // Default volume
 const currentTrackIndex = ref(0);
 const showWelcomeMessage = ref(true); // New state for welcome message
 const isCollapsed = ref(true); // For mobile collapse
+let collapseTimer = null;
 
 // Music tracks
 const tracks = [
@@ -83,6 +91,7 @@ const loadTrack = (index) => {
     audio.value.load();
     if (isPlaying.value) {
       audio.value.play();
+      showNowPlaying();
     }
   }
 };
@@ -114,6 +123,15 @@ const powerOff = () => {
   }
   isPlaying.value = false;
   showWelcomeMessage.value = true;
+  if (collapseTimer) clearTimeout(collapseTimer);
+};
+
+const showNowPlaying = () => {
+  isCollapsed.value = false;
+  if (collapseTimer) clearTimeout(collapseTimer);
+  collapseTimer = setTimeout(() => {
+    isCollapsed.value = true;
+  }, 2800);
 };
 
 onMounted(() => {
@@ -128,9 +146,11 @@ const engageComms = () => {
   showWelcomeMessage.value = false;
   audio.value.play();
   isPlaying.value = true;
+  showNowPlaying();
 };
 
 onUnmounted(() => {
+  if (collapseTimer) clearTimeout(collapseTimer);
   if (audio.value) {
     audio.value.removeEventListener('ended', playNext);
     audio.value.pause();

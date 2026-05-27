@@ -154,13 +154,13 @@
                 <div class="md:order-2">
                     <NuxtImg
                         src="/assets/image1.png"
-                        alt="Eyu's Desk Setup or a conceptual image"
+                        alt="Eyu's full image"
                         class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
                         format="webp"
                         quality="80"
                     />
                 </div>
-                <!--Todo: finish styling the title-->
+
                 <div
                     class="space-y-6 font-mono text-lg leading-relaxed md:order-1"
                 >
@@ -1015,10 +1015,6 @@ import JetScroll from "@/components/jetscroll.vue";
 import TechAltitude from "@/components/TechAltitude.vue";
 import SocialRadar from "@/components/SocialRadar.vue"; // New import
 
-const CopilotMusicPlayer = defineAsyncComponent(
-    () => import("@/components/CopilotMusicPlayer.vue"),
-);
-
 // --- Section Visibility ---
 const intelRef = ref(null);
 const hangarRef = ref(null);
@@ -1044,24 +1040,31 @@ const scrollAltitude = ref(0);
 const currentHeading = ref(0);
 
 // Use useAsyncData for SSR-friendly data fetching
-const { data: githubData } = await useAsyncData('github-stats', async () => {
+const { data: githubData } = await useAsyncData("github-stats", async () => {
     try {
         const [userRes, reposRes] = await Promise.all([
             $fetch(`https://api.github.com/users/${githubUser}`),
-            $fetch(`https://api.github.com/users/${githubUser}/repos?per_page=100`)
+            $fetch(
+                `https://api.github.com/users/${githubUser}/repos?per_page=100`,
+            ),
         ]);
 
         return {
             repos: userRes.public_repos,
-            stars: reposRes.reduce((acc, repo) => acc + repo.stargazers_count, 0)
+            stars: reposRes.reduce(
+                (acc, repo) => acc + repo.stargazers_count,
+                0,
+            ),
         };
     } catch (e) {
-        console.error('Error fetching GitHub stats:', e);
-        return { repos: 'ERR', stars: 'ERR' };
+        console.error("Error fetching GitHub stats:", e);
+        return { repos: "ERR", stars: "ERR" };
     }
 });
 
-const ghStats = computed(() => githubData.value || { repos: '...', stars: '...' });
+const ghStats = computed(
+    () => githubData.value || { repos: "...", stars: "..." },
+);
 
 const handleScrollData = () => {
     // Simulate altitude based on scroll height

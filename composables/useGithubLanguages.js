@@ -1,35 +1,22 @@
-import { ref } from 'vue';
-// No need to import useRuntimeConfig here anymore for PAT, it's used in the API route
+import { computed } from 'vue';
 
 export function useGithubLanguages(username) {
-  const languages = ref([]);
-  const loading = ref(true);
-  const error = ref(null);
-  // Removed direct PAT access
+  const key = `github-languages:${username}`;
 
-  const fetchLanguages = async () => {
-    loading.value = true;
-    error.value = null;
-    try {
-      // Call the local API route
-      const response = await $fetch(`/api/github-languages?username=${username}`);
+  const { data, pending, error, refresh } = useFetch('/api/github-languages', {
+    key,
+    query: { username },
+    default: () => [],
+    server: true,
+    lazy: false,
+    dedupe: 'defer',
+    transform: (value) => (Array.isArray(value) ? value : []),
+  });
 
-      languages.value = response;
+  // Keep existing API shape used by components.
+  const languages = computed(() => data.value || []);
+  const loading = computed(() => pending.value);
+  const normalizedError = computed(() => error.value?.message || null);
 
-    } catch (e) {
-      error.value = e.message;
-      console.error('Error fetching GitHub languages:', e);
-      // Fallback in case API route fails
-      languages.value = [
-        { name: 'Error', altitude: 50 },
-        { name: 'Loading', altitude: 30 }
-      ];
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  fetchLanguages(); // Execute on composable creation
-
-  return { languages, loading, error, fetchLanguages };
+  return { languages, loading, error: normalizedError, fetchLanguages: refresh };
 }

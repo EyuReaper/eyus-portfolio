@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ],
 
   // Plugins to load before mounting the App
-  plugins: ["~/plugins/fontawesome.client.js"],
+  plugins: ["~/plugins/fontawesome.client.js", "~/plugins/vue-marquee.client.js"],
 
   // Global CSS/SCSS files
   css: [
