@@ -23,7 +23,7 @@
       // Collapsed/Expanded states
       isCollapsed
         ? 'w-14 h-14 rounded-full p-0 flex items-center justify-center'
-        : 'w-72 sm:w-80 p-4 sm:p-5',
+        : 'w-64 sm:w-72 xl:w-80 p-4 sm:p-5',
     ]"
     style="transform: translateZ(0); will-change: transform;"
   >

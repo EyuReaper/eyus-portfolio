@@ -1,13 +1,13 @@
 <template>
-  <nav class="fixed z-50 -translate-x-1/2 bottom-5 left-1/2" style="transform: translateX(-50%) translateZ(0); will-change: transform;">
-    <div class="flex items-center justify-center gap-2 px-4 py-2 border rounded-full shadow-lg bg-slate-900/50 border-sky-500">
+  <nav class="fixed z-50 bottom-5 left-1/2" style="transform: translateX(-50%) translateZ(0); will-change: transform;">
+    <div class="flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 border rounded-full shadow-lg bg-slate-900/50 border-sky-500 max-w-[calc(100vw-1.5rem)] overflow-x-auto">
       <a 
         v-for="item in navItems"
         :key="item.id"
         :href="`#${item.id}`" 
         @click.prevent="scrollTo(item.id)"
         :class="[
-          'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300',
+          'px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap',
           activeSection === item.id && mountedAndReady
             ? 'bg-emerald-500 text-slate-950 shadow-md animate-glow' 
             : 'text-sky-500 hover:text-white'
