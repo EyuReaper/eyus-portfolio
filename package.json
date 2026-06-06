@@ -8,7 +8,12 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "postinstall": "nuxt prepare"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp"]
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -19,10 +24,8 @@
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/test-utils": "^2.4.6",
-    "canvas": "^3.2.1",
-    "happy-dom": "^20.6.1",
     "jsdom": "^28.0.0",
-    "nuxt": "^3.12.2",
+    "nuxt": "~3.17.5",
     "vitest": "^4.0.18",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
