@@ -1040,7 +1040,7 @@ const scrollAltitude = ref(0);
 const currentHeading = ref(0);
 
 // Use useAsyncData for SSR-friendly data fetching
-const { data: githubData } = await useAsyncData("github-stats", async () => {
+const { data: githubData } = useAsyncData("github-stats", async () => {
     try {
         const [userRes, reposRes] = await Promise.all([
             $fetch(`https://api.github.com/users/${githubUser}`),
@@ -1147,7 +1147,7 @@ const isSubmitting = ref(false);
 let feedbackTimeout = null;
 
 function validateEmail(email) {
-    return /^[^\s @]+ @[^\s @]+\.[^\s @]+$/.test(email);
+    return /^[^\s @]+@[^\s @]+\.[^\s @]+$/.test(email);
 }
 
 function validateForm() {
