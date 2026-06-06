@@ -1,16 +1,35 @@
 import { describe, it, expect, vi } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
+import { defineComponent, h, Suspense } from 'vue';
 import Index from '../pages/index.vue';
 
+function withSuspense(component) {
+  return defineComponent({
+    inheritAttrs: false,
+    setup() {
+      return () => h(Suspense, null, {
+        default: () => h(component),
+        fallback: () => h('div', 'Loading...'),
+      });
+    },
+  });
+}
+
+async function mountIndex() {
+  const wrapper = mount(withSuspense(Index));
+  await flushPromises();
+  return wrapper;
+}
+
 describe('CommsForm', () => {
-  it('renders the form', () => {
-    const wrapper = mount(Index);
+  it('renders the form', async () => {
+    const wrapper = await mountIndex();
     expect(wrapper.find('#comms').exists()).toBe(true);
     expect(wrapper.find('form').exists()).toBe(true);
   });
 
   it('shows validation errors for empty fields', async () => {
-    const wrapper = mount(Index);
+    const wrapper = await mountIndex();
     await wrapper.find('form').trigger('submit.prevent');
     
     expect(wrapper.html()).toContain('Name is required.');
@@ -19,7 +38,7 @@ describe('CommsForm', () => {
   });
 
   it('shows validation error for invalid email', async () => {
-    const wrapper = mount(Index);
+    const wrapper = await mountIndex();
     await wrapper.find('input#name').setValue('Test Name');
     await wrapper.find('input#email').setValue('invalid-email');
     await wrapper.find('textarea#message').setValue('Test Message');
@@ -40,7 +59,7 @@ describe('CommsForm', () => {
       });
     });
 
-    const wrapper = mount(Index);
+    const wrapper = await mountIndex();
     await wrapper.find('input#name').setValue('Test Name');
     await wrapper.find('input#email').setValue('test@example.com');
     await wrapper.find('textarea#message').setValue('Test Message');
@@ -73,7 +92,7 @@ describe('CommsForm', () => {
       });
     });
 
-    const wrapper = mount(Index);
+    const wrapper = await mountIndex();
     await wrapper.find('input#name').setValue('Test Name');
     await wrapper.find('input#email').setValue('test@example.com');
     await wrapper.find('textarea#message').setValue('Test Message');
