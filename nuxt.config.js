@@ -1,7 +1,7 @@
 import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2026-02-05",
+  compatibilityDate: "2024-11-01",
   // Modules to be loaded before rendering page
   modules: [
     "@nuxtjs/tailwindcss", // Integrates Tailwind CSS with Nuxt
@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ],
 
   // Plugins to load before mounting the App
-  plugins: ["~/plugins/fontawesome.client.js", "~/plugins/vue-marquee.client.js"],
+  plugins: ["~/plugins/fontawesome.client.js", "~/plugins/floating-vue.client.js"],
 
   // Global CSS/SCSS files
   css: [
@@ -21,17 +21,6 @@ export default defineNuxtConfig({
     "@": fileURLToPath(new URL(".", import.meta.url)),
     "@/components": fileURLToPath(new URL("./components", import.meta.url)),
     "@/lib": fileURLToPath(new URL("./lib", import.meta.url)),
-  },
-
-  // Build configuration
-  build: {
-    // Ensure PostCSS plugins for Tailwind
-    postcss: {
-      plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
-      },
-    },
   },
 
   // App configuration (head, meta, etc.)

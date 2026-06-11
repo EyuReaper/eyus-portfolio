@@ -1,48 +1,48 @@
 <template>
   <nav class="fixed z-50 bottom-5 left-1/2" style="transform: translateX(-50%) translateZ(0); will-change: transform;">
     <div class="flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 border rounded-full shadow-lg bg-slate-900/50 border-sky-500 max-w-[calc(100vw-1.5rem)] overflow-x-auto">
-      <a 
+      <a
         v-for="item in navItems"
         :key="item.id"
-        :href="`#${item.id}`" 
+        :href="`#${item.id}`"
         @click.prevent="scrollTo(item.id)"
         :class="[
           'px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap',
           activeSection === item.id && mountedAndReady
-            ? 'bg-emerald-500 text-slate-950 shadow-md animate-glow' 
+            ? 'bg-emerald-500 text-slate-950 shadow-md animate-glow'
             : 'text-sky-500 hover:text-white'
         ]"
       >
         {{ item.label }}
       </a>
 
-      <button 
-        @click="toggleDarkMode" 
+      <button
+        @click="toggleDarkMode"
         aria-label="Toggle Night Vision"
-        class="flex items-center justify-center w-10 h-10 p-2 transition-all duration-300 rounded-full" 
-        :class="isDarkMode 
-          ? 'text-slate-950 bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.6)]' 
+        class="flex items-center justify-center w-10 h-10 p-2 transition-all duration-300 rounded-full"
+        :class="isDarkMode
+          ? 'text-slate-950 bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.6)]'
           : 'text-sky-500 hover:bg-slate-800 hover:text-white'"
       >
         <svg v-if="isDarkMode" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="2.5" fill="currentColor" fill-opacity="0.2" />
           <circle cx="12" cy="8" r="1" fill="currentColor" />
-          
+
           <circle cx="7.5" cy="14" r="2.5" fill="currentColor" fill-opacity="0.2" />
           <circle cx="7.5" cy="14" r="1" fill="currentColor" />
-          
+
           <circle cx="16.5" cy="14" r="2.5" fill="currentColor" fill-opacity="0.2" />
           <circle cx="16.5" cy="14" r="1" fill="currentColor" />
-          
+
           <path d="M9.5 9.5l-1 2.5m6.5-2.5l1 2.5M10 14h4" opacity="0.5" />
         </svg>
 
         <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3" />
           <circle cx="12" cy="12" r="1" fill="currentColor" />
-          
+
           <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" />
-          
+
           <path d="M2 6V2h4M18 2h4v4M2 18v4h4M18 22h4v-4" opacity="0.6" />
         </svg>
       </button>
@@ -64,6 +64,7 @@ const navItems = [
 const activeSection = ref('scan');
 const mountedAndReady = ref(false);
 let observer;
+let debounceTimer = null;
 
 const { isDarkMode, toggleDarkMode } = useThemeStore();
 
@@ -76,18 +77,27 @@ const scrollTo = (id) => {
 
 onMounted(() => {
   // 2. Intersection Observer for Navigation (Theme initialization is now in useThemeStore)
+  mountedAndReady.value = true;
+
+    if(observer) observer.disconnect();
+    if(debounceTimer) clearTimeout(debounceTimer);
+
   const options = {
-    rootMargin: '-50% 0px -50% 0px',
+    rootMargin: '-30% 0px -60% 0px',
     threshold: 0,
   };
 
   observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        activeSection.value = entry.target.id;
+        clearTimeout(debounceTimer)
+        debounceTimer = setTimeout(() => {
+          activeSection.value = entry.target.id
+        }, 50)// 50ms debounce - smooth but still responsive
       }
     });
   }, options);
+
 
   navItems.forEach(item => {
     const element = document.getElementById(item.id);
@@ -95,13 +105,13 @@ onMounted(() => {
       observer.observe(element);
     }
   });
-  mountedAndReady.value = true;
 });
 
 onUnmounted(() => {
   if (observer) {
     observer.disconnect();
   }
+  if (debounceTimer) clearTimeout(debounceTimer);
 });
 </script>
 

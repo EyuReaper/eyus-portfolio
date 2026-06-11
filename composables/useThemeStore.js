@@ -21,7 +21,7 @@ const toggleDarkMode = () => {
       sfxAudio.play();
     }
     isDarkMode.value = !isDarkMode.value;
-  
+
     // Create a "Power On" flicker effect on the whole page
     if (process.client) {
       const body = document.body;
@@ -30,7 +30,7 @@ const toggleDarkMode = () => {
       // Intensity increases during activation
       body.style.animation = 'nvg-power-on 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
     }
-    
+
     applyDarkModeClass(isDarkMode.value);
     if (process.client) {
       localStorage.setItem('darkMode', isDarkMode.value);

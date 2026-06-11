@@ -8,12 +8,13 @@
 @tailwind utilities;
 
 
-
 body {
 
-
-
   @apply font-mono bg-background text-system;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: stretch;
+
 
 
 
@@ -43,6 +44,10 @@ body {
 
 }
 
+html {
+  height: -webkit-fill-available;
+  height: stretch;
+}
 
 
 
@@ -52,7 +57,7 @@ body {
 .dark body {
   @apply bg-black text-emerald-500;
   /* Intense Night Vision Effect */
-  background-image: 
+  background-image:
     linear-gradient(to bottom, rgba(0, 255, 128, 0.03) 50%, rgba(0, 0, 0, 0.5) 50%),
     linear-gradient(90deg, rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.05));
   background-size: 100% 3px, 100% 100%;
@@ -66,7 +71,7 @@ body {
 
 /* Intensify grid in dark mode */
 .dark body::before {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(16, 185, 129, 0.15) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(16, 185, 129, 0.15) 1px, transparent 1px);
 }

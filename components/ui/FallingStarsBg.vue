@@ -7,8 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { cn } from "@/lib/utils";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 const props = defineProps({
   color: { type: String, default: "#FFF" },
@@ -19,36 +18,11 @@ const starsCanvas = ref(null);
 let perspective = 0;
 let stars = [];
 let ctx = null;
+let animationFrameId = null;
+let rgb = { r: 255, g: 255, b: 255 };
 
-onMounted(() => {
-  const canvas = starsCanvas.value;
-  if (!canvas) return;
-
-  // Disable animation on mobile for performance
-  if (window.innerWidth < 768) {
-    return;
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  perspective = canvas.width / 2;
-  stars = [];
-
-  for (let i = 0; i < props.count; i++) {
-    stars.push({
-      x: (Math.random() - 0.5) * 2 * canvas.width,
-      y: (Math.random() - 0.5) * 2 * canvas.height,
-      z: Math.random() * canvas.width,
-      speed: Math.random() * 5 + 2,
-    });
-  }
-
-  animate();
-});
-
-function hexToRgb() {
-  let hex = props.color.replace(/^#/, "");
+function hexToRgb(hexColor) {
+  let hex = hexColor.replace(/^#/, "");
   if (hex.length === 3) {
     hex = hex.split("").map((char) => char + char).join("");
   }
@@ -59,23 +33,29 @@ function hexToRgb() {
   return { r, g, b };
 }
 
-function drawStar(star) {
+// Pre-calculate RGB when color changes
+watch(() => props.color, (newColor) => {
+  rgb = hexToRgb(newColor);
+}, { immediate: true });
+
+function resizeCanvas() {
   const canvas = starsCanvas.value;
   if (!canvas) return;
 
-  ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  perspective = canvas.width / 2;
+}
 
+function drawStar(star, canvasWidth, canvasHeight) {
   const scale = perspective / (perspective + star.z);
-  const x2d = canvas.width / 2 + star.x * scale;
-  const y2d = canvas.height / 2 + star.y * scale;
+  const x2d = canvasWidth / 2 + star.x * scale;
+  const y2d = canvasHeight / 2 + star.y * scale;
   const size = Math.max(scale * 3, 0.5);
 
   const prevScale = perspective / (perspective + star.z + star.speed * 15);
-  const xPrev = canvas.width / 2 + star.x * prevScale;
-  const yPrev = canvas.height / 2 + star.y * prevScale;
-
-  const rgb = hexToRgb();
+  const xPrev = canvasWidth / 2 + star.x * prevScale;
+  const yPrev = canvasHeight / 2 + star.y * prevScale;
 
   ctx.save();
   ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`;
@@ -103,31 +83,58 @@ function drawStar(star) {
 
 function animate() {
   const canvas = starsCanvas.value;
+  if (!canvas || !ctx) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const w = canvas.width;
+  const h = canvas.height;
+
+  stars.forEach((star) => {
+    drawStar(star, w, h);
+    star.z -= star.speed;
+    if (star.z <= 0) {
+      star.z = w;
+      star.x = (Math.random() - 0.5) * 2 * w;
+      star.y = (Math.random() - 0.5) * 2 * h;
+    }
+  });
+
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+onMounted(() => {
+  const canvas = starsCanvas.value;
   if (!canvas) return;
+
+  // Disable animation on mobile for performance
+  if (window.innerWidth < 768) {
+    return;
+  }
 
   ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
 
-  stars.forEach((star) => {
-    drawStar(star);
-    star.z -= star.speed;
-    if (star.z <= 0) {
-      star.z = canvas.width;
-      star.x = (Math.random() - 0.5) * 2 * canvas.width;
-      star.y = (Math.random() - 0.5) * 2 * canvas.height;
-    }
-  });
+  stars = [];
+  for (let i = 0; i < props.count; i++) {
+    stars.push({
+      x: (Math.random() - 0.5) * 2 * canvas.width,
+      y: (Math.random() - 0.5) * 2 * canvas.height,
+      z: Math.random() * canvas.width,
+      speed: Math.random() * 5 + 2,
+    });
+  }
 
-  requestAnimationFrame(animate);
-}
+  animate();
+});
 
-function resizeCanvas() {
-  const canvas = starsCanvas.value;
-  if (!canvas) return;
-
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-}
+onUnmounted(() => {
+  window.removeEventListener("resize", resizeCanvas);
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+});
 </script>
