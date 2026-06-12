@@ -899,8 +899,7 @@
                                                 values="0;1;0"
                                                 dur="1s"
                                                 begin="0.75s"
-                                                repeatCount="indefeni
-            te"
+                                                repeatCount="indefinite"
                                             />
                                         </use>
                                         <use

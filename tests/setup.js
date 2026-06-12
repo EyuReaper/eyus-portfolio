@@ -10,7 +10,7 @@ config.global.stubs['client-only'] = {
 };
 
 // Mock $fetch
-global.$fetch = vi.fn(() => Promise.resolve({}));
+global.$fetch = vi.fn(() => Promise.resolve([]));
 
 // Mock IntersectionObserver
 class IntersectionObserverMock {
@@ -38,5 +38,5 @@ globalThis.__useAsyncData = vi.fn(() => ({
 }));
 globalThis.__computed = Vue.computed;
 globalThis.__onUnmounted = Vue.onUnmounted;
-globalThis.__$fetch = vi.fn(() => Promise.resolve({}));
+globalThis.__$fetch = vi.fn(() => Promise.resolve([]));
 

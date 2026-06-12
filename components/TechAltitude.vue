@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue';
 import AltitudeTape from './ui/AltitudeTape.vue';
 import { useGithubLanguages } from '@/composables/useGithubLanguages';
 
@@ -179,6 +179,10 @@ onMounted(() => {
       }
     }
   }, { immediate: true });
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', setWidth);
 });
 
 // Hover Logic
