@@ -3,10 +3,9 @@ import { fileURLToPath } from "url";
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   // Modules to be loaded before rendering page
-  modules: [
-    "@nuxtjs/tailwindcss", // Integrates Tailwind CSS with Nuxt
-    "@nuxt/image", // Optimizes images
-  ],
+  modules: [// Integrates Tailwind CSS with Nuxt
+  "@nuxtjs/tailwindcss", // Optimizes images
+  "@nuxt/image", "@nuxt/eslint"],
 
   // Plugins to load before mounting the App
   plugins: ["~/plugins/fontawesome.client.js", "~/plugins/floating-vue.client.js"],
@@ -15,13 +14,6 @@ export default defineNuxtConfig({
   css: [
     "~/assets/css/main.css", // Path to your main Tailwind CSS file
   ],
-
-  // Path aliases for consistent imports
-  alias: {
-    "@": fileURLToPath(new URL(".", import.meta.url)),
-    "@/components": fileURLToPath(new URL("./components", import.meta.url)),
-    "@/lib": fileURLToPath(new URL("./lib", import.meta.url)),
-  },
 
   // App configuration (head, meta, etc.)
   app: {

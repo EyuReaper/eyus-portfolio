@@ -7,7 +7,7 @@
         :href="`#${item.id}`"
         @click.prevent="scrollTo(item.id)"
         :class="[
-          'px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap',
+          'nav-item px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-semibold whitespace-nowrap',
           activeSection === item.id && mountedAndReady
             ? 'bg-emerald-500 text-slate-950 shadow-md animate-glow'
             : 'text-sky-500 hover:text-white'
@@ -116,6 +116,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.nav-item {
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 .animate-glow {
   animation: glow 1.5s ease-in-out infinite;
 }
@@ -133,4 +139,5 @@ onUnmounted(() => {
 :deep(svg) {
   transition: transform 0.3s ease-in-out;
 }
+
 </style>

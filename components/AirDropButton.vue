@@ -19,7 +19,7 @@
             <button
                 @click="initiateAirDrop"
                 :disabled="state !== 'idle'"
-                class="relative min-w-[280px] px-8 py-5 bg-slate-900/40 border border-emerald-500/30 text-emerald-500 font-mono font-bold tracking-widest overflow-hidden transition-all duration-300 hover:bg-emerald-500/5 hover:border-emerald-500 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed group/btn"
+                class="relative w-full max-w-[320px] px-8 py-5 bg-slate-900/40 border border-emerald-500/30 text-emerald-500 font-mono font-bold tracking-widest overflow-hidden transition-all duration-300 hover:bg-emerald-500/5 hover:border-emerald-500 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed group/btn"
             >
                 <!-- Glitch Effect Layers (Visible on Hover) -->
                 <span

@@ -18,7 +18,7 @@
             <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
             <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
           </linearGradient>
-          
+
           <filter id="hudGlow">
             <feGaussianBlur stdDeviation="1.5" result="blur"/>
             <feMerge>
@@ -29,8 +29,8 @@
         </defs>
 
         <g class="opacity-10 dark:opacity-20">
-          <line v-for="h in [20, 40, 60, 80]" :key="h" 
-            x1="0" :y1="h" :x2="width" :y2="h" 
+          <line v-for="h in [20, 40, 60, 80]" :key="h"
+            x1="0" :y1="h" :x2="width" :y2="h"
             stroke="#10b981" stroke-width="0.5" stroke-dasharray="4 4" />
           <text v-for="h in [20, 40, 60, 80]" :key="`t-${h}`"
             x="5" :y="h - 2" fill="#10b981" font-size="3" font-family="monospace">
@@ -38,49 +38,49 @@
           </text>
         </g>
 
-        <path 
-          :d="fullPath" 
-          fill="url(#mountainGradient)" 
+        <path
+          :d="fullPath"
+          fill="url(#mountainGradient)"
           class="transition-opacity duration-1000"
           :class="animationTriggered ? 'opacity-100' : 'opacity-0'"
         />
 
-        <path 
-          :d="topLinePath" 
-          fill="none" 
-          stroke="#10b981" 
-          stroke-width="0.6" 
+        <path
+          :d="topLinePath"
+          fill="none"
+          stroke="#10b981"
+          stroke-width="0.6"
           filter="url(#hudGlow)"
           ref="mainPathRef"
           class="path-draw-animation"
-          :style="{ 
-            'stroke-dasharray': pathLength, 
-            'stroke-dashoffset': animationTriggered ? 0 : pathLength 
+          :style="{
+            'stroke-dasharray': pathLength,
+            'stroke-dashoffset': animationTriggered ? 0 : pathLength
           }"
         />
-        
+
         <g v-for="(point, index) in points" :key="index">
           <g v-if="activeLabel === index" class="text-emerald-400">
             <rect :x="point.x - 4" :y="point.y - 4" width="8" height="8" fill="none" stroke="currentColor" stroke-width="0.3" class="animate-ping" />
             <line :x1="point.x" :y1="0" :x2="point.x" :y2="110" stroke="currentColor" stroke-width="0.2" stroke-dasharray="2 2" />
           </g>
 
-          <circle 
-            :cx="point.x" :cy="point.y" 
-            :r="activeLabel === index ? 3 : 1.5" 
+          <circle
+            :cx="point.x" :cy="point.y"
+            :r="activeLabel === index ? 3 : 1.5"
             :fill="activeLabel === index ? '#fff' : '#10b981'"
             class="transition-all duration-300 cursor-pointer"
             @mouseenter="showLabel(index, false)"
             @mouseleave="debouncedHideLabel"
             @click="showLabel(index, true)"
           />
-          
+
           <rect :x="point.x - 15" :y="0" width="30" height="110" fill="transparent" class="cursor-pointer" @mouseenter="showLabel(index, false)" />
         </g>
       </svg>
-      
-      <div 
-        v-for="(tech, index) in techStackData" 
+
+      <div
+        v-for="(tech, index) in techStackData"
         :key="`label-${index}`"
         :style="{ left: `${(points[index].x / width) * 100}%`, top: `${points[index].y - 35}px` }"
         class="absolute transition-all duration-300 ease-out pointer-events-none"
@@ -91,8 +91,8 @@
         </div>
       </div>
     </div>
-    
-    <div 
+
+    <div
       v-if="activeLabel !== null && techStackData.length > 0"
       class="absolute hidden transition-opacity duration-300 -translate-y-1/2 top-1/2 right-8 lg:block"
     >
@@ -120,7 +120,7 @@ const activeLabel = ref(null);
 const pathLength = ref(0);
 const animationTriggered = ref(false);
 const mainPathRef = ref(null);
-const horizontalPadding = 80;
+const horizontalPadding = computed(() => width.value < 640 ? 40 : 80);
 
 // Calculate SVG Points
 const points = computed(() => {
@@ -168,7 +168,7 @@ const setWidth = () => {
 onMounted(() => {
   setWidth();
   window.addEventListener('resize', setWidth);
-  
+
   // Trigger animation when data arrives or visibility changes
   watch([techStackData, () => props.isVisible], async ([data, visible]) => {
     if (data.length > 0 && visible) {
@@ -206,7 +206,7 @@ const debouncedHideLabel = () => {
 /* Scanline effect for the chart area */
 svg {
   background: linear-gradient(
-    rgba(16, 185, 129, 0.02) 50%, 
+    rgba(16, 185, 129, 0.02) 50%,
     transparent 50%
   );
   background-size: 100% 4px;

@@ -31,7 +31,7 @@
                 </div>
 
                 <div
-                    class="hidden lg:flex items-center gap-6 text-[10px] uppercase tracking-tighter border-l border-slate-800 pl-6"
+                    class="hidden xl:flex items-center gap-6 text-[10px] uppercase tracking-tighter border-l border-slate-800 pl-6"
                 >
                     <div class="flex items-center gap-2 text-emerald-400">
                         <span class="relative flex w-2 h-2">
@@ -103,7 +103,7 @@
                     quality="80"
                 />
                 <h1
-                    class="mb-4 text-6xl font-extrabold leading-tight text-white animate-fly-in"
+                    class="mb-4 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-white animate-fly-in"
                 >
                     Eyu's Portfolio
                 </h1>
@@ -271,7 +271,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3 class="mb-3 text-3xl font-semibold text-white">
+                    <h3 class="mb-3 text-2xl sm:text-3xl font-semibold text-white">
                         Project Alpha: Sira-qemir
                     </h3>
                     <p class="mb-4 text-white text-md">
@@ -1006,7 +1006,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted,onUnmounted } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import FallingStarsBg from "@/components/ui/FallingStarsBg.vue";
 import BottomNav from "@/components/BottomNav.vue";

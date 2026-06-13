@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex items-center justify-center w-full min-h-[400px]">
-    <div class="relative w-full max-w-sm aspect-square">
+    <div class="relative w-[90vw] max-w-sm aspect-square">
       
       <div class="absolute inset-0 border-2 rounded-full bg-slate-950 border-emerald-500/20 shadow-[0_0_60px_rgba(16,185,129,0.1)]"></div>
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">

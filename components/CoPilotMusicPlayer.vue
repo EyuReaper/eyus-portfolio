@@ -14,10 +14,10 @@
     @mouseleave="isCollapsed = true"
     @click="isCollapsed = false"
     :class="[
-      'group fixed z-50 transition-all duration-300',
+      'group fixed z-[45] transition-all duration-300',
       'border-2 border-system animate-glow bg-slate-900/70',
       // Mobile positioning (Stacked above BottomNav)
-      'bottom-24 left-5 rounded-xl',
+      'bottom-28 left-5 rounded-xl',
       // Desktop positioning
       'sm:bottom-8 sm:left-8',
       // Collapsed/Expanded states
@@ -64,9 +64,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import DualWielder from '~/assets/Dual Wielder - PROJECT ACES.mp3';
-import MidnightLight from '~/assets/ Midnight Light - Jose Pavli.mp3';
-import Redline from '~/assets/Redline - Jose Pavli.mp3';
+import DualWielder from '~/assets/dual-wielder-project-aces.mp3';
+import MidnightLight from '~/assets/midnight-light-jose-pavli.mp3';
+import Redline from '~/assets/redline-jose-pavli.mp3';
 
 const audio = ref(null);
 const isPlaying = ref(false);
