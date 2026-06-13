@@ -1000,7 +1000,7 @@
             </div>
         </div>
 
-        <BottomNav />
+        <SideNav />
         <JetScroll />
     </div>
 </template>
@@ -1009,7 +1009,6 @@
 import { ref, onMounted,onUnmounted } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import FallingStarsBg from "@/components/ui/FallingStarsBg.vue";
-import BottomNav from "@/components/BottomNav.vue";
 import JetScroll from "@/components/jetscroll.vue";
 import TechAltitude from "@/components/TechAltitude.vue";
 import SocialRadar from "@/components/SocialRadar.vue"; // New import

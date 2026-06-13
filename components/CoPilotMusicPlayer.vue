@@ -16,8 +16,8 @@
     :class="[
       'group fixed z-[45] transition-all duration-300',
       'border-2 border-system animate-glow bg-slate-900/70',
-      // Mobile positioning (Stacked above BottomNav)
-      'bottom-28 left-5 rounded-xl',
+      // Mobile positioning (Now that SideNav is vertical)
+      'bottom-8 left-5 rounded-xl',
       // Desktop positioning
       'sm:bottom-8 sm:left-8',
       // Collapsed/Expanded states

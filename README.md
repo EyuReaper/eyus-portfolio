@@ -43,7 +43,7 @@ eyus-portfolio/
 ```
 
 - **assets/**: Contains all static assets used throughout the website.
-- **components/**: Contains reusable UI components, including the new `BottomNav.vue` and `FallingStarsBg.vue`.
+- **components/**: Contains reusable UI components, including the new `SideNav.vue` and `FallingStarsBg.vue`.
 - **pages/**: Houses the single `index.vue` file, which now serves as the entire application.
 - **public/**: Files in this folder are served directly.
 
