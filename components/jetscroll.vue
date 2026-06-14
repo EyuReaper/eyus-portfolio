@@ -3,12 +3,12 @@
     v-show="mountedAndReady"
     @click="handleScramble"
     :class="[
-      'fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-50 p-4 transition-all duration-500 rounded-full border-2 border-system hover:border-safe',
+      'fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[10005] p-4 transition-all duration-500 rounded-full border-2 border-system hover:border-safe',
       showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
       !showButton && 'pointer-events-none'
     ]"
     aria-label="Scramble to top"
-    style="transform: translateZ(0); will-change: transform;"
+    style="isolation: isolate;"
   >
     <div :class="['relative transition-all duration-700 ease-in-expo', isBlasting ? '-translate-y-[100vh] scale-150' : 'hover:-translate-y-2', !isBlasting && showButton ? 'animate-glow' : '']">
       

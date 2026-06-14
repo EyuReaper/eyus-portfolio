@@ -1,8 +1,8 @@
 <template>
-  <nav class="fixed z-50 right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-6 pointer-events-none" style="will-change: transform;">
+  <nav class="fixed z-[10010] right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-6 pointer-events-none" style="isolation: isolate;">
     
     <!-- Tactical Indicator Rail -->
-    <div class="pointer-events-auto flex flex-col items-center gap-4 p-2.5 border border-sky-500/20 rounded-full bg-slate-950/40 backdrop-blur-xl shadow-[0_0_20px_rgba(14,165,233,0.05)]">
+    <div class="pointer-events-auto flex flex-col items-center gap-4 p-2.5 border border-sky-500/30 rounded-full bg-slate-950 shadow-2xl">
       
       <div 
         v-for="item in navItems" 
@@ -114,10 +114,13 @@ const scrollTo = (id) => {
 };
 
 const updateScrollProgress = () => {
-  const winScroll = window.pageYOffset || document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  if (height === 0) return;
-  scrollProgress.value = (winScroll / height) * 100;
+  window.requestAnimationFrame(() => {
+    const winScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (height > 0) {
+      scrollProgress.value = (winScroll / height) * 100;
+    }
+  });
 };
 
 onMounted(() => {

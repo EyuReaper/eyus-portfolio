@@ -1,5 +1,5 @@
 <template>
-  <div v-show="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center transition-opacity duration-500" :class="{'opacity-0 pointer-events-none': !showWelcomeMessage}">
+  <div v-show="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-[10020] flex items-center justify-center transition-opacity duration-500" :class="{'opacity-0 pointer-events-none': !showWelcomeMessage}">
     <div class="text-center p-8 rounded-xl shadow-lg border-2 border-system animate-glow">
       <p class="text-white text-2xl font-bold mb-4">System Ready - Engage Comms?</p>
       <button @click="engageComms" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-lg transition-colors duration-200">
@@ -14,8 +14,8 @@
     @mouseleave="isCollapsed = true"
     @click="isCollapsed = false"
     :class="[
-      'group fixed z-[45] transition-all duration-300',
-      'border-2 border-system animate-glow bg-slate-900/70',
+      'group fixed z-[10000] transition-all duration-300',
+      'border-2 border-system animate-glow bg-slate-900',
       // Mobile positioning (Now that SideNav is vertical)
       'bottom-8 left-5 rounded-xl',
       // Desktop positioning
@@ -25,17 +25,17 @@
         ? 'w-14 h-14 rounded-full p-0 flex items-center justify-center'
         : 'w-64 sm:w-72 xl:w-80 p-4 sm:p-5',
     ]"
-    style="transform: translateZ(0); will-change: transform;"
+    style="isolation: isolate;"
   >
-    <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start', isCollapsed ? 'justify-center w-full' : '']">
+    <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start min-w-0', isCollapsed ? 'justify-center w-full' : '']">
       <!-- Icon/Visual for Music Player -->
       <svg xmlns="http://www.w3.org/2000/svg" :class="['w-8 h-8 md:w-10 md:h-10 text-emerald-500 shrink-0', isPlaying ? 'animate-pulse' : '']" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 18V5l12-2v13M9 18a3 3 0 1 0 0 6 3 3 0 1 0 0-6Zm12 0a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/>
       </svg>
 
       <!-- Music Controls -->
-      <div :class="['flex flex-col ml-4 sm:ml-0 flex-1', isCollapsed ? 'hidden' : 'flex transition-all duration-300']">
-        <div class="flex items-center mb-2 space-x-2">
+      <div :class="['flex flex-col ml-4 sm:ml-0 flex-1 min-w-0', isCollapsed ? 'hidden' : 'flex transition-all duration-300']">
+        <div class="flex items-center mb-2 space-x-2 min-w-0">
           <button v-tooltip="isPlaying ? 'Pause' : 'Play'" @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
@@ -43,15 +43,10 @@
           <button v-tooltip="'Power Off'" @click="powerOff" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
           </button>
-          <div class="w-full">
-            <ClientOnly>
-              <VueMarquee :duration="10" :key="currentTrackName">
-                <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
-              </VueMarquee>
-              <template #fallback>
-                <span class="font-mono text-sm text-safe">{{ currentTrackName }}</span>
-              </template>
-            </ClientOnly>
+          <div class="flex-1 min-w-0 overflow-hidden whitespace-nowrap">
+            <span :key="currentTrackName" class="inline-block font-mono text-sm text-safe marquee-text">
+              {{ currentTrackName }}
+            </span>
           </div>
         </div>
 
@@ -160,6 +155,17 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.marquee-text {
+    display: inline-block;
+    white-space: nowrap;
+  animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+  0% { margin-left: 100%; }
+  100% { margin-left: -100%; }
+}
+
 /* Custom styling for the range input thumb for better theming */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;

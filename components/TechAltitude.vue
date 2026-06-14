@@ -1,102 +1,104 @@
 <template>
-  <div class="relative py-20 overflow-hidden transition-colors duration-500 bg-gray-900 dark:bg-slate-950">
-    <h2 class="mb-4 font-mono text-3xl font-bold tracking-tighter text-center text-white">
-      TECH_ALTITUDE: <span class="uppercase text-emerald-500">Top Languages</span>
-      <a :href="`https://github.com/${githubUser}`" target="_blank" class="transition-colors text-sky-500 hover:text-emerald-400">
-        [{{ githubUser }}]
-      </a>
-    </h2>
+  <div class="transition-colors duration-500 bg-gray-900 dark:bg-slate-950">
+    <div class="relative py-20 overflow-hidden mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="mb-4 font-mono text-3xl font-bold tracking-tighter text-center text-white">
+        TECH_ALTITUDE: <span class="uppercase text-emerald-500">Top Languages</span>
+        <a :href="`https://github.com/${githubUser}`" target="_blank" class="transition-colors text-sky-500 hover:text-emerald-400">
+          [{{ githubUser }}]
+        </a>
+      </h2>
 
-    <div v-if="loading" class="font-mono text-center text-emerald-500 animate-pulse">INITIALIZING SCAN...</div>
-    <div v-else-if="error" class="font-mono text-center text-red-500">ERROR: SIGNAL_LOST ({{ error }})</div>
-    <div v-else-if="techStackData.length === 0" class="font-mono text-center text-white">NO DATA FOUND.</div>
+      <div v-if="loading" class="font-mono text-center text-emerald-500 animate-pulse">INITIALIZING SCAN...</div>
+      <div v-else-if="error" class="font-mono text-center text-red-500">ERROR: SIGNAL_LOST ({{ error }})</div>
+      <div v-else-if="techStackData.length === 0" class="font-mono text-center text-white">NO DATA FOUND.</div>
 
-    <div v-else class="relative w-full px-4 h-96" ref="container">
-      <svg :viewBox="`0 0 ${width} 110`" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
-            <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
-          </linearGradient>
+      <div v-else class="relative w-full" ref="container" :style="{ height: containerHeight + 'px' }">
+        <svg :viewBox="`0 0 ${width} ${viewBoxHeight}`" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+            </linearGradient>
 
-          <filter id="hudGlow">
-            <feGaussianBlur stdDeviation="1.5" result="blur"/>
-            <feMerge>
-              <feMergeNode in="blur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
+            <filter id="hudGlow">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
 
-        <g class="opacity-10 dark:opacity-20">
-          <line v-for="h in [20, 40, 60, 80]" :key="h"
-            x1="0" :y1="h" :x2="width" :y2="h"
-            stroke="#10b981" stroke-width="0.5" stroke-dasharray="4 4" />
-          <text v-for="h in [20, 40, 60, 80]" :key="`t-${h}`"
-            x="5" :y="h - 2" fill="#10b981" font-size="3" font-family="monospace">
-            {{ 100 - h }}%
-          </text>
-        </g>
-
-        <path
-          :d="fullPath"
-          fill="url(#mountainGradient)"
-          class="transition-opacity duration-1000"
-          :class="animationTriggered ? 'opacity-100' : 'opacity-0'"
-        />
-
-        <path
-          :d="topLinePath"
-          fill="none"
-          stroke="#10b981"
-          stroke-width="0.6"
-          filter="url(#hudGlow)"
-          ref="mainPathRef"
-          class="path-draw-animation"
-          :style="{
-            'stroke-dasharray': pathLength,
-            'stroke-dashoffset': animationTriggered ? 0 : pathLength
-          }"
-        />
-
-        <g v-for="(point, index) in points" :key="index">
-          <g v-if="activeLabel === index" class="text-emerald-400">
-            <rect :x="point.x - 4" :y="point.y - 4" width="8" height="8" fill="none" stroke="currentColor" stroke-width="0.3" class="animate-ping" />
-            <line :x1="point.x" :y1="0" :x2="point.x" :y2="110" stroke="currentColor" stroke-width="0.2" stroke-dasharray="2 2" />
+          <g class="opacity-10 dark:opacity-20">
+            <line v-for="h in [20, 40, 60, 80]" :key="h"
+              x1="0" :y1="h" :x2="width" :y2="h"
+              stroke="#10b981" stroke-width="0.5" stroke-dasharray="4 4" />
+            <text v-for="h in [20, 40, 60, 80]" :key="`t-${h}`"
+              x="5" :y="h - 2" fill="#10b981" font-size="3" font-family="monospace">
+              {{ 100 - h }}%
+            </text>
           </g>
 
-          <circle
-            :cx="point.x" :cy="point.y"
-            :r="activeLabel === index ? 3 : 1.5"
-            :fill="activeLabel === index ? '#fff' : '#10b981'"
-            class="transition-all duration-300 cursor-pointer"
-            @mouseenter="showLabel(index, false)"
-            @mouseleave="debouncedHideLabel"
-            @click="showLabel(index, true)"
+          <path
+            :d="fullPath"
+            fill="url(#mountainGradient)"
+            class="transition-opacity duration-1000"
+            :class="animationTriggered ? 'opacity-100' : 'opacity-0'"
           />
 
-          <rect :x="point.x - 15" :y="0" width="30" height="110" fill="transparent" class="cursor-pointer" @mouseenter="showLabel(index, false)" />
-        </g>
-      </svg>
+          <path
+            :d="topLinePath"
+            fill="none"
+            stroke="#10b981"
+            stroke-width="0.6"
+            filter="url(#hudGlow)"
+            ref="mainPathRef"
+            class="path-draw-animation"
+            :style="{
+              'stroke-dasharray': pathLength,
+              'stroke-dashoffset': animationTriggered ? 0 : pathLength
+            }"
+          />
 
-      <div
-        v-for="(tech, index) in techStackData"
-        :key="`label-${index}`"
-        :style="{ left: `${(points[index].x / width) * 100}%`, top: `${points[index].y - 35}px` }"
-        class="absolute transition-all duration-300 ease-out pointer-events-none"
-        :class="activeLabel === index ? 'opacity-100 transform -translate-x-1/2 -translate-y-2' : 'opacity-0 transform -translate-x-1/2 translate-y-0'"
-      >
-        <div class="px-3 py-1 text-xs font-mono text-emerald-400 bg-slate-900 border border-emerald-500/50 rounded shadow-[0_0_15px_rgba(16,185,129,0.3)] backdrop-blur-md">
-          {{ tech.name.toUpperCase() }} // {{ tech.altitude }}%
+          <g v-for="(point, index) in points" :key="index">
+            <g v-if="activeLabel === index" class="text-emerald-400">
+              <rect :x="point.x - 4" :y="point.y - 4" width="8" height="8" fill="none" stroke="currentColor" stroke-width="0.3" class="animate-ping" />
+              <line :x1="point.x" :y1="0" :x2="point.x" :y2="viewBoxHeight" stroke="currentColor" stroke-width="0.2" stroke-dasharray="2 2" />
+            </g>
+
+            <circle
+              :cx="point.x" :cy="point.y"
+              :r="activeLabel === index ? 3 : 1.5"
+              :fill="activeLabel === index ? '#fff' : '#10b981'"
+              class="transition-all duration-300 cursor-pointer"
+              @mouseenter="showLabel(index, false)"
+              @mouseleave="debouncedHideLabel"
+              @click="showLabel(index, true)"
+            />
+
+            <rect :x="point.x - 15" :y="0" width="30" :height="viewBoxHeight" fill="transparent" class="cursor-pointer" @mouseenter="showLabel(index, false)" />
+          </g>
+        </svg>
+
+        <div
+          v-for="(tech, index) in techStackData"
+          :key="`label-${index}`"
+          :style="{ left: `${(points[index].x / width) * 100}%`, top: `${labelY(index)}px` }"
+          class="absolute transition-all duration-300 ease-out pointer-events-none"
+          :class="activeLabel === index ? 'opacity-100 transform -translate-x-1/2 -translate-y-2' : 'opacity-0 transform -translate-x-1/2 translate-y-0'"
+        >
+          <div class="px-3 py-1 text-xs font-mono text-emerald-400 bg-slate-900 border border-emerald-500/50 rounded shadow-[0_0_15px_rgba(16,185,129,0.3)] backdrop-blur-md">
+            {{ tech.name.toUpperCase() }} // {{ tech.altitude }}%
+          </div>
         </div>
       </div>
-    </div>
 
-    <div
-      v-if="activeLabel !== null && techStackData.length > 0"
-      class="absolute hidden transition-opacity duration-300 -translate-y-1/2 top-1/2 right-8 lg:block"
-    >
-      <AltitudeTape :targetAltitude="techStackData[activeLabel].altitude" />
+      <div
+        v-if="activeLabel !== null && techStackData.length > 0"
+        class="absolute hidden transition-opacity duration-300 -translate-y-1/2 top-1/2 right-8 lg:block"
+      >
+        <AltitudeTape :targetAltitude="techStackData[activeLabel].altitude" />
+      </div>
     </div>
   </div>
 </template>
@@ -120,17 +122,40 @@ const activeLabel = ref(null);
 const pathLength = ref(0);
 const animationTriggered = ref(false);
 const mainPathRef = ref(null);
-const horizontalPadding = computed(() => width.value < 640 ? 40 : 80);
+
+const viewBoxHeight = 110;
+
+const containerHeight = computed(() => {
+  const h = Math.max(200, Math.min(420, width.value * 0.35));
+  return Math.round(h);
+});
+
+const horizontalPadding = computed(() => {
+  if (width.value < 480) return 16;
+  if (width.value < 768) return 24;
+  return Math.max(40, width.value * 0.05);
+});
+
+const yScale = computed(() => containerHeight.value / viewBoxHeight);
+
+const labelY = (index) => {
+  const pointsArr = points.value;
+  if (!pointsArr[index]) return 0;
+  return Math.round(pointsArr[index].y * yScale.value - 40);
+};
 
 // Calculate SVG Points
 const points = computed(() => {
   const count = techStackData.value.length;
   if (count === 0) return [];
-  const usableWidth = width.value - (2 * horizontalPadding);
+  const usableWidth = width.value - (2 * horizontalPadding.value);
   const segmentWidth = usableWidth / (count > 1 ? count - 1 : 1);
+  const topMargin = 15;
+  const bottomMargin = 15;
+  const drawRange = viewBoxHeight - topMargin - bottomMargin;
   return techStackData.value.map((tech, i) => ({
-    x: horizontalPadding + (i * segmentWidth),
-    y: 90 - (tech.altitude / 100 * 70), // Map 0-100 altitude to 20-90 Y space
+    x: horizontalPadding.value + (i * segmentWidth),
+    y: viewBoxHeight - bottomMargin - (tech.altitude / 100 * drawRange),
   }));
 });
 
@@ -158,7 +183,7 @@ const topLinePath = computed(() => {
 // Full Path (For Fill)
 const fullPath = computed(() => {
   if (points.value.length < 2) return '';
-  return `${topLinePath.value} L ${points.value[points.value.length-1].x},110 L ${points.value[0].x},110 Z`;
+  return `${topLinePath.value} L ${points.value[points.value.length-1].x},${viewBoxHeight} L ${points.value[0].x},${viewBoxHeight} Z`;
 });
 
 const setWidth = () => {
