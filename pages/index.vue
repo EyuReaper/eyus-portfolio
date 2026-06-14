@@ -95,12 +95,10 @@
             class="container z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16 mx-auto text-center"
         >
             <div class="max-w-4xl animate-fade-in">
-                <NuxtImg
-                    src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/profile.jpg"
+                <img
+                    :src="profileImg"
                     alt="Eyu's Profile Picture"
                     class="object-cover w-48 h-48 mx-auto mb-6 border-4 rounded-full shadow-lg border-emerald-500"
-                    format="webp"
-                    quality="80"
                 />
                 <h1
                     class="mb-4 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-white animate-fly-in"
@@ -152,12 +150,10 @@
             </h2>
             <div class="grid items-center grid-cols-1 gap-12 md:grid-cols-2">
                 <div class="md:order-2">
-                    <NuxtImg
-                        src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/image1.png"
+                    <img
+                        :src="intelImg"
                         alt="Eyu's full image"
                         class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
-                        format="webp"
-                        quality="80"
                     />
                 </div>
 
@@ -228,25 +224,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-landingpage-siraqemir.png',
-                        )
+                        showImageModal('screenshot-landingpage-siraqemir.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-landingpage-siraqemir.png',
-                        )
+                        showImageModal('screenshot-landingpage-siraqemir.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-landingpage-siraqemir.png"
+                            :src="proxiedImage('screenshot-landingpage-siraqemir.png')"
                             alt="Project Alpha Thumbnail"
                             class="object-cover w-full mb-4 rounded-lg cursor-pointer h-38"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-landingpage-siraqemir.png',
-                                )
+                                showImageModal('screenshot-landingpage-siraqemir.png')
                             "
                         />
                         <div
@@ -277,7 +267,7 @@
                     <p class="mb-4 text-white text-md">
                         Sira Qemir (ሥራ ቀምር) is a modern task management web
                         application built with React, Supabase, and Tailwind CSS
-                        and built for Ethiopians firs
+                        and built for Ethiopians first
                     </p>
                     <div class="flex justify-around mt-4">
                         <a
@@ -305,25 +295,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png',
-                        )
+                        showImageModal('screencapture-luxurywatch-በአማርኛ.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png',
-                        )
+                        showImageModal('screencapture-luxurywatch-በአማርኛ.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png"
+                            :src="proxiedImage('screencapture-luxurywatch-በአማርኛ.png')"
                             alt="Project Bravo Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-luxurywatch-በአማርኛ.png',
-                                )
+                                showImageModal('screencapture-luxurywatch-በአማርኛ.png')
                             "
                         />
                         <div
@@ -374,25 +358,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png',
-                        )
+                        showImageModal('screencapture-amharic-phrase-book.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png',
-                        )
+                        showImageModal('screencapture-amharic-phrase-book.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-amharic-phrase-book.png"
+                            :src="proxiedImage('screencapture-amharic-phrase-book.png')"
                             alt="Project Charlie Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screenshot-amharic-phrasebook-webapp.png',
-                                )
+                                showImageModal('screenshot-amharic-phrasebook-webapp.png')
                             "
                         />
                         <div
@@ -450,25 +428,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png',
-                        )
+                        showImageModal('screencapture-yckf-replica.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png',
-                        )
+                        showImageModal('screencapture-yckf-replica.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png"
+                            :src="proxiedImage('screencapture-yckf-replica.png')"
                             alt="Project Delta Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-yckf-replica.png',
-                                )
+                                showImageModal('screencapture-yckf-replica.png')
                             "
                         />
                         <div
@@ -526,25 +498,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png',
-                        )
+                        showImageModal('screencapture-janoweb1.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png',
-                        )
+                        showImageModal('screencapture-janoweb1.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png"
+                            :src="proxiedImage('screencapture-janoweb1.png')"
                             alt="Project Echo Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-janoweb1.png',
-                                )
+                                showImageModal('screencapture-janoweb1.png')
                             "
                         />
                         <div
@@ -601,25 +567,19 @@
                     tabindex="0"
                     role="button"
                     @click="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-fidel-ascii.png',
-                        )
+                        showImageModal('screencapture-fidel-ascii.png')
                     "
                     @keydown.enter="
-                        showImageModal(
-                            'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-fidel-ascii.png',
-                        )
+                        showImageModal('screencapture-fidel-ascii.png')
                     "
                 >
                     <div class="relative">
                         <img
-                            src="https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-fidel-ascii.png"
+                            :src="proxiedImage('screencapture-fidel-ascii.png')"
                             alt="Project Foxtrot Thumbnail"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
-                                showImageModal(
-                                    'https://cdn.jsdelivr.net/gh/EyuReaper/image-cdn/screencapture-fidel-ascii.png',
-                                )
+                                showImageModal('screencapture-fidel-ascii.png')
                             "
                         />
                         <div
@@ -1012,6 +972,12 @@ import FallingStarsBg from "@/components/ui/FallingStarsBg.vue";
 import JetScroll from "@/components/jetscroll.vue";
 import TechAltitude from "@/components/TechAltitude.vue";
 import SocialRadar from "@/components/SocialRadar.vue"; // New import
+import { useImageProxy } from "@/composables/useImageProxy";
+
+const { proxiedImage } = useImageProxy();
+
+const profileImg = proxiedImage("profile.jpg", { format: "webp", quality: 80 });
+const intelImg = proxiedImage("image1.png", { format: "webp", quality: 80 });
 
 // --- Section Visibility ---
 const intelRef = ref(null);
@@ -1115,7 +1081,7 @@ const isModalOpen = ref(false);
 const modalImageUrl = ref("");
 
 const showImageModal = (imageUrl) => {
-    modalImageUrl.value = imageUrl;
+    modalImageUrl.value = proxiedImage(imageUrl);
     isModalOpen.value = true;
     document.body.style.overflow = "hidden";
 };
