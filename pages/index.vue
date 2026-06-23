@@ -6,7 +6,8 @@
             class="sticky top-0 z-[60] flex items-center justify-between px-4 md:px-8 py-3 border-b border-emerald-500/20 bg-slate-950/90 backdrop-blur-md font-mono"
         >
             <div class="flex items-center gap-6">
-                <div class="flex items-center gap-3 group cursor-crosshair">
+                <div class="flex items-center gap-2 group cursor-crosshair">
+                    <!-- 翔 primary mark -->
                     <div
                         class="relative flex items-center justify-center w-8 h-8 overflow-hidden border border-emerald-500"
                     >
@@ -14,8 +15,8 @@
                             class="absolute inset-0 transition-colors bg-emerald-500/10 group-hover:bg-emerald-500/30"
                         ></div>
                         <span
-                            class="text-xs font-bold tracking-tighter text-emerald-500"
-                            >ER</span
+                            class="text-sm font-bold tracking-tighter text-emerald-500"
+                            >翔</span
                         >
                     </div>
                     <div class="flex flex-col">
@@ -92,9 +93,12 @@
         <!-- SCAN (Home) Section -->
         <section
             id="scan"
-            class="container z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16 mx-auto text-center"
+            class="relative container z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16 mx-auto text-center"
         >
-            <div class="max-w-4xl animate-fade-in">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+                <span class="text-[20vw] sm:text-[18vw] font-bold text-emerald-500/[0.04] dark:text-emerald-500/[0.07] leading-none">翔</span>
+            </div>
+            <div class="relative z-10 max-w-4xl animate-fade-in">
                 <img
                     :src="profileImg"
                     alt="Eyu's Profile Picture"
@@ -978,6 +982,61 @@ const { proxiedImage } = useImageProxy();
 
 const profileImg = proxiedImage("profile.jpg", { format: "webp", quality: 80 });
 const intelImg = proxiedImage("image1.png", { format: "webp", quality: 80 });
+
+// --- Jet Trail (翔 Contrail Effect) ---
+let trailElements = [];
+let rafId = null;
+let mouseX = -100, mouseY = -100;
+const trailPositions = Array.from({ length: 30 }, () => ({ x: -100, y: -100 }));
+
+function initJetTrail() {
+  const container = document.createElement("div");
+  container.id = "jet-trail";
+  container.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:99999";
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement("div");
+    if (i === 0) {
+      el.style.cssText = `position:absolute;border-radius:50%;background:rgba(16,185,129,0.9);box-shadow:0 0 4px rgba(16,185,129,0.6);width:3px;height:3px;transform:translate(-50%,-50%)`;
+    } else {
+      const w = Math.max(2 + i * 0.12, 1);
+      const blur = 1 + i * 0.35;
+      const a = Math.max(0.4 - i * 0.013, 0.005);
+      el.style.cssText = `position:absolute;border-radius:50%;background:rgba(16,185,129,${a});width:${w}px;height:${w}px;filter:blur(${blur}px);transform:translate(-50%,-50%)`;
+    }
+    container.appendChild(el);
+    trailElements.push(el);
+  }
+
+  const onMove = (e) => { mouseX = e.clientX; mouseY = e.clientY; };
+  window.addEventListener("mousemove", onMove);
+
+  function animate() {
+    trailPositions[0].x += (mouseX - trailPositions[0].x) * 0.5;
+    trailPositions[0].y += (mouseY - trailPositions[0].y) * 0.5;
+    trailElements[0].style.transform = `translate(${trailPositions[0].x}px,${trailPositions[0].y}px)`;
+    for (let i = 1; i < trailElements.length; i++) {
+      trailPositions[i].x += (trailPositions[i - 1].x - trailPositions[i].x) * 0.08;
+      trailPositions[i].y += (trailPositions[i - 1].y - trailPositions[i].y) * 0.08;
+      trailElements[i].style.transform = `translate(${trailPositions[i].x}px,${trailPositions[i].y}px)`;
+    }
+    rafId = requestAnimationFrame(animate);
+  }
+  animate();
+
+  return () => {
+    window.removeEventListener("mousemove", onMove);
+    if (rafId) cancelAnimationFrame(rafId);
+    container.remove();
+    trailElements = [];
+  };
+}
+
+onMounted(() => {
+  const cleanup = initJetTrail();
+  onUnmounted(() => { if (cleanup) cleanup(); });
+});
 
 // --- Section Visibility ---
 const intelRef = ref(null);

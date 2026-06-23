@@ -6,13 +6,12 @@ export default defineCachedEventHandler(
       throw createError({ statusCode: 400, statusMessage: 'Missing username' });
     }
 
-    const config = useRuntimeConfig(event);
     const headers = {
       Accept: 'application/vnd.github+json',
       'User-Agent': 'eyus-portfolio',
     };
 
-    if (config.githubPat) {
+    if (process.env.NUXT_GITHUB_PAT) {
       headers.Authorization = `Bearer ${config.githubPat}`;
     }
 

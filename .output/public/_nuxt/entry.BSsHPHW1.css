@@ -1,0 +1,1 @@
+.nvg-overlay{background:linear-gradient(#12101000 50%,#10b9810d 0);background-size:100% 4px;opacity:.3;z-index:9999}.nvg-active:after,.nvg-overlay{top:0;right:0;bottom:0;left:0;pointer-events:none;position:fixed}.nvg-active:after{box-shadow:inset 0 0 150px #000000e6,inset 0 0 50px #10b98133;content:"";z-index:9998}

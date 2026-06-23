@@ -40,7 +40,8 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap",
         },
-        { rel: "icon", type: "image/png", href: "/favicon-96x96.png" },
+        { rel: "icon", type: "image/svg+xml", href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%2310b981' font-family='sans-serif'>翔</text></svg>" },
+        { rel: "alternate icon", type: "image/png", href: "/favicon-96x96.png" },
       ],
     },
   },
@@ -49,14 +50,6 @@ export default defineNuxtConfig({
   tailwindcss: {
     // Reference the correct tailwind.config.js
     configPath: "~/tailwind.config.js",
-  },
-
-  // Runtime configuration
-  runtimeConfig: {
-    githubPat: process.env.NUXT_GITHUB_PAT, // Now a server-only variable
-    public: {
-      // Any public runtime config variables can go here
-    },
   },
 
   // Static site generation

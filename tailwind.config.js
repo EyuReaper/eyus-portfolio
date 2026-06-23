@@ -45,7 +45,11 @@ export default {
         grid: {
           '0%': { 'background-position': '0 0' },
           '100%': { 'background-position': '50px 50px' },
-        }
+        },
+        soar: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-15px)' },
+        },
       },
       animation: {
         'fly-in': 'flyIn 1s ease-out forwards',
@@ -53,6 +57,7 @@ export default {
         'glow': 'glow 1.5s ease-in-out infinite',
         'scanline': 'scanline 10s linear infinite',
         'grid': 'grid 2s linear infinite',
+        'soar': 'soar 6s ease-in-out infinite',
       },
     },
   },
