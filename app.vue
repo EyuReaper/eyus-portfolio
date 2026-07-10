@@ -8,8 +8,11 @@
 
 <script setup>
 import { useThemeStore } from './composables/useThemeStore';
-import { defineAsyncComponent } from 'vue';
-
+import { defineAsyncComponent, onMounted, onUnmounted } from 'vue';
+import { useCustomCursor } from './composables/useCustomCursor';
+let cleanupCursor = () => {};
+onMounted(() => { cleanupCursor = useCustomCursor().cleanup; });
+onUnmounted(() => cleanupCursor());
 const { isDarkMode } = useThemeStore();
 const CoPilotMusicPlayer = defineAsyncComponent(() => import('./components/CoPilotMusicPlayer.vue'));
 </script>
@@ -22,7 +25,7 @@ const CoPilotMusicPlayer = defineAsyncComponent(() => import('./components/CoPil
   z-index: 9999;
   /* Very subtle scanlines */
   background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
+    rgba(18, 16, 16, 0) 50%,
     rgba(16, 185, 129, 0.05) 50%
   );
   background-size: 100% 4px;
@@ -35,7 +38,7 @@ const CoPilotMusicPlayer = defineAsyncComponent(() => import('./components/CoPil
   pointer-events: none;
   position: fixed;
   inset: 0;
-  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9), 
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9),
               inset 0 0 50px rgba(16, 185, 129, 0.2);
   z-index: 9998;
 }
