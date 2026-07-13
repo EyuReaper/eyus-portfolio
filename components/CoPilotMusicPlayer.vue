@@ -1,31 +1,40 @@
 <template>
-  <div v-show="showWelcomeMessage" class="fixed inset-0 bg-slate-900/90 z-[10020] flex items-center justify-center transition-opacity duration-500" :class="{'opacity-0 pointer-events-none': !showWelcomeMessage}">
-    <div class="text-center p-8 rounded-xl shadow-lg border-2 border-system animate-glow">
-      <p class="text-white text-2xl font-bold mb-4">System Ready - Engage Comms?</p>
-      <button @click="engageComms" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-lg transition-colors duration-200">
-        Engage
+  <!-- Pre-boot gate -->
+  <div
+    v-show="showWelcomeMessage"
+    class="fixed inset-0 bg-slate-900/90 z-[10020] flex items-center justify-center transition-opacity duration-500"
+    :class="{ 'opacity-0 pointer-events-none': !showWelcomeMessage || isEngaging }"
+  >
+    <div class="text-center p-8 rounded-xl shadow-lg border-2 border-system animate-glow max-w-md mx-4">
+      <p class="text-[10px] font-mono tracking-[0.35em] text-emerald-400/70 mb-3 uppercase">Mark I · Flight Deck</p>
+      <p class="text-white text-2xl font-bold mb-2">System Ready</p>
+      <p class="text-sky-400/70 text-xs font-mono tracking-widest mb-6 uppercase">Engage comms to bring HUD online</p>
+      <button
+        @click="engageComms"
+        :disabled="isEngaging"
+        class="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-slate-950 font-semibold rounded-lg transition-all duration-200 tracking-widest uppercase text-sm shadow-[0_0_24px_rgba(16,185,129,0.35)] hover:shadow-[0_0_36px_rgba(16,185,129,0.55)]"
+      >
+        {{ isEngaging ? 'Initializing…' : 'Engage' }}
       </button>
     </div>
   </div>
 
+  <!-- Music player HUD module (always mounted so boot drop-in can play) -->
   <div
-    v-if="!showWelcomeMessage"
-    @mouseenter="isCollapsed = false"
+    @mouseenter="systemsOnline && (isCollapsed = false)"
     @mouseleave="isCollapsed = true"
-    @click="isCollapsed = false"
+    @click="systemsOnline && (isCollapsed = false)"
     :class="[
-      'group fixed z-[10000] transition-all duration-300',
+      'hud-module hud-from-bottom-left group fixed z-[10000]',
+      musicHudClass,
       'border-2 border-system animate-glow bg-slate-900',
-      // Mobile positioning (Now that SideNav is vertical)
       'bottom-8 left-5 rounded-xl',
-      // Desktop positioning
       'sm:bottom-8 sm:left-8',
-      // Collapsed/Expanded states
       isCollapsed
         ? 'w-14 h-14 rounded-full p-0 flex items-center justify-center'
         : 'w-64 sm:w-72 xl:w-80 p-4 sm:p-5',
     ]"
-    style="isolation: isolate;"
+    style="--hud-delay: 0.15s; isolation: isolate;"
   >
     <div :class="['flex items-center sm:space-x-4 justify-between sm:justify-start min-w-0', isCollapsed ? 'justify-center w-full' : '']">
       <!-- Icon/Visual for Music Player -->
@@ -36,11 +45,11 @@
       <!-- Music Controls -->
       <div :class="['flex flex-col ml-4 sm:ml-0 flex-1 min-w-0', isCollapsed ? 'hidden' : 'flex transition-all duration-300']">
         <div class="flex items-center mb-2 space-x-2 min-w-0">
-          <button v-tooltip="isPlaying ? 'Pause' : 'Play'" @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
+          <button :title="isPlaying ? 'Pause' : 'Play'" @click="togglePlay" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
           </button>
-          <button v-tooltip="'Power Off'" @click="powerOff" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
+          <button title="Power Off" @click="powerOff" class="p-2 rounded-full bg-system hover:bg-safe text-slate-950">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
           </button>
           <div class="flex-1 min-w-0 overflow-hidden whitespace-nowrap">
@@ -62,6 +71,10 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import DualWielder from '~/assets/dual-wielder-project-aces.mp3';
 import MidnightLight from '~/assets/midnight-light-jose-pavli.mp3';
 import Redline from '~/assets/redline-jose-pavli.mp3';
+import { useSystemsOnline } from '~/composables/useSystemsOnline';
+
+const { systemsOnline, engageSystems, powerDownSystems, hudModuleClass } = useSystemsOnline();
+const musicHudClass = hudModuleClass();
 
 const audio = ref(null);
 const isPlaying = ref(false);
@@ -69,6 +82,7 @@ const volume = ref(0.2); // Default volume
 const currentTrackIndex = ref(0);
 const showWelcomeMessage = ref(true); // New state for welcome message
 const isCollapsed = ref(true); // For mobile collapse
+const isEngaging = ref(false);
 let collapseTimer = null;
 
 // Music tracks
@@ -117,6 +131,8 @@ const powerOff = () => {
     audio.value.pause();
   }
   isPlaying.value = false;
+  isEngaging.value = false;
+  powerDownSystems();
   showWelcomeMessage.value = true;
   if (collapseTimer) clearTimeout(collapseTimer);
 };
@@ -138,10 +154,22 @@ onMounted(() => {
 });
 
 const engageComms = () => {
-  showWelcomeMessage.value = false;
-  audio.value.play();
-  isPlaying.value = true;
-  showNowPlaying();
+  if (isEngaging.value) return;
+  isEngaging.value = true;
+
+  // Kick Iron Man HUD boot — modules drop in staggered sequence
+  engageSystems();
+
+  // Brief beat for overlay / gate fade, then reveal player + audio
+  setTimeout(() => {
+    showWelcomeMessage.value = false;
+    isEngaging.value = false;
+    if (audio.value) {
+      audio.value.play().catch(() => {});
+      isPlaying.value = true;
+      showNowPlaying();
+    }
+  }, 280);
 };
 
 onUnmounted(() => {

@@ -123,9 +123,11 @@
                 <AirDropButton />
                 <div
                     id="typewriter-container"
-                    class="p-4 mt-4 text-left bg-black bg-opacity-50 rounded-lg"
+                    class="p-4 mt-4 font-mono text-sm text-left border rounded-lg bg-slate-950/80 border-emerald-500/30 terminal-container"
                 >
-                    <span class="font-mono text-emerald-500"></span>
+                    <span class="text-emerald-500/50">$</span>
+                    <span class="text-emerald-500 typewriter-text"></span>
+                    <span class="cursor">▊</span>
                 </div>
                 <p class="mt-4 font-mono text-sm text-sky-500 flicker">
                     System Diagnostic: All systems nominal.
@@ -1115,19 +1117,25 @@ onMounted(() => {
 
     const container = document.getElementById("typewriter-container");
     if (container) {
-        const span = container.querySelector("span");
+        const textSpan = container.querySelector(".typewriter-text");
+        const cursor = container.querySelector(".cursor");
         const text =
             "System analysis complete. All subsystems are operational. Ready for user engagement.";
         let index = 0;
 
+        cursor.style.opacity = "0";
+
         function type() {
             if (index < text.length) {
-                span.textContent += text.charAt(index);
+                textSpan.textContent += text.charAt(index);
                 index++;
-                setTimeout(type, 50);
+                const delay = 50 + (Math.random() * 60 - 30);
+                setTimeout(type, delay);
+            } else {
+                cursor.style.opacity = "1";
             }
         }
-        type();
+        setTimeout(type, 400);
     }
 });
 
@@ -1295,5 +1303,26 @@ const submitForm = async () => {
 
 .signal-transmitter {
     box-shadow: 0 0 15px #10b981; /* emerald-500 */
+}
+
+.terminal-container {
+    min-height: 3rem;
+    box-shadow:
+        0 0 12px rgba(16, 185, 129, 0.08),
+        inset 0 0 20px rgba(16, 185, 129, 0.03);
+}
+
+.cursor {
+    animation: blink-cursor 0.7s step-end infinite;
+}
+
+@keyframes blink-cursor {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
 </style>

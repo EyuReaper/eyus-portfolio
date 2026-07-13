@@ -3,6 +3,7 @@
     <NuxtPage />
     <CoPilotMusicPlayer />
     <Navigator />
+    <HudBootOverlay />
     <div v-if="isDarkMode" class="nvg-overlay"></div>
   </div>
 </template>
@@ -15,8 +16,9 @@ let cleanupCursor = () => {};
 onMounted(() => { cleanupCursor = useCustomCursor().cleanup; });
 onUnmounted(() => cleanupCursor());
 const Navigator = defineAsyncComponent(() => import('./components/Navigator.vue'));
-const { isDarkMode } = useThemeStore();
 const CoPilotMusicPlayer = defineAsyncComponent(() => import('./components/CoPilotMusicPlayer.vue'));
+const HudBootOverlay = defineAsyncComponent(() => import('./components/HudBootOverlay.vue'));
+const { isDarkMode } = useThemeStore();
 </script>
 
 <style>

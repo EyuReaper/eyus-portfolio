@@ -1,5 +1,9 @@
 <template>
-  <nav class="fixed z-[10010] right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-6 pointer-events-none" style="isolation: isolate;">
+  <nav
+    class="hud-module hud-from-right hud-anchor-y-center fixed z-[10010] right-4 sm:right-6 top-1/2 -translate-y-1/2 flex flex-col items-end gap-6 pointer-events-none"
+    :class="sideHudClass"
+    style="--hud-delay: 0.55s; isolation: isolate;"
+  >
     
     <!-- Tactical Indicator Rail -->
     <div class="pointer-events-auto flex flex-col items-center gap-4 p-2.5 border border-sky-500/30 rounded-full bg-slate-950 shadow-2xl">
@@ -90,6 +94,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useThemeStore } from '~/composables/useThemeStore';
+import { useSystemsOnline } from '~/composables/useSystemsOnline';
+
+const { hudModuleClass } = useSystemsOnline();
+const sideHudClass = hudModuleClass();
 
 const navItems = [
   { id: 'scan', label: 'SCAN' },
