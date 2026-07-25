@@ -188,7 +188,7 @@
                         experiences and leverage Tailwind CSS for rapid,
                         maintainable styling. My skills extend to Nuxt.js,
                         Node.js for backend, databases like MongoDB/PostgreSQL,
-                        cloud platforms like AWS/GCP. I am always eager to
+                        Supabase, vercel. I am always eager to
                         collaborate on projects that demand creativity,
                         problem-solving, and a commitment to excellence.
                     </p>
@@ -268,7 +268,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-2xl sm:text-3xl font-semibold text-white">
-                        Project Alpha: Sira-qemir
+                     Sira-qemir
                     </h3>
                     <p class="mb-4 text-white text-md">
                         Sira Qemir (ሥራ ቀምር) is a modern task management web
@@ -279,18 +279,18 @@
                         <a
                             href="https://github.com/EyuReaper/sira-qemir"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                         <a
                             href="https://sira-qemir-flrv.vercel.app"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fas', 'rocket']" />
-                            <span>Live Demo</span>
+                                <font-awesome-icon :icon="['fas', 'rocket']" />
+                                <span>Live Demo</span>
                         </a>
                     </div>
                 </div>
@@ -339,7 +339,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-3xl font-semibold text-white">
-                        Project Bravo: Luxury Watch Product Landing Page
+                         Luxury Watch Product Landing Page
                     </h3>
                     <p class="mb-4 text-white text-md">
                         A visually striking product landing page that showcases
@@ -350,10 +350,10 @@
                         <a
                             href="https://github.com/EyuReaper/luxury-watch-landing-page"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                     </div>
                 </div>
@@ -402,7 +402,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-3xl font-semibold text-white">
-                        Project Charlie:Amharic Phrase book
+                        Amharic Phrase book
                     </h3>
                     <p class="mb-4 text-white text-md">
                         A free, offline-friendly Amharic phrasebook web app for
@@ -412,18 +412,18 @@
                         <a
                             href="https://github.com/EyuReaper/amharic-phrase-book"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                         <a
                             href="https://amharic-phrase-book.vercel.app/"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fas', 'rocket']" />
-                            <span>Live Demo</span>
+                                <font-awesome-icon :icon="['fas', 'rocket']" />
+                                <span>Live Demo</span>
                         </a>
                     </div>
                 </div>
@@ -472,7 +472,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-3xl font-semibold text-white">
-                        Project Delta:YCKF-replica
+                        YCKF-replica
                     </h3>
                     <p class="mb-4 text-white text-md">
                         A full-stack Intership project done for young cyber
@@ -482,18 +482,18 @@
                         <a
                             href="https://github.com/EyuReaper/yckf-replica"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                         <a
                             href="https://yckf-replica.vercel.app/"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fas', 'rocket']" />
-                            <span>Live Demo</span>
+                                <font-awesome-icon :icon="['fas', 'rocket']" />
+                                <span>Live Demo</span>
                         </a>
                     </div>
                 </div>
@@ -542,7 +542,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-3xl font-semibold text-white">
-                        Project Echo:Jano-fidel
+                        Jano-fidel
                     </h3>
                     <p class="mb-4 text-white text-md">
                         A Native Amharic programming Language built on Node.js.
@@ -551,18 +551,18 @@
                         <a
                             href="https://github.com/EyuReaper/jano-fidel"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                         <a
                             href="https://jano-fidel.vercel.app/"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fas', 'rocket']" />
-                            <span>Live Demo</span>
+                                <font-awesome-icon :icon="['fas', 'rocket']" />
+                                <span>Live Demo</span>
                         </a>
                     </div>
                 </div>
@@ -611,7 +611,7 @@
                         </div>
                     </div>
                     <h3 class="mb-3 text-3xl font-semibold text-white">
-                        Project Foxtrot:Fidel-ascii
+                        Fidel-ascii
                     </h3>
                     <p class="mb-4 text-white text-md">
                         An Ethiopian character map and rendering engine for
@@ -621,18 +621,18 @@
                         <a
                             href="https://github.com/EyuReaper/fidel-ascii"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fab', 'github']" />
-                            <span>GitHub</span>
+                                <font-awesome-icon :icon="['fab', 'github']" />
+                                <span>GitHub</span>
                         </a>
                         <a
                             href="https://fidel-ascii.vercel.app"
                             target="_blank"
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-bold transition-all duration-300 transform rounded-full shadow-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
-                            <font-awesome-icon :icon="['fas', 'rocket']" />
-                            <span>Live Demo</span>
+                                <font-awesome-icon :icon="['fas', 'rocket']" />
+                                <span>Live Demo</span>
                         </a>
                     </div>
                 </div>

@@ -7,6 +7,18 @@
 
 @tailwind utilities;
 
+/* Shared military HUD silhouette: chamfered top-right and bottom-left corners. */
+.military-cut-button {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px)
+  );
+}
+
 
 body {
 

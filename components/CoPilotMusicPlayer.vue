@@ -12,7 +12,7 @@
       <button
         @click="engageComms"
         :disabled="isEngaging"
-        class="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-slate-950 font-semibold rounded-lg transition-all duration-200 tracking-widest uppercase text-sm shadow-[0_0_24px_rgba(16,185,129,0.35)] hover:shadow-[0_0_36px_rgba(16,185,129,0.55)]"
+        class="military-cut-button px-8 py-[11px] bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-slate-950 font-semibold transition-all duration-200 tracking-[0.1em] uppercase text-xs [filter:drop-shadow(0_0_12px_rgba(16,185,129,0.35))] hover:[filter:drop-shadow(0_0_18px_rgba(16,185,129,0.55))]"
       >
         {{ isEngaging ? 'Initializing…' : 'Engage' }}
       </button>

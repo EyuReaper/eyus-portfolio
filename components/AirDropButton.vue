@@ -19,19 +19,19 @@
             <button
                 @click="initiateAirDrop"
                 :disabled="state !== 'idle'"
-                class="relative w-full max-w-[320px] px-8 py-5 bg-slate-900/40 border border-emerald-500/30 text-emerald-500 font-mono font-bold tracking-widest overflow-hidden transition-all duration-300 hover:bg-emerald-500/5 hover:border-emerald-500 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed group/btn"
+                class="military-cut-button phosphor-flicker relative w-full max-w-[320px] px-8 pl-6 py-[14px] bg-slate-950/90 border border-emerald-500/60 text-emerald-500 font-mono font-bold tracking-[0.1em] overflow-hidden transition-all duration-300 hover:bg-emerald-500/10 hover:text-emerald-400 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed [filter:drop-shadow(0_0_4px_rgba(16,185,129,0.35))] hover:[filter:drop-shadow(0_0_8px_rgba(16,185,129,0.65))]"
             >
                 <!-- Glitch Effect Layers (Visible on Hover) -->
-                <span
-                    class="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity"
-                >
                     <span
-                        class="absolute inset-0 bg-emerald-500/10 animate-pulse"
-                    ></span>
-                    <span
-                        class="absolute top-0 left-0 w-full h-[1px] bg-emerald-400/50 animate-scan"
-                    ></span>
-                </span>
+                        class="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity"
+                    >
+                        <span
+                            class="absolute inset-0 bg-emerald-500/10 animate-pulse"
+                        ></span>
+                        <span
+                            class="absolute top-0 left-0 w-full h-[1px] bg-emerald-400/50 animate-scan"
+                        ></span>
+                    </span>
 
                 <!-- Scanning Radar Effect -->
                 <span
@@ -220,6 +220,52 @@ const initiateAirDrop = () => {
 </script>
 
 <style scoped>
+@keyframes phosphor-flicker {
+    0%,
+    83%,
+    87%,
+    91%,
+    100% {
+        opacity: 1;
+        text-shadow: 0 0 7px rgba(16, 185, 129, 0.45);
+    }
+
+    84% {
+        opacity: 0.72;
+        text-shadow: 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    85% {
+        opacity: 0.94;
+        text-shadow: 0 0 13px rgba(16, 185, 129, 0.8);
+    }
+
+    88% {
+        opacity: 0.62;
+        text-shadow: 0 0 1px rgba(16, 185, 129, 0.1);
+    }
+
+    89% {
+        opacity: 1;
+        text-shadow: 0 0 16px rgba(16, 185, 129, 0.9);
+    }
+
+    92% {
+        opacity: 0.78;
+        text-shadow: 0 0 4px rgba(16, 185, 129, 0.3);
+    }
+}
+
+.phosphor-flicker {
+    animation: phosphor-flicker 4.8s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .phosphor-flicker {
+        animation: none;
+    }
+}
+
 @keyframes scan {
     0% {
         transform: translateY(0);
