@@ -985,61 +985,6 @@ const { proxiedImage } = useImageProxy();
 const profileImg = proxiedImage("profile.jpg", { format: "webp", quality: 80 });
 const intelImg = proxiedImage("image1.png", { format: "webp", quality: 80 });
 
-// --- Jet Trail (翔 Contrail Effect) ---
-let trailElements = [];
-let rafId = null;
-let mouseX = -100, mouseY = -100;
-const trailPositions = Array.from({ length: 30 }, () => ({ x: -100, y: -100 }));
-
-function initJetTrail() {
-  const container = document.createElement("div");
-  container.id = "jet-trail";
-  container.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:99999";
-  document.body.appendChild(container);
-
-  for (let i = 0; i < 30; i++) {
-    const el = document.createElement("div");
-    if (i === 0) {
-      el.style.cssText = `position:absolute;border-radius:50%;background:rgba(16,185,129,0.9);box-shadow:0 0 4px rgba(16,185,129,0.6);width:3px;height:3px;transform:translate(-50%,-50%)`;
-    } else {
-      const w = Math.max(2 + i * 0.12, 1);
-      const blur = 1 + i * 0.35;
-      const a = Math.max(0.4 - i * 0.013, 0.005);
-      el.style.cssText = `position:absolute;border-radius:50%;background:rgba(16,185,129,${a});width:${w}px;height:${w}px;filter:blur(${blur}px);transform:translate(-50%,-50%)`;
-    }
-    container.appendChild(el);
-    trailElements.push(el);
-  }
-
-  const onMove = (e) => { mouseX = e.clientX; mouseY = e.clientY; };
-  window.addEventListener("mousemove", onMove);
-
-  function animate() {
-    trailPositions[0].x += (mouseX - trailPositions[0].x) * 0.5;
-    trailPositions[0].y += (mouseY - trailPositions[0].y) * 0.5;
-    trailElements[0].style.transform = `translate(${trailPositions[0].x}px,${trailPositions[0].y}px)`;
-    for (let i = 1; i < trailElements.length; i++) {
-      trailPositions[i].x += (trailPositions[i - 1].x - trailPositions[i].x) * 0.08;
-      trailPositions[i].y += (trailPositions[i - 1].y - trailPositions[i].y) * 0.08;
-      trailElements[i].style.transform = `translate(${trailPositions[i].x}px,${trailPositions[i].y}px)`;
-    }
-    rafId = requestAnimationFrame(animate);
-  }
-  animate();
-
-  return () => {
-    window.removeEventListener("mousemove", onMove);
-    if (rafId) cancelAnimationFrame(rafId);
-    container.remove();
-    trailElements = [];
-  };
-}
-
-onMounted(() => {
-  const cleanup = initJetTrail();
-  onUnmounted(() => { if (cleanup) cleanup(); });
-});
-
 // --- Section Visibility ---
 const intelRef = ref(null);
 const hangarRef = ref(null);
@@ -1064,23 +1009,13 @@ const githubUser = "EyuReaper";
 const scrollAltitude = ref(0);
 const currentHeading = ref(0);
 
-// Use useAsyncData for SSR-friendly data fetching
+// Use useAsyncData for SSR-friendly data fetching, routed through our
+// cached server endpoint so we don't burn GitHub's shared unauth rate limit.
 const { data: githubData } = await useAsyncData("github-stats", async () => {
     try {
-        const [userRes, reposRes] = await Promise.all([
-            $fetch(`https://api.github.com/users/${githubUser}`),
-            $fetch(
-                `https://api.github.com/users/${githubUser}/repos?per_page=100`,
-            ),
-        ]);
-
-        return {
-            repos: userRes.public_repos,
-            stars: reposRes.reduce(
-                (acc, repo) => acc + repo.stargazers_count,
-                0,
-            ),
-        };
+        return await $fetch("/api/github-stats", {
+            query: { username: githubUser },
+        });
     } catch (e) {
         console.error("Error fetching GitHub stats:", e);
         return { repos: "ERR", stars: "ERR" };

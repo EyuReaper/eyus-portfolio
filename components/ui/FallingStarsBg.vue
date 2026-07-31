@@ -20,6 +20,9 @@ let stars = [];
 let ctx = null;
 let animationFrameId = null;
 let rgb = { r: 255, g: 255, b: 255 };
+let intersectionObserver = null;
+let isVisible = true;
+let isPageVisible = true;
 
 function hexToRgb(hexColor) {
   let hex = hexColor.replace(/^#/, "");
@@ -82,6 +85,11 @@ function drawStar(star, canvasWidth, canvasHeight) {
 }
 
 function animate() {
+  if (!isVisible || !isPageVisible) {
+    animationFrameId = null;
+    return;
+  }
+
   const canvas = starsCanvas.value;
   if (!canvas || !ctx) return;
 
@@ -101,6 +109,17 @@ function animate() {
   });
 
   animationFrameId = requestAnimationFrame(animate);
+}
+
+function startAnimation() {
+  if (animationFrameId !== null) return;
+  if (!isVisible || !isPageVisible) return;
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+function handleVisibilityChange() {
+  isPageVisible = document.visibilityState === "visible";
+  startAnimation();
 }
 
 onMounted(() => {
@@ -128,11 +147,25 @@ onMounted(() => {
     });
   }
 
-  animate();
+  intersectionObserver = new IntersectionObserver(
+    ([entry]) => {
+      isVisible = entry.isIntersecting;
+      startAnimation();
+    },
+    { threshold: 0 },
+  );
+  intersectionObserver.observe(canvas);
+
+  isPageVisible = document.visibilityState === "visible";
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  startAnimation();
 });
 
 onUnmounted(() => {
   window.removeEventListener("resize", resizeCanvas);
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
+  intersectionObserver?.disconnect();
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
   }

@@ -4,8 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   // Modules to be loaded before rendering page
   modules: [// Integrates Tailwind CSS with Nuxt
-  "@nuxtjs/tailwindcss", // Optimizes images
-  "@nuxt/image", "@nuxt/eslint"],
+  "@nuxtjs/tailwindcss", "@nuxt/eslint"],
 
   // Plugins to load before mounting the App
   plugins: ["~/plugins/fontawesome.client.js", "~/plugins/floating-vue.client.js"],
