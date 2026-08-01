@@ -9,6 +9,15 @@ const systemsOnline = ref(false)
 const isBooting = ref(false)
 const bootGeneration = ref(0)
 
+// Single source of truth for the boot-overlay fade duration.
+// HudBootOverlay uses this for its hide timer and passes it to CSS
+// via --hud-boot-duration, so the JS timer and the CSS animation
+// (main.css .hud-boot-overlay / hud-boot-fade) can never drift apart.
+export const HUD_BOOT_FADE_MS = 2100
+// Boot FX window: fade duration plus a buffer for the longest
+// staggered module drop-in animation.
+const HUD_BOOT_WINDOW_MS = HUD_BOOT_FADE_MS + 100
+
 let bootTimer = null
 
 function engageSystems() {
@@ -27,11 +36,10 @@ function engageSystems() {
     systemsOnline.value = true
   }
 
-  // Boot FX window (matches longest staggered module + overlay)
   bootTimer = setTimeout(() => {
     isBooting.value = false
     bootTimer = null
-  }, 2200)
+  }, HUD_BOOT_WINDOW_MS)
 }
 
 function powerDownSystems() {

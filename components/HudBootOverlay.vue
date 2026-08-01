@@ -4,6 +4,7 @@
       v-if="visible"
       :key="bootGeneration"
       class="hud-boot-overlay"
+      :style="{ '--hud-boot-duration': `${visibleDurationMs}ms` }"
       aria-hidden="true"
     >
       <div class="hud-boot-grid"></div>
@@ -16,7 +17,6 @@
 
       <div class="hud-boot-center">
         <p class="hud-boot-title">SYSTEMS ONLINE</p>
-        <p class="hud-boot-sub">Initializing flight interfaces</p>
         <div class="hud-boot-bar"><span></span></div>
       </div>
     </div>
@@ -24,29 +24,40 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted } from 'vue'
-import { useSystemsOnline } from '~/composables/useSystemsOnline'
+import { ref, computed, watch } from 'vue'
+import { useTimeoutFn, usePreferredReducedMotion } from '@vueuse/core'
+import { useSystemsOnline, HUD_BOOT_FADE_MS } from '~/composables/useSystemsOnline'
+
+// Just long enough to swap the (already invisible) overlay out of the DOM.
+const REDUCED_MOTION_VISIBLE_MS = 50
 
 const { isBooting, bootGeneration, systemsOnline } = useSystemsOnline()
 const visible = ref(false)
-let hideTimer = null
 
+const reducedMotion = usePreferredReducedMotion()
+const visibleDurationMs = computed(() =>
+  reducedMotion.value === 'reduce' ? REDUCED_MOTION_VISIBLE_MS : HUD_BOOT_FADE_MS,
+)
+
+const { start: startHideTimer } = useTimeoutFn(
+  () => {
+    visible.value = false
+  },
+  visibleDurationMs,
+  { immediate: false },
+)
+
+// Watch both refs: systemsOnline flips true on a deferred rAF tick after
+// isBooting flips true, so relying on isBooting alone can fire before
+// systemsOnline catches up and skip showing the overlay entirely.
 watch(
-  isBooting,
-  (booting) => {
-    if (booting && systemsOnline.value) {
-      clearTimeout(hideTimer)
+  [isBooting, systemsOnline],
+  ([booting, online]) => {
+    if (booting && online) {
       visible.value = true
-      // Match css fade-out end
-      hideTimer = setTimeout(() => {
-        visible.value = false
-      }, 2100)
+      startHideTimer()
     }
   },
   { immediate: true },
 )
-
-onUnmounted(() => {
-  clearTimeout(hideTimer)
-})
 </script>

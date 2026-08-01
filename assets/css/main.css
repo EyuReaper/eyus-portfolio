@@ -279,7 +279,9 @@ html {
   background:
     radial-gradient(ellipse 80% 60% at 50% 50%, rgba(16, 185, 129, 0.08), transparent 70%),
     rgba(2, 8, 12, 0.35);
-  animation: hud-boot-fade 2.1s ease forwards;
+  animation:
+    hud-boot-fade var(--hud-boot-duration, 2.1s) ease forwards,
+    hud-boot-iris 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hud-boot-scan {
@@ -360,19 +362,12 @@ html {
   text-transform: uppercase;
   color: #6ee7b7;
   text-shadow: 0 0 16px rgba(16, 185, 129, 0.85);
-  animation: hud-boot-type 0.9s steps(18, end) both;
+  animation:
+    hud-boot-type 0.9s steps(18, end) both,
+    hud-boot-flicker 0.35s steps(1, end) both;
   overflow: hidden;
   white-space: nowrap;
   max-width: 22ch;
-}
-
-.hud-boot-sub {
-  font-size: 0.65rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(0, 212, 255, 0.75);
-  opacity: 0;
-  animation: hud-boot-sub 1.2s ease 0.35s both;
 }
 
 .hud-boot-bar {
@@ -383,7 +378,7 @@ html {
   overflow: hidden;
   border-radius: 1px;
   opacity: 0;
-  animation: hud-boot-sub 0.4s ease 0.2s both;
+  animation: hud-boot-line 0.4s ease 0.2s both;
 }
 .hud-boot-bar > span {
   display: block;
@@ -419,13 +414,27 @@ html {
   from { max-width: 0; opacity: 0; }
   to { max-width: 22ch; opacity: 1; }
 }
-@keyframes hud-boot-sub {
+@keyframes hud-boot-line {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes hud-boot-bar {
   from { width: 0; }
   to { width: 100%; }
+}
+/* Visor aperture snapping open around the boot HUD */
+@keyframes hud-boot-iris {
+  0% { clip-path: circle(0% at 50% 50%); }
+  100% { clip-path: circle(150% at 50% 50%); }
+}
+/* Signal-lock strobe on the title before it settles */
+@keyframes hud-boot-flicker {
+  0%, 100% { filter: brightness(1); }
+  8% { filter: brightness(3) blur(1px); }
+  16% { filter: brightness(0.3); }
+  28% { filter: brightness(2.4); }
+  42% { filter: brightness(0.6); }
+  60% { filter: brightness(1.4); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -437,7 +446,6 @@ html {
   .hud-boot-grid,
   .hud-boot-corner,
   .hud-boot-title,
-  .hud-boot-sub,
   .hud-boot-bar > span {
     animation-duration: 0.01ms !important;
   }
