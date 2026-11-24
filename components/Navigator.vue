@@ -162,7 +162,7 @@
     <Transition name="navigator-slide">
       <div
         v-if="isOpen"
-        class="ace-panel fixed bottom-[140px] sm:bottom-[170px] right-4 sm:right-6 z-[10015] w-[min(20rem,calc(100vw-2rem))] h-[min(540px,calc(100dvh-170px))] sm:h-[min(540px,calc(100dvh-200px))] rounded-2xl flex flex-col overflow-hidden"
+        class="ace-panel fixed bottom-[140px] sm:bottom-[170px] right-4 sm:right-6 z-[10015] w-[min(20rem,calc(100vw-2rem))] h-[min(540px,calc(100svh-170px))] sm:h-[min(540px,calc(100svh-200px))] rounded-2xl flex flex-col overflow-hidden"
         role="dialog"
         aria-label="ACE chat"
       >

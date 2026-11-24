@@ -13,9 +13,12 @@
       </div>
 
       <!-- Radar Sweep - Fixed origin -->
-      <div class="absolute inset-0 z-10 pointer-events-none animate-radar-sweep">
-        <div class="w-full h-full rounded-full" 
-             style="background: conic-gradient(from 0deg at 50% 50%, transparent 300deg, rgba(16, 185, 129, 0.4) 360deg);">
+      <!-- Clip the rotating sweep to the circle so its corners never widen the page -->
+      <div class="absolute inset-0 z-10 rounded-full overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 animate-radar-sweep">
+          <div class="w-full h-full rounded-full"
+               style="background: conic-gradient(from 0deg at 50% 50%, transparent 300deg, rgba(16, 185, 129, 0.4) 360deg);">
+          </div>
         </div>
       </div>
 

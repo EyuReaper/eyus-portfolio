@@ -1,7 +1,7 @@
 <template>
   <canvas
     ref="canvasRef"
-    class="fixed inset-0 -z-10 w-full h-full pointer-events-none"
+    class="terrain-canvas fixed top-0 left-0 -z-10 w-full pointer-events-none"
     aria-hidden="true"
   ></canvas>
 </template>
@@ -178,9 +178,18 @@ onMounted(async () => {
     if (!running) renderer.render(scene, camera);
   });
 
+  // Phones show/hide their toolbar while scrolling, which fires "resize" with
+  // only the height changed. The canvas is already sized to the large viewport
+  // (100lvh), so ignore those and only react to real width/orientation changes.
+  const touch = window.matchMedia?.('(pointer: coarse)').matches;
+  let lastW = 0;
+  let lastH = 0;
   const resize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    if (touch && lastW && Math.abs(w - lastW) < 30 && Math.abs(h - lastH) < 200) return;
+    lastW = w;
+    lastH = h;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
@@ -274,3 +283,11 @@ onMounted(async () => {
 
 onBeforeUnmount(() => cleanup());
 </script>
+
+<style scoped>
+/* Large viewport height: already covers the area a collapsing toolbar uncovers */
+.terrain-canvas {
+  height: 100vh;
+  height: 100lvh;
+}
+</style>

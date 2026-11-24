@@ -56,8 +56,6 @@ body {
 
   @apply font-mono bg-background text-system;
     min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: stretch;
 
 
 
@@ -89,8 +87,18 @@ body {
 }
 
 html {
-  height: -webkit-fill-available;
-  height: stretch;
+  /* Same colour as the page so any overscroll never shows a mismatched strip */
+  background-color: #020617;
+}
+html,
+body {
+  /* Stop the rubber-band bounce at the top/bottom of the page on phones */
+  overscroll-behavior-y: none;
+}
+body {
+  /* Never let a stray decoration make the page scroll sideways. "clip" (unlike
+     "hidden") doesn't create a scroll container, so the sticky header still works. */
+  overflow-x: clip;
 }
 
 
