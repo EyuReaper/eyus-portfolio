@@ -6,12 +6,6 @@
                 class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-emerald-500/80 transition-all duration-500 group-hover/container:w-6 group-hover/container:h-6 group-hover/container:border-emerald-400"
             ></div>
             <div
-                class="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-emerald-500/80 transition-all duration-500 group-hover/container:w-6 group-hover/container:h-6 group-hover/container:border-emerald-400"
-            ></div>
-            <div
-                class="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-emerald-500/80 transition-all duration-500 group-hover/container:w-6 group-hover/container:h-6 group-hover/container:border-emerald-400"
-            ></div>
-            <div
                 class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-emerald-500/80 transition-all duration-500 group-hover/container:w-6 group-hover/container:h-6 group-hover/container:border-emerald-400"
             ></div>
 
@@ -19,7 +13,7 @@
             <button
                 @click="initiateAirDrop"
                 :disabled="state !== 'idle'"
-                class="military-cut-button phosphor-flicker relative w-full max-w-[320px] px-8 pl-6 py-[14px] bg-slate-950/90 border border-emerald-500/60 text-emerald-500 font-mono font-bold tracking-[0.1em] overflow-hidden transition-all duration-300 hover:bg-emerald-500/10 hover:text-emerald-400 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed [filter:drop-shadow(0_0_4px_rgba(16,185,129,0.35))] hover:[filter:drop-shadow(0_0_8px_rgba(16,185,129,0.65))]"
+                class="group/btn military-cut-button military-cut-outline phosphor-flicker relative w-full max-w-[320px] px-8 py-[14px] text-emerald-500 font-mono font-bold tracking-[0.1em] overflow-hidden transition-[color,transform] duration-300 hover:text-emerald-400 active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed"
             >
                 <!-- Glitch Effect Layers (Visible on Hover) -->
                     <span
@@ -220,6 +214,7 @@ const initiateAirDrop = () => {
 </script>
 
 <style scoped>
+/* Opacity-only flicker (compositor-friendly); the glow itself is static */
 @keyframes phosphor-flicker {
     0%,
     83%,
@@ -227,36 +222,31 @@ const initiateAirDrop = () => {
     91%,
     100% {
         opacity: 1;
-        text-shadow: 0 0 7px rgba(16, 185, 129, 0.45);
     }
 
     84% {
         opacity: 0.72;
-        text-shadow: 0 0 2px rgba(16, 185, 129, 0.2);
     }
 
     85% {
         opacity: 0.94;
-        text-shadow: 0 0 13px rgba(16, 185, 129, 0.8);
     }
 
     88% {
         opacity: 0.62;
-        text-shadow: 0 0 1px rgba(16, 185, 129, 0.1);
     }
 
     89% {
         opacity: 1;
-        text-shadow: 0 0 16px rgba(16, 185, 129, 0.9);
     }
 
     92% {
         opacity: 0.78;
-        text-shadow: 0 0 4px rgba(16, 185, 129, 0.3);
     }
 }
 
 .phosphor-flicker {
+    text-shadow: 0 0 7px rgba(16, 185, 129, 0.45);
     animation: phosphor-flicker 4.8s steps(1, end) infinite;
 }
 

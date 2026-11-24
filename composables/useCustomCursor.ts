@@ -3,7 +3,12 @@ export function useCustomCursor() {
     return { cleanup: () => {} }
   }
 
-  if (window.matchMedia('(pointer: coarse)').matches) {
+  // Touch devices and reduced-motion users keep the native cursor:
+  // bail before the style that hides it is injected.
+  if (
+    window.matchMedia('(pointer: coarse)').matches
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
     return { cleanup: () => {} }
   }
 
@@ -16,7 +21,7 @@ export function useCustomCursor() {
   styleEl.textContent = `
     *, *::after, *::before { cursor: none !important; }
     [data-cursor-missile] {
-      will-change: transform, filter;
+      will-change: transform;
       transition: filter 0.15s ease;
     }
     [data-cursor-missile] svg {
@@ -72,13 +77,6 @@ export function useCustomCursor() {
           <stop offset="65%" stop-color="#f97316"/>
           <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
         </radialGradient>
-        <filter id="msl-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1.2" result="b"/>
-          <feMerge>
-            <feMergeNode in="b"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
       </defs>
 
       <ellipse class="msl-plume" cx="14" cy="34.5" rx="3.2" ry="5.5" fill="url(#msl-thrust)" opacity="0.95"/>
@@ -95,7 +93,7 @@ export function useCustomCursor() {
                L18.6 26
                C18.6 28.2 16.6 29.5 14 29.5
                C11.4 29.5 9.4 28.2 9.4 26
-               Z" fill="url(#msl-body)" filter="url(#msl-glow)"/>
+               Z" fill="url(#msl-body)"/>
 
       <path d="M12.2 10 C12.2 10 12.4 7.5 14 5.2 C14.2 7.2 14.2 26 14.2 26 C13 26 12.2 25 12.2 24 Z"
             fill="#ecfdf5" opacity="0.28"/>
@@ -139,7 +137,10 @@ export function useCustomCursor() {
     kind: 'smoke' | 'ember' | 'spark'
   }
 
-  const MAX_PARTICLES = 48
+  const MAX_PARTICLES = 24
+  // Fixed element size; per-frame size is applied via transform scale
+  const P_BASE = 16
+  const P_HALF = P_BASE / 2
   const pool: Particle[] = []
   const active: Particle[] = []
 
@@ -147,6 +148,7 @@ export function useCustomCursor() {
     const el = document.createElement('div')
     el.style.cssText = `
       position: absolute; left: 0; top: 0;
+      width: ${P_BASE}px; height: ${P_BASE}px;
       border-radius: 50%;
       pointer-events: none;
       will-change: transform, opacity;
@@ -205,27 +207,19 @@ export function useCustomCursor() {
     const el = p.el
     if (kind === 'smoke') {
       const g = 120 + Math.floor(Math.random() * 40)
-      el.style.background = `radial-gradient(circle, rgba(${g},${g + 20},${g + 10},0.55) 0%, rgba(16,185,129,0.12) 55%, transparent 70%)`
-      el.style.filter = `blur(${2.5 + Math.random() * 3}px)`
-      el.style.boxShadow = 'none'
+      el.style.background = `radial-gradient(circle, rgba(${g},${g + 20},${g + 10},0.5) 0%, rgba(${g},${g + 20},${g + 10},0.22) 25%, rgba(16,185,129,0.08) 45%, transparent 62%)`
     } else if (kind === 'ember') {
-      el.style.background = 'radial-gradient(circle, #fff7ed 0%, #fbbf24 40%, #f97316 70%, transparent 100%)'
-      el.style.filter = 'blur(0.6px)'
-      el.style.boxShadow = '0 0 6px rgba(251,191,36,0.7)'
+      el.style.background = 'radial-gradient(circle, #fff7ed 0%, #fbbf24 22%, rgba(249,115,22,0.75) 38%, rgba(251,191,36,0.25) 52%, transparent 66%)'
     } else {
-      el.style.background = 'radial-gradient(circle, #ecfdf5 0%, #34d399 50%, transparent 100%)'
-      el.style.filter = 'blur(0.4px)'
-      el.style.boxShadow = '0 0 4px rgba(52,211,153,0.8)'
+      el.style.background = 'radial-gradient(circle, #ecfdf5 0%, #34d399 25%, rgba(52,211,153,0.35) 45%, transparent 64%)'
     }
-    el.style.width = `${p.size}px`
-    el.style.height = `${p.size}px`
     el.style.opacity = '1'
 
     active.push(p)
   }
 
   // Soft lag trail segments (ribbon behind missile)
-  const TRAIL_LEN = 12
+  const TRAIL_LEN = 8
   const trailEls: HTMLDivElement[] = []
   const trailPos = Array.from({ length: TRAIL_LEN }, () => ({ x: -200, y: -200 }))
 
@@ -239,9 +233,8 @@ export function useCustomCursor() {
       border-radius: 50%;
       background: radial-gradient(circle,
         rgba(16,185,129,${0.45 - t * 0.35}) 0%,
-        rgba(6,78,59,${0.2 - t * 0.15}) 50%,
-        transparent 70%);
-      filter: blur(${1 + t * 3}px);
+        rgba(6,78,59,${0.2 - t * 0.15}) 35%,
+        transparent 65%);
       pointer-events: none;
       will-change: transform, opacity;
       opacity: ${0.7 - t * 0.55};
@@ -257,14 +250,27 @@ export function useCustomCursor() {
   let prevY = 0
   let angle = 0 // CSS deg; 0 = nose up
   let isHover = false
+  let lastHover: boolean | null = null
   let hasMoved = false
   let rafId: number | null = null
   let spawnAcc = 0
   let lastTs = performance.now()
+  // Frames without pointer movement; the loop stops once idle and the smoke has faded
+  let idleFrames = 0
+  const IDLE_STOP_FRAMES = 120
+
+  function wake() {
+    idleFrames = 0
+    if (rafId === null) {
+      lastTs = performance.now()
+      rafId = requestAnimationFrame(animate)
+    }
+  }
 
   const interactiveSel = 'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor-hover]'
 
   const onMouseMove = (e: MouseEvent) => {
+    wake()
     mouseX = e.clientX
     mouseY = e.clientY
     if (!hasMoved) {
@@ -300,7 +306,7 @@ export function useCustomCursor() {
     lastTs = ts
 
     if (!hasMoved) {
-      rafId = requestAnimationFrame(animate)
+      rafId = null
       return
     }
 
@@ -361,7 +367,8 @@ export function useCustomCursor() {
       if (speed > 2 || isHover) spawn(tailX, tailY, noseAngleRad, speed, 'ember')
       if (speed > 6) spawn(tailX, tailY, noseAngleRad, speed, 'spark')
     }
-    if (speed < 0.5 && Math.random() < 0.12 * dt) {
+    idleFrames = speed > 0.35 ? 0 : idleFrames + 1
+    if (speed < 0.5 && idleFrames < IDLE_STOP_FRAMES && Math.random() < 0.12 * dt) {
       spawn(tailX, tailY, noseAngleRad, 0.5, 'ember')
       if (Math.random() < 0.4) spawn(tailX, tailY, noseAngleRad, 0.3, 'smoke')
     }
@@ -391,11 +398,11 @@ export function useCustomCursor() {
         ? (t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85)
         : 1 - t
       const pScale = p.kind === 'smoke' ? 1 + t * 1.6 : 1 - t * 0.4
-      const half = (p.size * pScale) / 2
-      p.el.style.width = `${p.size * pScale}px`
-      p.el.style.height = `${p.size * pScale}px`
+      // Gradients now fade out at ~60-66% radius instead of relying on blur/box-shadow,
+      // so scale up to keep the same visible footprint
+      const s = (p.size * pScale * (p.kind === 'smoke' ? 1.25 : 1.5)) / P_BASE
       p.el.style.opacity = String(Math.max(0, fade) * (p.kind === 'smoke' ? 0.75 : 0.95))
-      p.el.style.transform = `translate3d(${p.x - half}px, ${p.y - half}px, 0)`
+      p.el.style.transform = `translate3d(${p.x - P_HALF}px, ${p.y - P_HALF}px, 0) scale(${s})`
     }
 
     // Place nose tip exactly on the pointer.
@@ -406,9 +413,13 @@ export function useCustomCursor() {
     //   4) move tip to mouse
     const scale = isHover ? 1.35 : 1
     missile.style.transform = `translate3d(${tipX}px, ${tipY}px, 0) rotate(${angle}deg) scale(${scale}) translate3d(${-TIP_X}px, ${-TIP_Y}px, 0)`
-    missile.style.filter = isHover
-      ? 'drop-shadow(0 0 6px #34d399) drop-shadow(0 0 16px rgba(16,185,129,0.75)) drop-shadow(0 8px 10px rgba(249,115,22,0.45))'
-      : 'drop-shadow(0 0 4px #10b981) drop-shadow(0 0 12px rgba(16,185,129,0.4)) drop-shadow(0 6px 8px rgba(249,115,22,0.25))'
+    // Filter only changes with hover state; reassigning it each frame forces a repaint
+    if (isHover !== lastHover) {
+      lastHover = isHover
+      missile.style.filter = isHover
+        ? 'drop-shadow(0 0 10px rgba(52,211,153,0.85))'
+        : 'drop-shadow(0 0 7px rgba(16,185,129,0.6))'
+    }
 
     if (plume && plumeCore) {
       const boost = 0.75 + Math.min(speed * 0.06, 0.6) + (isHover ? 0.25 : 0)
@@ -417,9 +428,12 @@ export function useCustomCursor() {
       plumeCore.setAttribute('opacity', String(0.7 + Math.min(speed * 0.03, 0.3)))
     }
 
+    if (idleFrames >= IDLE_STOP_FRAMES && active.length === 0) {
+      rafId = null
+      return
+    }
     rafId = requestAnimationFrame(animate)
   }
-  rafId = requestAnimationFrame(animate)
 
   function cleanup() {
     if (rafId !== null) cancelAnimationFrame(rafId)

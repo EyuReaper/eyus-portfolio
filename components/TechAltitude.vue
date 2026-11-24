@@ -1,6 +1,6 @@
 <template>
-  <div class="transition-colors duration-500 bg-gray-900 dark:bg-slate-950">
-    <div class="relative py-20 overflow-hidden mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+  <div>
+    <div class="relative py-20 overflow-hidden mx-auto max-w-6xl px-4 sm:px-24 xl:px-8">
       <h2 class="mb-4 font-mono text-3xl font-bold tracking-tighter text-center text-white">
         TECH_ALTITUDE: <span class="uppercase text-emerald-500">Top Languages</span>
         <a :href="`https://github.com/${githubUser}`" target="_blank" class="transition-colors text-sky-500 hover:text-emerald-400">
@@ -12,7 +12,7 @@
       <div v-else-if="error" class="font-mono text-center text-red-500">ERROR: SIGNAL_LOST ({{ error }})</div>
       <div v-else-if="techStackData.length === 0" class="font-mono text-center text-white">NO DATA FOUND.</div>
 
-      <div v-else class="relative w-full" ref="container" :style="{ height: containerHeight + 'px' }">
+      <div v-else class="relative w-full mb-8" ref="container" :style="{ height: containerHeight + 'px' }">
         <svg :viewBox="`0 0 ${width} ${viewBoxHeight}`" class="w-full h-full overflow-visible" preserveAspectRatio="none">
           <defs>
             <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -85,11 +85,22 @@
           :key="`label-${index}`"
           :style="{ left: `${(points[index].x / width) * 100}%`, top: `${labelY(index)}px` }"
           class="absolute transition-all duration-300 ease-out pointer-events-none"
-          :class="activeLabel === index ? 'opacity-100 transform -translate-x-1/2 -translate-y-2' : 'opacity-0 transform -translate-x-1/2 translate-y-0'"
+          :class="[labelAlign(index), activeLabel === index ? 'opacity-100 -translate-y-2' : 'opacity-0 translate-y-0']"
         >
-          <div class="px-3 py-1 text-xs font-mono text-emerald-400 bg-slate-900 border border-emerald-500/50 rounded shadow-[0_0_15px_rgba(16,185,129,0.3)] backdrop-blur-md">
+          <div class="px-3 py-1 text-xs font-mono text-emerald-400 bg-slate-900 border border-emerald-500/50 rounded shadow-[0_0_15px_rgba(16,185,129,0.3)]">
             {{ tech.name.toUpperCase() }} // {{ tech.altitude }}%
           </div>
+        </div>
+
+        <!-- Axis labels: readable without hovering (tap a point on phones) -->
+        <div class="absolute inset-x-0 top-full hidden sm:block h-6 mt-2" aria-hidden="true">
+          <span
+            v-for="(tech, index) in techStackData"
+            :key="`axis-${index}`"
+            class="absolute -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.14em] whitespace-nowrap transition-colors duration-200"
+            :class="activeLabel === index ? 'text-emerald-300' : 'text-slate-400'"
+            :style="{ left: `${(points[index].x / width) * 100}%` }"
+          >{{ tech.name }}</span>
         </div>
       </div>
 
@@ -114,7 +125,16 @@ const props = defineProps({
 });
 
 const { languages: fetchedLanguages, loading, error } = useGithubLanguages(props.githubUser);
-const techStackData = computed(() => fetchedLanguages.value);
+// The API returns languages largest first; reverse so the line climbs left to right
+// and peaks at the most-used language, like an aircraft gaining altitude.
+const techStackData = computed(() => [...fetchedLanguages.value].reverse());
+
+// Keep the first and last tooltips inside the chart instead of centring them on the edge
+const labelAlign = (index) => {
+  if (index === 0) return 'translate-x-0';
+  if (index === techStackData.value.length - 1) return '-translate-x-full';
+  return '-translate-x-1/2';
+};
 
 const container = ref(null);
 const width = ref(1000);
@@ -190,9 +210,19 @@ const setWidth = () => {
   if (container.value) width.value = container.value.clientWidth;
 };
 
+// Coalesce resize bursts into one measurement per frame
+let resizeFrame = null;
+const onResize = () => {
+  if (resizeFrame !== null) return;
+  resizeFrame = requestAnimationFrame(() => {
+    resizeFrame = null;
+    setWidth();
+  });
+};
+
 onMounted(() => {
   setWidth();
-  window.addEventListener('resize', setWidth);
+  window.addEventListener('resize', onResize, { passive: true });
 
   // Trigger animation when data arrives or visibility changes
   watch([techStackData, () => props.isVisible], async ([data, visible]) => {
@@ -207,7 +237,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', setWidth);
+  window.removeEventListener('resize', onResize);
+  if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
 });
 
 // Hover Logic

@@ -31,7 +31,23 @@ Rules:
 - Occasionally use subtle aviation/military language naturally -- words like "confirmed", "roger that", "navigating", "on course" where they fit without feeling forced. Never overdo it
 - If asked something you don't know, say: "That's outside flight plan - reach out via COMMS section and Eyu will get back to you.`;
 
-function convertMessages(messages: { role: string; content: string }[]) {
+type ChatMessage = { role: 'user' | 'assistant'; content: string };
+
+function sanitizeHistory(history: unknown): ChatMessage[] {
+  if (!Array.isArray(history)) return [];
+  const clean = history
+    .filter(
+      (m): m is ChatMessage =>
+        (m?.role === 'user' || m?.role === 'assistant') && typeof m.content === 'string',
+    )
+    .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }))
+    .slice(-6);
+  // Gemini contents must start with a user turn.
+  const firstUser = clean.findIndex((m) => m.role === 'user');
+  return firstUser === -1 ? [] : clean.slice(firstUser);
+}
+
+function convertMessages(messages: ChatMessage[]) {
   return messages.map((msg) => ({
     role: msg.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: msg.content }],
@@ -42,12 +58,19 @@ export default defineEventHandler(async (event) => {
   const ip = getHeader(event, 'x-forwarded-for')?.split(',')[0].trim() || event.node.req.socket.remoteAddress || 'unknown';
 
   const now = Date.now();
+  if (rateLimiter.size > 500) {
+    for (const [key, { resetAt }] of rateLimiter) {
+      if (resetAt <= now) rateLimiter.delete(key);
+    }
+  }
   const entry = rateLimiter.get(ip);
 
   if (entry) {
     if (now >= entry.resetAt) {
       rateLimiter.set(ip, { count: 1, resetAt: now + 60_000 });
     } else if (entry.count >= 10) {
+      // Deliberately 200, not 429: the client's $fetch throws on non-2xx and would
+      // replace this message with the generic "NAVIGATOR offline" fallback.
       return { reply: 'Too many queries. Stand by 60 seconds.' };
     } else {
       entry.count++;
@@ -57,18 +80,17 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event);
-  const { message, history } = body as {
-    message: string;
-    history: { role: string; content: string }[];
-  };
+  const { message, history } = (body ?? {}) as { message?: unknown; history?: unknown };
 
-  if (!message || typeof message !== 'string') {
+  if (typeof message !== 'string' || !message.trim()) {
     throw createError({ statusCode: 400, statusMessage: 'Missing message' });
   }
+  if (message.length > 1000) {
+    throw createError({ statusCode: 400, statusMessage: 'Message too long' });
+  }
 
-  const conversationHistory = (history || []).slice(-6);
   const contents = [
-    ...convertMessages(conversationHistory),
+    ...convertMessages(sanitizeHistory(history)),
     { role: 'user', parts: [{ text: message }] },
   ];
 
@@ -79,10 +101,10 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`,
       {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', 'x-goog-api-key': apiKey },
         body: JSON.stringify({
           system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
           contents,

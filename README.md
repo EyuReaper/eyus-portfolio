@@ -1,96 +1,73 @@
 # Eyus Portfolio Tactical SPA
 
-Eyus Portfolio is now a Single Page Application (SPA) reimagined with an Air Force Tactical HUD theme, built using Vue 3 (Composition API) and Tailwind CSS. It showcases projects, contact information, and professional connections through a unified, immersive experience. The project demonstrates modern web development techniques including form validation, secure API integration, accessible UI components, and smooth animated transitions.
-
-## Table of Contents
-
-- [Eyus Portfolio](#eyus-portfolio)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Project Structure](#project-structure)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contact Form](#contact-form)
-  - [Security \& Accessibility](#security--accessibility)
-  - [License](#license)
+My personal portfolio, built as a single-page Nuxt 3 app with Vue 3 (Composition API) and Tailwind CSS, and styled like an Air Force tactical HUD. It shows my projects, my contact details, and where to find me online.
 
 ## Features
 
-- **Single Page Application (SPA):** Delivers a fluid, app-like experience with smooth transitions between sections.
-- **Tactical HUD Theme:** Immersive Air Force HUD styling with dark mode, scanline effects, and a fixed grid pattern.
-- **Responsive Design:** Built using Tailwind CSS for mobile-first responsiveness, with a cockpit-like aesthetic.
-- **Bottom-Docked Navigation:** Innovative floating, pill-shaped navigation with Intersection Observer to highlight the active section.
-- **Contact Form:** Integrated contact form with validation, secure API submission using Web3Forms, custom animated loader, and spam prevention (honeypot field).
-- **Smooth Transitions:** Uses Vue's `<Transition>` component and Intersection Observer for elegant UI state changes.
-- **Accessibility:** Semantic HTML, proper ARIA attributes, live region updates for user feedback, and keyboard-friendly navigation, including project cards.
-- **Modular Components:** Structured for maintainability and extensibility.
+- One page split into four sections (SCAN, INTEL, HANGAR, COMMS), with animated transitions as each section scrolls into view.
+- A HUD look throughout: scanlines, a night-vision (NVG) mode, and a Three.js background that flies low over a wireframe contour map and climbs as you scroll.
+- A side rail that tracks the active section with Intersection Observer and shows how far down the page you are.
+- ACE, a chat assistant that answers questions about me. It runs through a Nuxt server route that calls Google's Gemini API.
+- A small music player, a scroll-to-top button, and live GitHub stats served from cached server routes.
+- A contact form that validates input, submits through Web3Forms, shows a loader while sending, and uses a honeypot field to catch spam.
+- Responsive layout built mobile first with Tailwind CSS.
 
-## Project Structure
-
-Below is a brief explanation of the main project folders and files:
+## Project structure
 
 ```
 eyus-portfolio/
-├── assets/              # Images, fonts, and other static files (e.g., CSS for global styles).
-├── components/          # Reusable Vue components (e.g., BottomNav.vue for navigation).
-│   └── ui/              # UI-specific components (e.g., FallingStarsBg.vue).
+├── assets/              # Global CSS, audio, and other static assets.
+├── components/          # Vue components (SideNav.vue, Navigator.vue, CoPilotMusicPlayer.vue, ...).
+│   └── ui/              # Visual building blocks (e.g., FlightTerrainBg.vue).
+├── composables/         # Shared state and helpers (theme, HUD boot, custom cursor, ...).
 ├── pages/               # Contains the single page-level Vue component (index.vue).
 │   └── index.vue        # The main SPA with all sections (SCAN, INTEL, HANGAR, COMMS).
 ├── public/              # Publicly accessible files like favicon.
+├── server/api/          # Nuxt server routes (chat, GitHub stats and languages).
 ├── README.md            # This file.
 ├── tailwind.config.js   # Tailwind CSS configuration, including custom colors and animations.
 └── package.json         # Project dependencies and scripts.
 ```
 
-- **assets/**: Contains all static assets used throughout the website.
-- **components/**: Contains reusable UI components, including the new `SideNav.vue` and `FallingStarsBg.vue`.
-- **pages/**: Houses the single `index.vue` file, which now serves as the entire application.
-- **public/**: Files in this folder are served directly.
+Everything lives on one page, `pages/index.vue`. Files in `public/` are served as is.
 
 ## Installation
 
-1. **Clone the Repository:**
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/EyuReaper/eyus-portfolio.git
    cd eyus-portfolio
    ```
 
-2. **Install Dependencies:**
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. **Run the Development Server:**
+3. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-   Open your browser and navigate to `http://localhost:3000` (or the port specified) to view the project.
+   Then open `http://localhost:3000` (or whichever port the dev server prints).
+
+To use the ACE chat locally, copy `.env.example` to `.env` and add a Google AI API key.
 
 ## Usage
 
-- **Development:** Use your favorite IDE (e.g., Visual Studio Code) to edit Vue components. Changes will be hot-reloaded in the browser.
-- **Building:** Run `npm run build` to compile the project for production.
+Edit the Vue components in any editor; the dev server hot-reloads changes in the browser. Run `npm run build` to build for production.
 
-## Security & Accessibility
+## Security and accessibility
 
-- **Security:**
-  - Sensitive data such as API keys are ideally managed via environment variables or backend functions.
-  - The honeypot field helps filter spam submissions.
-  - API submissions use HTTPS.
-- **Accessibility:**
-  - All form inputs include associated `<label>` elements.
-  - ARIA attributes such as `aria-invalid`, `aria-describedby`, `aria-live`, and `role` are added for better screen reader support.
-  - Project cards are now keyboard-navigable (`tabindex="0"`, `role="button"`) and trigger the image modal on `Enter` key press.
-  - The animated loader is hidden from assistive technologies, with a visually hidden alternative text provided.
+API keys stay on the server: the chat route reads the Gemini key from an environment variable, and the browser never sees it. Form submissions go over HTTPS, and the honeypot field helps filter out spam bots.
+
+Every form input has a `<label>`, and the form uses `aria-invalid`, `aria-describedby`, and an `aria-live` region so screen readers announce errors and the send result. Project cards are keyboard accessible (`tabindex="0"`, `role="button"`) and open the image preview on `Enter`. The animated loader is hidden from assistive technology and has visually hidden text in its place.
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
----
-
-For any questions or feedback, you can connect through my [LinkedIn](https://www.linkedin.com/in/eyuel-getachew-37061513b) or [GitHub](https://github.com/EyuReaper).
+For questions or feedback, reach me on [LinkedIn](https://www.linkedin.com/in/eyuel-getachew-37061513b) or [GitHub](https://github.com/EyuReaper).

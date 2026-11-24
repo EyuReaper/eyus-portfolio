@@ -32,6 +32,7 @@
     "clsx": "^2.1.1",
     "floating-vue": "^5.2.2",
     "tailwind-merge": "^3.3.1",
+    "three": "^0.181.2",
     "vue3-marquee": "^4.2.2"
   }
 }

@@ -1,9 +1,9 @@
 <template>
     <div
-        class="min-h-screen bg-slate-950 text-sky-500 dark:bg-gray-950 dark:text-gray-100"
+        class="relative isolate min-h-screen bg-slate-950 text-sky-500 dark:bg-gray-950 dark:text-gray-100"
     >
         <nav
-            class="sticky top-0 z-[60] flex items-center justify-between px-4 md:px-8 py-3 border-b border-emerald-500/20 bg-slate-950/90 backdrop-blur-md font-mono"
+            class="sticky top-0 z-[60] flex items-center justify-between px-4 md:px-8 py-3 border-b border-emerald-500/20 bg-slate-950/95 font-mono"
         >
             <div class="flex items-center gap-6">
                 <div class="flex items-center gap-2 group cursor-crosshair">
@@ -57,43 +57,73 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <div
-                    class="flex items-center gap-4 px-3 py-1.5 bg-slate-900/80 border border-emerald-500/20 rounded-sm text-[11px]"
-                >
-                    <a
-                        :href="`https://github.com/${githubUser}`"
-                        target="_blank"
-                        class="flex items-center gap-1.5 hover:text-white transition-all group"
+                <div class="flex items-center gap-2">
+                    <div
+                        class="flex items-center gap-4 px-3 py-1.5 bg-slate-900/80 border border-emerald-500/20 rounded-sm text-[11px]"
                     >
-                        <font-awesome-icon
-                            :icon="['fab', 'github']"
-                            class="text-emerald-500 group-hover:scale-110"
-                        />
-                        <span class="font-bold text-slate-500">REPOS:</span>
-                        <span class="font-mono text-emerald-400">{{
-                            ghStats.repos
-                        }}</span>
-                    </a>
-                    <div class="w-[1px] h-3 bg-slate-800"></div>
-                    <div class="flex items-center gap-1.5">
-                        <font-awesome-icon
-                            :icon="['fas', 'star']"
-                            class="text-orange-500"
-                        />
-                        <span class="font-bold text-slate-500">STARS:</span>
-                        <span class="font-mono text-emerald-400">{{
-                            ghStats.stars
-                        }}</span>
+                        <a
+                            :href="`https://github.com/${githubUser}`"
+                            target="_blank"
+                            class="flex items-center gap-1.5 hover:text-white transition-all group"
+                        >
+                            <font-awesome-icon
+                                :icon="['fab', 'github']"
+                                class="text-emerald-500 group-hover:scale-110"
+                            />
+                            <span class="hidden sm:inline font-bold text-slate-500">REPOS:</span>
+                            <span class="font-mono text-emerald-400">{{
+                                ghStats.repos
+                            }}</span>
+                        </a>
+                        <div class="w-[1px] h-3 bg-slate-800"></div>
+                        <div class="flex items-center gap-1.5">
+                            <font-awesome-icon
+                                :icon="['fas', 'star']"
+                                class="text-orange-500"
+                            />
+                            <span class="hidden sm:inline font-bold text-slate-500">STARS:</span>
+                            <span class="font-mono text-emerald-400">{{
+                                ghStats.stars
+                            }}</span>
+                        </div>
                     </div>
+                    <!-- Theme toggles for phones (the side rail is hidden there) -->
+                    <button
+                        type="button"
+                        class="sm:hidden grid place-items-center w-9 h-9 rounded-md border border-slate-500/30 text-slate-400 transition-colors"
+                        :aria-pressed="isLightMode"
+                        :aria-label="isLightMode ? 'Switch to night vision' : 'Switch to light mode'"
+                        @click="isLightMode ? toggleDarkMode() : toggleLightMode()"
+                    >
+                        <svg v-if="isLightMode" viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5h16v5.2a2.3 2.3 0 0 1-2.3 2.3h-2.4a2 2 0 0 1-1.8-1.1l-.6-1.2a1 1 0 0 0-1.8 0l-.6 1.2A2 2 0 0 1 8.7 18H6.3A2.3 2.3 0 0 1 4 15.7z"/><circle cx="8.3" cy="14" r="1.6"/><circle cx="15.7" cy="14" r="1.6"/><path d="M7 10.5 8.5 6h7l1.5 4.5M12 6V4"/></svg>
+                        <svg v-else viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+                    </button>
+                    <!-- Separate NVG toggle; hidden in light mode, where the toggle above shows goggles -->
+                    <button
+                        v-if="!isLightMode"
+                        type="button"
+                        class="sm:hidden grid place-items-center w-9 h-9 rounded-md border transition-colors"
+                        :class="isDarkMode ? 'text-green-400 border-green-400/50 bg-green-500/10' : 'text-slate-400 border-slate-500/30'"
+                        :aria-pressed="isDarkMode"
+                        aria-label="Toggle night vision"
+                        @click="toggleDarkMode"
+                    >
+                        <svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 10.5h16v5.2a2.3 2.3 0 0 1-2.3 2.3h-2.4a2 2 0 0 1-1.8-1.1l-.6-1.2a1 1 0 0 0-1.8 0l-.6 1.2A2 2 0 0 1 8.7 18H6.3A2.3 2.3 0 0 1 4 15.7z"/>
+                            <circle cx="8.3" cy="14" r="1.6" :fill="isDarkMode ? 'currentColor' : 'none'"/>
+                            <circle cx="15.7" cy="14" r="1.6" :fill="isDarkMode ? 'currentColor' : 'none'"/>
+                            <path d="M7 10.5 8.5 6h7l1.5 4.5M12 6V4"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </nav>
-        <FallingStarsBg />
+        <FlightTerrainBg />
 
         <!-- SCAN (Home) Section -->
         <section
             id="scan"
-            class="relative container z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16 mx-auto text-center"
+            class="relative container z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-24 py-16 mx-auto text-center"
         >
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
                 <span class="text-[20vw] sm:text-[18vw] font-bold text-emerald-500/[0.04] dark:text-emerald-500/[0.07] leading-none">翔</span>
@@ -110,15 +140,15 @@
                     Eyu's Portfolio
                 </h1>
                 <p class="mb-8 text-3xl italic font-semibold text-emerald-500">
-                    — Aviator of Code, Navigating Digital Frontiers —
+                    Aviator of Code. Cleared for your next build.
                 </p>
                 <p
                     class="max-w-2xl mx-auto mb-10 text-xl leading-relaxed text-white"
                 >
-                    Welcome to my command center. I am a dedicated developer,
-                    constantly honing my skills to deliver precise, robust, and
-                    high-performance web solutions. My mission is to transform
-                    complex challenges into elegant digital experiences.
+                    Welcome aboard. I'm Eyu, a full-stack developer with a
+                    front-end focus. I build fast, reliable web apps in Vue and
+                    React, and I like turning messy problems into tools people
+                    actually enjoy using.
                 </p>
                 <AirDropButton />
                 <div
@@ -129,9 +159,21 @@
                     <span class="text-emerald-500 typewriter-text"></span>
                     <span class="cursor">▊</span>
                 </div>
-                <p class="mt-4 font-mono text-sm text-sky-500 flicker">
-                    System Diagnostic: All systems nominal.
-                </p>
+                <!-- Availability, set in utils/availability.js -->
+                <div
+                    class="status-chip"
+                    :class="isOpenToWork ? 'status-chip--open' : 'status-chip--mission'"
+                    role="status"
+                >
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-key">STATUS //</span>
+                    <strong class="status-value">{{ isOpenToWork ? "OPEN TO NEW MISSIONS" : "ON MISSION" }}</strong>
+                    <span v-if="!isOpenToWork" class="status-note">Currently engaged, still happy to talk</span>
+                    <a href="#comms" class="status-link" @click.prevent="goToComms">
+                        Open a channel
+                        <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -143,6 +185,7 @@
                 'container',
                 'flex-grow',
                 'px-4',
+                'sm:px-24',
                 'py-16',
                 'mx-auto',
                 'text-white',
@@ -154,11 +197,11 @@
             <h2 class="mb-10 text-5xl font-bold text-center text-emerald-500">
                 INTEL
             </h2>
-            <div class="grid items-center grid-cols-1 gap-12 md:grid-cols-2">
+            <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                 <div class="md:order-2">
                     <img
                         :src="intelImg"
-                        alt="Eyu's full image"
+                        alt="Eyu standing with arms crossed"
                         class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
                     />
                 </div>
@@ -169,35 +212,33 @@
                     <h3 class="text-3xl text-emerald-500">The Pilot</h3>
                     <h4 class="text-2xl text-emerald-500">
                         Call sign:
-                        <a href="https://t.me/@Reaper_X"
+                        <a href="https://t.me/EyuReaper"
                             ><span class="text-orange-500">EyuReaper</span></a
                         >
                     </h4>
                     <p>
-                        Hi my name is Eyuel or Eyu for short. As a developer, my
-                        journey is driven by a passion for creating efficient
-                        and impactful digital solutions. I thrive on challenges,
-                        embracing new technologies and methodologies to build
-                        applications that are not only functional but also
-                        intuitive and user-friendly. My approach is disciplined
-                        and meticulous, reflecting the precision required in
-                        modern software development.
+                        Hi, I'm Eyuel, or Eyu for short. I like building
+                        software that runs efficiently and makes a real
+                        difference to the people using it. Hard problems are
+                        the fun part for me, and I pick up new tools and
+                        methods whenever a project calls for them. I want my
+                        apps to be easy to use as well as working, and I'm
+                        careful about the details.
                     </p>
                     <p>
-                        I specialize in React & Vue.js for robust frontend
-                        experiences and leverage Tailwind CSS for rapid,
-                        maintainable styling. My skills extend to Nuxt.js,
-                        Node.js for backend, databases like MongoDB/PostgreSQL,
-                        Supabase, vercel. I am always eager to
-                        collaborate on projects that demand creativity,
-                        problem-solving, and a commitment to excellence.
+                        Most of my frontend work is in React and Vue.js,
+                        styled with Tailwind CSS because it's quick to write
+                        and easy to maintain. I also work with Nuxt.js,
+                        Node.js on the backend, MongoDB and PostgreSQL,
+                        Supabase, and Vercel. I'm always happy to collaborate
+                        on projects that need creative problem-solving.
                     </p>
                     <p>
-                        Beyond coding, I enjoy reading about technology &
-                        history books, drawing & sketching ,solving puzzles ,
-                        which further sharpens my analytical thinking, my eye
-                        for design and strategic planning — qualities I bring to
-                        every development project.
+                        Away from the keyboard, I read about technology and
+                        history, draw and sketch, and solve puzzles. Those
+                        hobbies keep my analytical thinking, my eye for design,
+                        and my planning sharp, and all of that carries over
+                        into my projects.
                     </p>
                 </div>
             </div>
@@ -214,6 +255,7 @@
                 'flex-grow',
                 'min-h-screen',
                 'px-4',
+                'sm:px-24',
                 'py-16',
                 'mx-auto',
                 'text-white',
@@ -224,7 +266,7 @@
             <h2 class="mb-12 text-5xl font-bold text-center text-emerald-500">
                 HANGAR
             </h2>
-            <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 xl:grid-cols-3">
                 <div
                     class="p-6 transition-transform duration-300 transform border shadow-xl bg-slate-900 rounded-xl border-sky-500 hover:border-emerald-500 hover:scale-105 mission-dossier group"
                     tabindex="0"
@@ -239,7 +281,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screenshot-landingpage-siraqemir.png')"
-                            alt="Project Alpha Thumbnail"
+                            alt="Sira Qemir landing page"
                             class="object-cover w-full mb-4 rounded-lg cursor-pointer h-38"
                             @click="
                                 showImageModal('screenshot-landingpage-siraqemir.png')
@@ -271,15 +313,15 @@
                      Sira-qemir
                     </h3>
                     <p class="mb-4 text-white text-md">
-                        Sira Qemir (ሥራ ቀምር) is a modern task management web
-                        application built with React, Supabase, and Tailwind CSS
-                        and built for Ethiopians first
+                        Sira Qemir (ሥራ ቀምር) is a task management web app
+                        built with React, Supabase, and Tailwind CSS, designed
+                        for Ethiopian users first.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/sira-qemir"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -287,7 +329,7 @@
                         <a
                             href="https://sira-qemir-flrv.vercel.app"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fas', 'rocket']" />
                                 <span>Live Demo</span>
@@ -310,7 +352,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screencapture-luxurywatch-በአማርኛ.png')"
-                            alt="Project Bravo Thumbnail"
+                            alt="Luxury watch product landing page"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
                                 showImageModal('screencapture-luxurywatch-በአማርኛ.png')
@@ -342,15 +384,14 @@
                          Luxury Watch Product Landing Page
                     </h3>
                     <p class="mb-4 text-white text-md">
-                        A visually striking product landing page that showcases
-                        luxury timepieces with smooth parallax scrolling and
-                        interactive elements.
+                        A product landing page for luxury watches, with
+                        parallax scrolling and interactive elements.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/luxury-watch-landing-page"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -373,7 +414,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screencapture-amharic-phrase-book.png')"
-                            alt="Project Charlie Thumbnail"
+                            alt="Amharic phrasebook web app"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
                                 showImageModal('screenshot-amharic-phrasebook-webapp.png')
@@ -408,11 +449,11 @@
                         A free, offline-friendly Amharic phrasebook web app for
                         travelers and learners.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/amharic-phrase-book"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -420,7 +461,7 @@
                         <a
                             href="https://amharic-phrase-book.vercel.app/"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fas', 'rocket']" />
                                 <span>Live Demo</span>
@@ -443,7 +484,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screencapture-yckf-replica.png')"
-                            alt="Project Delta Thumbnail"
+                            alt="YCKF replica home page"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
                                 showImageModal('screencapture-yckf-replica.png')
@@ -475,14 +516,14 @@
                         YCKF-replica
                     </h3>
                     <p class="mb-4 text-white text-md">
-                        A full-stack Intership project done for young cyber
-                        knight foundation.
+                        A full-stack internship project for the Young Cyber
+                        Knight Foundation.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/yckf-replica"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -490,7 +531,7 @@
                         <a
                             href="https://yckf-replica.vercel.app/"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fas', 'rocket']" />
                                 <span>Live Demo</span>
@@ -513,7 +554,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screencapture-janoweb1.png')"
-                            alt="Project Echo Thumbnail"
+                            alt="Jano-fidel website"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
                                 showImageModal('screencapture-janoweb1.png')
@@ -545,13 +586,14 @@
                         Jano-fidel
                     </h3>
                     <p class="mb-4 text-white text-md">
-                        A Native Amharic programming Language built on Node.js.
+                        A programming language written in native Amharic,
+                        built on Node.js.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/jano-fidel"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -559,7 +601,7 @@
                         <a
                             href="https://jano-fidel.vercel.app/"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fas', 'rocket']" />
                                 <span>Live Demo</span>
@@ -582,7 +624,7 @@
                     <div class="relative">
                         <img
                             :src="proxiedImage('screencapture-fidel-ascii.png')"
-                            alt="Project Foxtrot Thumbnail"
+                            alt="Fidel-ascii running in a terminal"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
                                 showImageModal('screencapture-fidel-ascii.png')
@@ -615,13 +657,13 @@
                     </h3>
                     <p class="mb-4 text-white text-md">
                         An Ethiopian character map and rendering engine for
-                        terminal interface.
+                        the terminal.
                     </p>
-                    <div class="flex justify-around mt-4">
+                    <div class="flex flex-wrap justify-center gap-x-4 gap-y-3 mt-6">
                         <a
                             href="https://github.com/EyuReaper/fidel-ascii"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-white tracking-[0.1em] transition-all duration-200 bg-sky-500 hover:bg-sky-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fab', 'github']" />
                                 <span>GitHub</span>
@@ -629,7 +671,7 @@
                         <a
                             href="https://fidel-ascii.vercel.app"
                             target="_blank"
-                            class="military-cut-button inline-flex items-center gap-2 px-6 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
+                            class="military-cut-button inline-flex items-center gap-2 px-5 py-[11px] text-xs font-bold text-slate-950 tracking-[0.1em] transition-all duration-200 bg-emerald-500 hover:bg-emerald-400 hover:scale-105"
                         >
                                 <font-awesome-icon :icon="['fas', 'rocket']" />
                                 <span>Live Demo</span>
@@ -647,6 +689,7 @@
                 'container',
                 'flex-grow',
                 'px-4',
+                'sm:px-24',
                 'py-16',
                 'mx-auto',
                 'text-white',
@@ -887,9 +930,11 @@
                             </span>
                             <span v-else
                                 >Transmit Signal
-                                <span class="ml-2" aria-hidden="true"
-                                    >📡</span
-                                ></span
+                                <font-awesome-icon
+                                    :icon="['fas', 'satellite-dish']"
+                                    class="ml-2"
+                                    aria-hidden="true"
+                                /></span
                             >
                         </button>
                         <p class="mt-4 text-sm text-center text-emerald-500">
@@ -904,7 +949,7 @@
                     >
                         <div
                             v-if="submitStatus === 'success'"
-                            class="flex items-center justify-between px-4 py-3 text-green-800 bg-green-100 border border-green-300 rounded shadow"
+                            class="flex items-center justify-between gap-4 px-4 py-3 text-sm text-emerald-100 bg-emerald-500/10 border border-emerald-400/40 rounded-md"
                             role="status"
                             aria-live="polite"
                         >
@@ -913,14 +958,14 @@
                                 @click="submitStatus = null"
                                 type="button"
                                 aria-label="Dismiss message"
-                                class="ml-4 text-xl font-bold text-green-800 hover:text-green-600 focus:outline-none"
+                                class="grid place-items-center w-7 h-7 rounded text-emerald-300 hover:bg-emerald-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
                             >
-                                &times;
+                                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
                             </button>
                         </div>
                         <div
                             v-else-if="submitStatus === 'error'"
-                            class="flex items-center justify-between px-4 py-3 text-red-500 bg-red-100 border border-red-300 rounded shadow"
+                            class="flex items-center justify-between gap-4 px-4 py-3 text-sm text-red-100 bg-red-500/10 border border-red-400/40 rounded-md"
                             role="alert"
                             aria-live="assertive"
                         >
@@ -931,9 +976,9 @@
                                 @click="submitStatus = null"
                                 type="button"
                                 aria-label="Dismiss message"
-                                class="ml-4 text-xl font-bold text-red-500 hover:text-red-600 focus:outline-none"
+                                class="grid place-items-center w-7 h-7 rounded text-red-300 hover:bg-red-500/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-400"
                             >
-                                &times;
+                                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
                             </button>
                         </div>
                     </div>
@@ -945,22 +990,27 @@
         <!-- Image Modal -->
         <div
             v-if="isModalOpen"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80"
+            class="fixed inset-0 z-[10030] flex items-center justify-center p-4 bg-black/85"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Project screenshot"
             @click.self="closeImageModal"
         >
             <div
                 class="relative max-w-4xl max-h-full overflow-auto rounded-lg shadow-xl"
             >
                 <button
+                    ref="modalCloseRef"
+                    type="button"
                     @click="closeImageModal"
-                    class="absolute z-50 p-2 text-4xl font-bold text-white transition-colors duration-200 rounded-full top-4 right-4 bg-slate-900 hover:text-emerald-500"
-                    aria-label="Close"
+                    class="absolute z-10 grid place-items-center w-10 h-10 top-3 right-3 rounded-full text-slate-200 bg-slate-950/90 border border-emerald-500/30 transition-colors hover:text-emerald-300 hover:border-emerald-400/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
+                    aria-label="Close screenshot"
                 >
-                    &times;
+                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
                 </button>
                 <img
                     :src="modalImageUrl"
-                    alt="Zoomed Project Image"
+                    alt="Enlarged project screenshot"
                     class="max-w-full max-h-[90vh] object-contain rounded-lg"
                 />
             </div>
@@ -972,13 +1022,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted,onUnmounted } from "vue";
+import { ref, nextTick, onMounted, onUnmounted } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
-import FallingStarsBg from "@/components/ui/FallingStarsBg.vue";
+import FlightTerrainBg from "@/components/ui/FlightTerrainBg.vue";
 import JetScroll from "@/components/jetscroll.vue";
 import TechAltitude from "@/components/TechAltitude.vue";
 import SocialRadar from "@/components/SocialRadar.vue"; // New import
 import { useImageProxy } from "@/composables/useImageProxy";
+import { useThemeStore } from "@/composables/useThemeStore";
+import { AVAILABILITY } from "@/utils/availability";
+
+const isOpenToWork = AVAILABILITY === "open";
+const goToComms = () => {
+    document.getElementById("comms")?.scrollIntoView({ behavior: "smooth" });
+};
+
+const { isDarkMode, toggleDarkMode, isLightMode, toggleLightMode } = useThemeStore();
 
 const { proxiedImage } = useImageProxy();
 
@@ -996,8 +1055,8 @@ const socialMediaLinks = [
         url: "https://www.linkedin.com/in/eyuel-getachew-37061513b",
     },
     { name: "GitHub", url: "https://github.com/EyuReaper" },
-    { name: "Telegram", url: "https://t.me/@Reaper_X" },
-    { name: "X", url: "https://x.com/@eyu_gx" }, // Placeholder URL for X (Twitter)
+    { name: "Telegram", url: "https://t.me/EyuReaper" },
+    { name: "X", url: "https://x.com/eyu_gx" },
 ];
 
 const intelVisible = ref(false);
@@ -1046,16 +1105,27 @@ useIntersectionObserver(commsRef, ([{ isIntersecting }]) => {
     if (isIntersecting) commsVisible.value = true;
 });
 
+let scrollFrame = null;
+const onScroll = () => {
+    if (scrollFrame !== null) return;
+    scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = null;
+        handleScrollData();
+    });
+};
+
 // --- Typewriter and Flicker ---
+let typewriterTimer = null;
+
 onMounted(() => {
-    window.addEventListener("scroll", handleScrollData); // Attach scroll listener
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     const container = document.getElementById("typewriter-container");
     if (container) {
         const textSpan = container.querySelector(".typewriter-text");
         const cursor = container.querySelector(".cursor");
         const text =
-            "System analysis complete. All subsystems are operational. Ready for user engagement.";
+            "Preflight complete. Portfolio cleared for recruiter review. Standing by for contact.";
         let index = 0;
 
         cursor.style.opacity = "0";
@@ -1064,34 +1134,51 @@ onMounted(() => {
             if (index < text.length) {
                 textSpan.textContent += text.charAt(index);
                 index++;
-                const delay = 50 + (Math.random() * 60 - 30);
-                setTimeout(type, delay);
+                const delay = 25 + (Math.random() * 24 - 12);
+                typewriterTimer = setTimeout(type, delay);
             } else {
                 cursor.style.opacity = "1";
             }
         }
-        setTimeout(type, 400);
+        typewriterTimer = setTimeout(type, 400);
     }
 });
 
 onUnmounted(() => {
-    window.removeEventListener("scroll", handleScrollData); // Detach scroll listener
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("keydown", onModalKey);
+    if (scrollFrame !== null) cancelAnimationFrame(scrollFrame);
+    clearTimeout(typewriterTimer);
+    clearTimeout(feedbackTimeout);
 });
 
 // --- Projects Modal ---
 const isModalOpen = ref(false);
 const modalImageUrl = ref("");
 
+const modalCloseRef = ref(null);
+let modalOpener = null;
+
+const onModalKey = (e) => {
+    if (e.key === "Escape") closeImageModal();
+};
+
 const showImageModal = (imageUrl) => {
+    modalOpener = document.activeElement;
     modalImageUrl.value = proxiedImage(imageUrl);
     isModalOpen.value = true;
     document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onModalKey);
+    nextTick(() => modalCloseRef.value?.focus());
 };
 
 const closeImageModal = () => {
+    if (!isModalOpen.value) return;
     isModalOpen.value = false;
     modalImageUrl.value = "";
     document.body.style.overflow = "";
+    window.removeEventListener("keydown", onModalKey);
+    modalOpener?.focus?.(); // return focus to the card that opened it
 };
 
 // --- Contact Form ---
@@ -1171,7 +1258,7 @@ const submitForm = async () => {
         } else {
             submitStatus.value = "error";
         }
-    } catch (error) {
+    } catch {
         submitStatus.value = "error";
     } finally {
         isSubmitting.value = false;
@@ -1188,13 +1275,83 @@ const submitForm = async () => {
     opacity: 0;
     transform: translateY(20px);
     transition:
-        opacity 0.5s ease-out,
-        transform 0.5s ease-out;
+        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .is-visible {
     opacity: 1;
     transform: translateY(0);
 }
+/* ── Availability status chip ── */
+.status-chip {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 10px;
+    margin-top: 1.25rem;
+    padding: 8px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--status-edge);
+    background: var(--status-bg);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #cbd5e1;
+}
+.status-chip--open {
+    --status: #34d399;
+    --status-edge: rgba(52, 211, 153, 0.45);
+    --status-bg: rgba(16, 185, 129, 0.1);
+}
+.status-chip--mission {
+    --status: #fbbf24;
+    --status-edge: rgba(251, 191, 36, 0.45);
+    --status-bg: rgba(245, 158, 11, 0.1);
+}
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: var(--status);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--status) 25%, transparent);
+}
+.status-chip--open .status-dot {
+    animation: status-pulse 1.8s ease-in-out infinite;
+}
+@keyframes status-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.status-key {
+    color: #64748b;
+}
+.status-value {
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--status);
+}
+.status-note {
+    color: #94a3b8;
+    letter-spacing: 0.02em;
+}
+.status-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #e2e8f0;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--status) 50%, transparent);
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+}
+.status-link:hover {
+    color: var(--status);
+}
+@media (prefers-reduced-motion: reduce) {
+    .status-chip--open .status-dot { animation: none; }
+}
+
 .flicker {
     animation: flicker 1.5s infinite alternate;
 }

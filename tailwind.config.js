@@ -34,10 +34,6 @@ export default {
             '0%': { opacity: '0' },
             '100%': { opacity: '1' },
         },
-        glow: {
-          '0%, 100%': { 'box-shadow': '0 0 5px #10b981' },
-          '50%': { 'box-shadow': '0 0 20px #10b981' },
-        },
         scanline: {
           '0%': { 'background-position': '0 0' },
           '100%': { 'background-position': '0 100%' },
@@ -52,14 +48,42 @@ export default {
         },
       },
       animation: {
-        'fly-in': 'flyIn 1s ease-out forwards',
-        'fade-in': 'fadeIn 1s ease-in forwards',
-        'glow': 'glow 1.5s ease-in-out infinite',
+        'fly-in': 'flyIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in': 'fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'scanline': 'scanline 10s linear infinite',
         'grid': 'grid 2s linear infinite',
         'soar': 'soar 6s ease-in-out infinite',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Compositor-only glow: the 20px shadow is painted once on a ::after layer
+    // and only its opacity animates, instead of repainting box-shadow per frame.
+    function ({ addBase, addComponents }) {
+      addBase({
+        '@keyframes glow-pulse': {
+          '0%, 100%': { opacity: '0.25' },
+          '50%': { opacity: '1' },
+        },
+        // Zero specificity so .fixed / .absolute / .sticky still win.
+        ':where(.animate-glow)': { position: 'relative' },
+      })
+      addComponents({
+        '.animate-glow::after': {
+          content: '""',
+          position: 'absolute',
+          inset: '0',
+          'border-radius': 'inherit',
+          'box-shadow': '0 0 20px #10b981',
+          'pointer-events': 'none',
+          opacity: '0.25',
+          'will-change': 'opacity',
+          animation: 'glow-pulse 1.5s ease-in-out infinite',
+        },
+        '@media (prefers-reduced-motion: reduce)': {
+          '.animate-glow::after': { animation: 'none', opacity: '0.6' },
+        },
+      })
+    },
+  ],
 }

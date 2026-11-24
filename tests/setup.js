@@ -21,6 +21,14 @@ class IntersectionObserverMock {
 }
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
+// jsdom has no matchMedia (used for reduced-motion / pointer checks)
+vi.stubGlobal('matchMedia', (query) => ({
+  matches: false,
+  media: query,
+  addEventListener() {},
+  removeEventListener() {},
+}));
+
 vi.mock('~/composables/useGithubLanguages', () => ({
   useGithubLanguages: () => ({
     languages: Vue.ref([]),

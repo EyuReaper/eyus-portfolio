@@ -1,5 +1,3 @@
-import { fileURLToPath } from "url";
-
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   // Modules to be loaded before rendering page
@@ -7,11 +5,12 @@ export default defineNuxtConfig({
   "@nuxtjs/tailwindcss", "@nuxt/eslint"],
 
   // Plugins to load before mounting the App
-  plugins: ["~/plugins/fontawesome.client.js", "~/plugins/floating-vue.client.js"],
+  plugins: ["~/plugins/fontawesome.js", "~/plugins/floating-vue.client.js"],
 
   // Global CSS/SCSS files
   css: [
     "~/assets/css/main.css", // Path to your main Tailwind CSS file
+    "~/assets/css/light.css", // Light mode overrides (html.light)
   ],
 
   // App configuration (head, meta, etc.)

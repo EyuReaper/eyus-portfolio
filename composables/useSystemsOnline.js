@@ -13,10 +13,10 @@ const bootGeneration = ref(0)
 // HudBootOverlay uses this for its hide timer and passes it to CSS
 // via --hud-boot-duration, so the JS timer and the CSS animation
 // (main.css .hud-boot-overlay / hud-boot-fade) can never drift apart.
-export const HUD_BOOT_FADE_MS = 2100
+export const HUD_BOOT_FADE_MS = 1200
 // Boot FX window: fade duration plus a buffer for the longest
 // staggered module drop-in animation.
-const HUD_BOOT_WINDOW_MS = HUD_BOOT_FADE_MS + 100
+const HUD_BOOT_WINDOW_MS = HUD_BOOT_FADE_MS + 200
 
 let bootTimer = null
 

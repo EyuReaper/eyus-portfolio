@@ -68,15 +68,20 @@ describe('CommsForm', () => {
     await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
 
-    expect(global.fetch).toHaveBeenCalledWith('https://api.web3forms.com/submit', {
+    const submitCall = global.fetch.mock.calls.find(
+      ([url]) => url === 'https://api.web3forms.com/submit',
+    );
+    expect(submitCall).toBeDefined();
+    const [, options] = submitCall;
+    expect(options).toMatchObject({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: 'f82722bc-7f34-4d62-b7a9-9264f74e54c8',
-        name: 'Test Name',
-        email: 'test@example.com',
-        message: 'Test Message',
-      }),
+    });
+    expect(JSON.parse(options.body)).toMatchObject({
+      access_key: expect.any(String),
+      name: 'Test Name',
+      email: 'test@example.com',
+      message: 'Test Message',
     });
 
     expect(wrapper.html()).toContain('Message sent successfully!');

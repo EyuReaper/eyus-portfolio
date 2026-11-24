@@ -1,11 +1,29 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const isDarkMode = ref(false); // Global state
+const isDarkMode = ref(false); // NVG (night vision) mode
+const isLightMode = ref(false); // Daylight mode; never on together with NVG
 let sfxAudio = null; // Declare sfxAudio globally for composable
+
+const applyLightModeClass = (isLight) => {
+  if (import.meta.client) {
+    document.documentElement.classList.toggle('light', isLight);
+  }
+};
+
+const toggleLightMode = () => {
+  isLightMode.value = !isLightMode.value;
+  if (isLightMode.value && isDarkMode.value) {
+    isDarkMode.value = false;
+    applyDarkModeClass(false);
+    localStorage.setItem('darkMode', false);
+  }
+  applyLightModeClass(isLightMode.value);
+  localStorage.setItem('lightMode', isLightMode.value);
+};
 
 // Applies the .dark class to the <html> element for Tailwind's dark: prefix
 const applyDarkModeClass = (isDark) => {
-  if (process.client) {
+  if (import.meta.client) {
     if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
@@ -21,9 +39,14 @@ const toggleDarkMode = () => {
       sfxAudio.play();
     }
     isDarkMode.value = !isDarkMode.value;
+    if (isDarkMode.value && isLightMode.value) {
+      isLightMode.value = false;
+      applyLightModeClass(false);
+      if (import.meta.client) localStorage.setItem('lightMode', false);
+    }
 
     // Create a "Power On" flicker effect on the whole page
-    if (process.client) {
+    if (import.meta.client) {
       const body = document.body;
       body.style.animation = 'none';
       body.offsetHeight; /* trigger reflow */
@@ -32,7 +55,7 @@ const toggleDarkMode = () => {
     }
 
     applyDarkModeClass(isDarkMode.value);
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('darkMode', isDarkMode.value);
     }
 };
@@ -40,7 +63,7 @@ const toggleDarkMode = () => {
 export function useThemeStore() {
   onMounted(() => {
     // Initialize sound effect if not already initialized
-    if (!sfxAudio && process.client) {
+    if (!sfxAudio && import.meta.client) {
       // Import the sound file within the composable to avoid client/server issues
       import('~/assets/Splinter_Cell_Sfx.wav').then(module => {
         sfxAudio = new Audio(module.default);
@@ -48,7 +71,7 @@ export function useThemeStore() {
     }
 
     // 1. Theme Initialization
-    if (process.client) {
+    if (import.meta.client) {
       const savedDarkMode = localStorage.getItem('darkMode');
       if (savedDarkMode !== null) {
         isDarkMode.value = JSON.parse(savedDarkMode);
@@ -58,11 +81,17 @@ export function useThemeStore() {
         localStorage.setItem('darkMode', false); // Save this preference
       }
       applyDarkModeClass(isDarkMode.value);
+
+      const savedLight = localStorage.getItem('lightMode');
+      isLightMode.value = savedLight !== null && JSON.parse(savedLight) && !isDarkMode.value;
+      applyLightModeClass(isLightMode.value);
     }
   });
 
   return {
     isDarkMode,
     toggleDarkMode,
+    isLightMode,
+    toggleLightMode,
   };
 }
