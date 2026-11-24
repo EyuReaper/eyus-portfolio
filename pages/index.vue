@@ -146,8 +146,8 @@
                     class="max-w-2xl mx-auto mb-10 text-xl leading-relaxed text-white"
                 >
                     Welcome aboard. I'm Eyu, a full-stack developer with a
-                    front-end focus. I build fast, reliable web apps in Vue and
-                    React, and I like turning messy problems into tools people
+                    front-end focus. I build fast, reliable web apps in Next.js
+                    and Vue, and I like turning messy problems into tools people
                     actually enjoy using.
                 </p>
                 <AirDropButton />
@@ -1030,9 +1030,11 @@ import TechAltitude from "@/components/TechAltitude.vue";
 import SocialRadar from "@/components/SocialRadar.vue"; // New import
 import { useImageProxy } from "@/composables/useImageProxy";
 import { useThemeStore } from "@/composables/useThemeStore";
-import { AVAILABILITY } from "@/utils/availability";
+import { normalizeAvailability } from "@/utils/availability";
 
-const isOpenToWork = AVAILABILITY === "open";
+// Set with NUXT_PUBLIC_AVAILABILITY ('open' | 'on-mission'); see utils/availability.js
+const isOpenToWork =
+    normalizeAvailability(useRuntimeConfig().public.availability) === "open";
 const goToComms = () => {
     document.getElementById("comms")?.scrollIntoView({ behavior: "smooth" });
 };

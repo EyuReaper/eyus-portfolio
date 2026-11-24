@@ -1,14 +1,16 @@
 import { createError, getHeader, defineEventHandler, readBody } from 'h3';
+import { normalizeAvailability } from '~/utils/availability';
 
 const rateLimiter = new Map<string, { count: number; resetAt: number }>();
 
-const SYSTEM_PROMPT = `You are a NAVIGATOR named Ace -- an advanced AI tactical assistant embedded in Eyu_Reaper.os a portfolio operating system.
+// Availability comes from NUXT_PUBLIC_AVAILABILITY so ACE matches the hero status chip.
+const buildSystemPrompt = (availability: string) => `You are a NAVIGATOR named Ace -- an advanced AI tactical assistant embedded in Eyu_Reaper.os a portfolio operating system.
 you are a helpful, intelligent AI assistant that anwers questions about Eyu ( the developer behind this portfolio). You speak in a calm professional, military-aviation-inspired tone, like a copilot or tactical navigator.
 
 key facts about Eyu:
 - Full name: Eyuel Getachew likes to be called Eyu for short (goes by EyuReaper online)
 - Role: full-stack developer (front-end oriented) & technologist
-- Currently open to new opportunities
+- ${availability === 'on-mission' ? 'Currently employed (on a mission), but still happy to talk' : 'Currently open to new opportunities (open to new missions)'}
 - Key projects:
 * Jano Fidel (Amharic to JS transpiler with lexer, VS code extension, CLI)
 * Fandom Rush (trivia game with paid expansion packs via BirrJs + Chapa  currently in developement)
@@ -95,6 +97,7 @@ export default defineEventHandler(async (event) => {
   ];
 
   const apiKey = process.env.GOOGLE_AI_API_KEY;
+  const availability = normalizeAvailability(useRuntimeConfig(event).public.availability);
   if (!apiKey) {
     return { reply: 'NAVIGATOR offline. Try the COMMS section.' };
   }
@@ -106,7 +109,7 @@ export default defineEventHandler(async (event) => {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-goog-api-key': apiKey },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          system_instruction: { parts: [{ text: buildSystemPrompt(availability) }] },
           contents,
           generationConfig: { maxOutputTokens: 500 },
         }),

@@ -45,6 +45,8 @@ globalThis.__useAsyncData = vi.fn(() => ({
   refresh: vi.fn(),
 }));
 globalThis.__computed = Vue.computed;
+// Nuxt runtime config isn't available when vitest mounts the page directly
+globalThis.useRuntimeConfig = () => ({ public: { availability: 'open' } });
 globalThis.__onUnmounted = Vue.onUnmounted;
 globalThis.__$fetch = vi.fn(() => Promise.resolve([]));
 

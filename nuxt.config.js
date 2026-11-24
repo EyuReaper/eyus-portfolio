@@ -52,6 +52,14 @@ export default defineNuxtConfig({
 
   // Static site generation
   ssr: true,
+
+  // Public runtime settings; each can be overridden with an env var at runtime.
+  runtimeConfig: {
+    public: {
+      // 'open' | 'on-mission' — override with NUXT_PUBLIC_AVAILABILITY
+      availability: "open",
+    },
+  },
   // Nitro compression
   nitro: {
     compressPublicAssets: true,

@@ -56,6 +56,10 @@ Everything lives on one page, `pages/index.vue`. Files in `public/` are served a
 
 To use the ACE chat locally, copy `.env.example` to `.env` and add a Google AI API key.
 
+### Switching your availability status
+
+The status chip under the hero shows either "Open to new missions" or "On mission", and ACE's answers follow the same setting. To switch it, set `NUXT_PUBLIC_AVAILABILITY` to `open` or `on-mission` in your host's environment variables (on Vercel: Settings, then Environment Variables) and redeploy. Locally, put it in `.env`. Any other value falls back to `open`.
+
 ## Usage
 
 Edit the Vue components in any editor; the dev server hot-reloads changes in the browser. Run `npm run build` to build for production.
