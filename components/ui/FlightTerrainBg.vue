@@ -99,6 +99,8 @@ const FRAG = /* glsl */ `
   }
 `;
 
+const PHONE_FPS = 30;
+
 let cleanup = () => {};
 
 onMounted(async () => {
@@ -224,7 +226,12 @@ onMounted(async () => {
   let running = false;
   let last = performance.now();
 
+  // 1ms of slack so a 60Hz screen lands on every second frame
+  const minFrameMs = small ? 1000 / PHONE_FPS - 1 : 0;
+
   const frame = (now) => {
+    raf = requestAnimationFrame(frame);
+    if (now - last < minFrameMs) return;
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     const k = 1 - Math.exp(-dt * 2.5); // frame-rate independent smoothing
@@ -238,7 +245,6 @@ onMounted(async () => {
     uniforms.uTime.value += dt;
     placeCamera();
     renderer.render(scene, camera);
-    raf = requestAnimationFrame(frame);
   };
 
   const start = () => {
