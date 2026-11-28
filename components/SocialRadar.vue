@@ -28,25 +28,21 @@
           :key="link.name"
           :href="link.url"
           target="_blank"
-          :style="getIconPosition(index)"
+          :style="[getIconPosition(index), getSweepDelay(index)]"
           class="absolute flex flex-col items-center justify-center group"
         >
           <div 
-            class="flex items-center justify-center w-14 h-14 text-white bg-slate-900 border-2 rounded-full transition-all duration-300
+            class="radar-blip relative flex items-center justify-center w-14 h-14 text-white bg-slate-900 border-2 border-slate-800 rounded-full transition-all duration-300
                    group-hover:scale-125 group-hover:border-emerald-400 group-hover:shadow-[0_0_30px_#10b981] group-hover:bg-emerald-500/20 group-hover:z-50"
-            :class="[
-              isActive(index) 
-                ? 'border-emerald-500 shadow-[0_0_20px_#10b981] scale-110 bg-emerald-500/10 opacity-100' 
-                : 'border-slate-800 opacity-40 scale-100'
-            ]"
           >
+            <!-- Lit while the sweep arm passes over this icon -->
+            <span class="radar-lock absolute -inset-0.5 border-2 rounded-full pointer-events-none border-emerald-500 bg-emerald-500/10 shadow-[0_0_20px_#10b981]" aria-hidden="true"></span>
             <font-awesome-icon :icon="getFontAwesomeIcon(link.name)" class="w-6 h-6 transition-transform group-hover:rotate-12" />
           </div>
           
           <span 
-            class="mt-2 font-mono text-[10px] tracking-widest transition-all duration-300 uppercase
-                   group-hover:opacity-100 group-hover:text-emerald-300"
-            :class="isActive(index) ? 'text-emerald-400 opacity-100' : 'text-emerald-900 opacity-0'"
+            class="radar-label mt-2 font-mono text-[10px] tracking-widest transition-all duration-300 uppercase text-emerald-400
+                   group-hover:text-emerald-300"
           >
             {{ link.name }}
           </span>
@@ -59,8 +55,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-
 const props = defineProps({
   socialLinks: {
     type: Array,
@@ -73,10 +67,7 @@ const props = defineProps({
   }
 });
 
-const currentAngle = ref(0);
-let animationFrame = null;
-const SWEEP_DURATION = 4000; // 4 seconds per full rotation
-const SWEEP_WIDTH_DEGREES = 60; // The conic gradient covers 60 degrees
+const SWEEP_SECONDS = 4; // one full rotation; matches the CSS animations below
 
 const getFontAwesomeIcon = (name) => {
   const map = {
@@ -87,16 +78,6 @@ const getFontAwesomeIcon = (name) => {
   };
   return map[name] || ['fas', 'circle'];
 };
-
-// High-precision angle tracking
-const updateAngle = (startTime) => {
-  const elapsed = performance.now() - startTime;
-  currentAngle.value = (elapsed % SWEEP_DURATION) / SWEEP_DURATION * 360;
-  animationFrame = requestAnimationFrame(() => updateAngle(startTime));
-};
-
-onMounted(() => updateAngle(performance.now()));
-onUnmounted(() => cancelAnimationFrame(animationFrame));
 
 const getIconPosition = (index) => {
   const numLinks = props.socialLinks.length;
@@ -114,24 +95,11 @@ const getIconPosition = (index) => {
   };
 };
 
-const isActive = (index) => {
-  const numLinks = props.socialLinks.length;
-  const iconAngle = (index * (360 / numLinks)); // Icon angle relative to 0 (East)
-
-  // Normalized iconAngle to match radar sweep's 0 position (North)
-  const normalizedIconAngle = (iconAngle - 90 + 360) % 360; 
-
-  // Check if the current sweep angle is within the "active" range of the sweep arm
-  // The sweep arm goes from currentAngle to (currentAngle + SWEEP_WIDTH_DEGREES)
-  const sweepStart = currentAngle.value;
-  const sweepEnd = (currentAngle.value + SWEEP_WIDTH_DEGREES) % 360;
-
-  if (sweepStart < sweepEnd) {
-    return normalizedIconAngle >= sweepStart && normalizedIconAngle <= sweepEnd;
-  } else { // Handles wrap-around (e.g., sweep goes from 340 to 20 degrees)
-    return normalizedIconAngle >= sweepStart || normalizedIconAngle <= sweepEnd;
-  }
-};
+// Icons run clockwise from the top, like the sweep, so each one lights a
+// proportional part of a rotation later. The negative delay starts it mid-cycle.
+const getSweepDelay = (index) => ({
+  '--sweep-delay': `${(index / props.socialLinks.length - 1) * SWEEP_SECONDS}s`,
+});
 </script>
 
 <style scoped>
@@ -145,4 +113,25 @@ const isActive = (index) => {
   /* Ensure transform-origin is center */
   transform-origin: center center;
 }
+
+/* Icon highlights are pure CSS: no per-frame JavaScript. Each stays lit for the
+   60deg (16.67% of a turn) the arm covers it, with a 300ms fade either side. */
+.radar-blip { animation: radar-blip 4s var(--sweep-delay) infinite; }
+.radar-lock { opacity: 0; animation: radar-fade 4s var(--sweep-delay) infinite; }
+.radar-label { opacity: 0; animation: radar-fade 4s var(--sweep-delay) infinite; }
+
+@keyframes radar-blip {
+  0%, 24.17%, 100% { opacity: 0.4; scale: 1; }
+  7.5%, 16.67% { opacity: 1; scale: 1.1; }
+}
+
+@keyframes radar-fade {
+  0%, 24.17%, 100% { opacity: 0; }
+  7.5%, 16.67% { opacity: 1; }
+}
+
+/* Hover takes over from the sweep */
+.group:hover .radar-blip { animation: none; opacity: 1; }
+.group:hover .radar-lock { animation: none; opacity: 0; }
+.group:hover .radar-label { animation: none; opacity: 1; }
 </style>
