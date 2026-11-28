@@ -199,11 +199,21 @@
             </h2>
             <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                 <div class="md:order-2">
-                    <img
-                        :src="intelImg"
-                        alt="Eyu standing with arms crossed"
-                        class="object-cover w-full h-auto border-4 rounded-lg shadow-xl border-sky-500"
-                    />
+                    <!-- Silent loop; downloads and plays only while on screen -->
+                    <video
+                        ref="intelVideoRef"
+                        :src="intelVideo.src"
+                        :poster="intelVideo.poster"
+                        width="720"
+                        height="1120"
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        disablepictureinpicture
+                        aria-label="Black and white video of Eyu in a black T-shirt, standing with arms crossed, then looking up with hands in pockets and running a hand through their hair"
+                        class="block w-full max-w-[360px] h-auto mx-auto aspect-[9/14] object-cover border-4 rounded-lg shadow-xl border-sky-500"
+                    ></video>
                 </div>
 
                 <div
@@ -1072,10 +1082,16 @@ const thumbnail = (path) =>
     proxiedImage(path, { width: 800, format: "webp", quality: 80 });
 
 const profileImg = proxiedImage("profile.jpg", { format: "webp", quality: 80 });
-const intelImg = proxiedImage("image1.png", { format: "webp", quality: 80 });
+// Bound in the template as values: a literal src makes Vite try to import the
+// public file, which fails with a 400 in `nuxt dev`.
+const intelVideo = {
+    src: "/video/eyu.mp4",
+    poster: "/video/eyu-poster.webp",
+};
 
 // --- Section Visibility ---
 const intelRef = ref(null);
+const intelVideoRef = ref(null);
 const hangarRef = ref(null);
 const commsRef = ref(null);
 
@@ -1128,6 +1144,20 @@ const handleScrollData = () => {
 useIntersectionObserver(intelRef, ([{ isIntersecting }]) => {
     if (isIntersecting) intelVisible.value = true;
 });
+// Play the INTEL clip only while it is on screen
+useIntersectionObserver(
+    intelVideoRef,
+    ([{ isIntersecting }]) => {
+        const video = intelVideoRef.value;
+        if (!video) return;
+        if (!isIntersecting) return video.pause();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+        video.muted = true; // required for autoplay; Vue may not set the property
+        video.play().catch(() => {}); // blocked (e.g. data saver): poster stays
+    },
+    { threshold: 0.25 },
+);
 useIntersectionObserver(hangarRef, ([{ isIntersecting }]) => {
     if (isIntersecting) hangarVisible.value = true;
 });
