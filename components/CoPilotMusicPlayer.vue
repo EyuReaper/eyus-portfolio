@@ -253,7 +253,6 @@ const showNowPlaying = () => {
 onMounted(() => {
   audio.value = new Audio();
   audio.value.volume = volume.value;
-  loadTrack(currentTrackIndex.value);
   audio.value.addEventListener('ended', playNext); // Auto play next track
   audio.value.addEventListener('timeupdate', onTimeUpdate);
   audio.value.addEventListener('loadedmetadata', onMeta);
@@ -272,6 +271,8 @@ const engageComms = () => {
     showWelcomeMessage.value = false;
     isEngaging.value = false;
     if (audio.value) {
+      // First engage only: nothing is downloaded until the visitor asks for it
+      if (!audio.value.getAttribute('src')) loadTrack(currentTrackIndex.value);
       audio.value.play().catch(() => {});
       isPlaying.value = true;
       showNowPlaying();

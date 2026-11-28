@@ -25,7 +25,7 @@ defineProps({
   border-radius: 10px;
   background: rgba(6, 10, 15, 0.92);
   border: 1px solid rgba(52, 211, 153, 0.3);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono Variable', monospace;
 }
 .altitude-tape__label {
   font-size: 9px;

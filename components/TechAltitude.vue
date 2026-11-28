@@ -228,6 +228,9 @@ onMounted(() => {
   watch([techStackData, () => props.isVisible], async ([data, visible]) => {
     if (data.length > 0 && visible) {
       await nextTick();
+      // The chart only exists once data is in, so measure it here
+      setWidth();
+      await nextTick();
       if (mainPathRef.value) {
         pathLength.value = mainPathRef.value.getTotalLength();
         setTimeout(() => animationTriggered.value = true, 100);

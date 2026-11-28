@@ -66,7 +66,9 @@ export function useThemeStore() {
     if (!sfxAudio && import.meta.client) {
       // Import the sound file within the composable to avoid client/server issues
       import('~/assets/Splinter_Cell_Sfx.wav').then(module => {
-        sfxAudio = new Audio(module.default);
+        sfxAudio = new Audio();
+        sfxAudio.preload = 'none'; // fetched on first play
+        sfxAudio.src = module.default;
       });
     }
 

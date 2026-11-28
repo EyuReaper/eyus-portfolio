@@ -280,7 +280,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screenshot-landingpage-siraqemir.png')"
+                            :src="thumbnail('screenshot-landingpage-siraqemir.png')"
+                            width="800"
+                            height="501"
+                            loading="lazy"
+                            decoding="async"
                             alt="Sira Qemir landing page"
                             class="object-cover w-full mb-4 rounded-lg cursor-pointer h-38"
                             @click="
@@ -351,7 +355,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screencapture-luxurywatch-በአማርኛ.png')"
+                            :src="thumbnail('screencapture-luxurywatch-በአማርኛ.png')"
+                            width="800"
+                            height="1022"
+                            loading="lazy"
+                            decoding="async"
                             alt="Luxury watch product landing page"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
@@ -413,7 +421,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screencapture-amharic-phrase-book.png')"
+                            :src="thumbnail('screencapture-amharic-phrase-book.png')"
+                            width="800"
+                            height="683"
+                            loading="lazy"
+                            decoding="async"
                             alt="Amharic phrasebook web app"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
@@ -483,7 +495,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screencapture-yckf-replica.png')"
+                            :src="thumbnail('screencapture-yckf-replica.png')"
+                            width="800"
+                            height="427"
+                            loading="lazy"
+                            decoding="async"
                             alt="YCKF replica home page"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
@@ -553,7 +569,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screencapture-janoweb1.png')"
+                            :src="thumbnail('screencapture-janoweb1.png')"
+                            width="800"
+                            height="427"
+                            loading="lazy"
+                            decoding="async"
                             alt="Jano-fidel website"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
@@ -623,7 +643,11 @@
                 >
                     <div class="relative">
                         <img
-                            :src="proxiedImage('screencapture-fidel-ascii.png')"
+                            :src="thumbnail('screencapture-fidel-ascii.png')"
+                            width="800"
+                            height="1085"
+                            loading="lazy"
+                            decoding="async"
                             alt="Fidel-ascii running in a terminal"
                             class="object-cover w-full h-48 mb-4 rounded-lg cursor-pointer"
                             @click="
@@ -1043,6 +1067,10 @@ const { isDarkMode, toggleDarkMode, isLightMode, toggleLightMode } = useThemeSto
 
 const { proxiedImage } = useImageProxy();
 
+// Card-sized copies; the modal still requests the full-size screenshot.
+const thumbnail = (path) =>
+    proxiedImage(path, { width: 800, format: "webp", quality: 80 });
+
 const profileImg = proxiedImage("profile.jpg", { format: "webp", quality: 80 });
 const intelImg = proxiedImage("image1.png", { format: "webp", quality: 80 });
 
@@ -1070,8 +1098,8 @@ const githubUser = "EyuReaper";
 const scrollAltitude = ref(0);
 const currentHeading = ref(0);
 
-// Use useAsyncData for SSR-friendly data fetching, routed through our
-// cached server endpoint so we don't burn GitHub's shared unauth rate limit.
+// Fetched in the browser so a slow GitHub never delays the page. Routed through
+// our cached server endpoint so we don't burn GitHub's shared unauth rate limit.
 const { data: githubData } = await useAsyncData("github-stats", async () => {
     try {
         return await $fetch("/api/github-stats", {
@@ -1081,7 +1109,7 @@ const { data: githubData } = await useAsyncData("github-stats", async () => {
         console.error("Error fetching GitHub stats:", e);
         return { repos: "ERR", stars: "ERR" };
     }
-});
+}, { server: false, lazy: true });
 
 const ghStats = computed(
     () => githubData.value || { repos: "...", stars: "..." },
@@ -1296,7 +1324,7 @@ const submitForm = async () => {
     border-radius: 9999px;
     border: 1px solid var(--status-edge);
     background: var(--status-bg);
-    font-family: "JetBrains Mono", monospace;
+    font-family: "JetBrains Mono Variable", monospace;
     font-size: 12px;
     letter-spacing: 0.08em;
     color: #cbd5e1;

@@ -15,8 +15,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"JetBrains Mono"', 'monospace'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"JetBrains Mono Variable"', 'monospace'],
+        mono: ['"JetBrains Mono Variable"', 'monospace'],
       },
       colors: {
         'background': '#020617',
